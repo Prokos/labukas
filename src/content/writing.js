@@ -1,0 +1,123 @@
+// Open writing uses transparent self-review, never an automatic mastery score.
+export const writing = [
+  [
+    1,
+    "Introduce yourself",
+    "23–30",
+    "Write 3–4 short sentences introducing yourself to a classmate.",
+    [
+      "Give your name and say whether you study or work.",
+      "Say where you are from and where you live.",
+      "Name a language you speak.",
+    ],
+    "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai.",
+  ],
+  [
+    2,
+    "Write your café order",
+    "43–62",
+    "Write an order for a drink and a dish, then say how you will pay.",
+    [
+      "Use norėčiau or prašom with a genitive request.",
+      "Include an ingredient with su or without be.",
+      "Say kortele or grynaisiais.",
+    ],
+    "Norėčiau daržovių sriubos ir arbatos be cukraus. Sąskaitą, prašom. Mokėsiu kortele.",
+  ],
+  [
+    3,
+    "Send meeting instructions",
+    "76–86",
+    "Invite a friend to meet. Give a day, time, place, and a short direction.",
+    [
+      "Give a day and time in their when forms.",
+      "Use prie + genitive for a meeting point.",
+      "Include one direction or means of transport.",
+    ],
+    "Susitinkame penktadienį, pusę šeštos prie muziejaus. Nuo stoties eik tiesiai iki parko. Aš važiuosiu autobusu.",
+  ],
+  [
+    4,
+    "Ask about a rental",
+    "106–108",
+    "Write a short enquiry about a flat you might rent.",
+    [
+      "Say you want to rent a flat.",
+      "Ask about rooms, floor, or price.",
+      "Ask whether a facility you need is present.",
+    ],
+    "Laba diena. Noriu išsinuomoti butą. Kiek kambarių yra bute? Kelintame aukšte jis yra? Ar yra internetas? Kiek kainuoja nuoma?",
+  ],
+  [
+    5,
+    "Write a holiday postcard",
+    "120–132",
+    "Write 4–6 sentences about a trip: what happened, where you are, and what you will do.",
+    [
+      "Use a past verb for an earlier event.",
+      "Say how you travelled and where you are.",
+      "Use a future verb for your next plan.",
+    ],
+    "Labas! Vakar atvykome į Palangą. Važiavome autobusu. Dabar esame prie jūros. Šiandien ilsimės. Rytoj eisime pasivaikščioti. Iki!",
+  ],
+  [
+    6,
+    "Write a study email",
+    "146",
+    "Write an email about your studies or work. Aim for 70–80 words, as in the book; the model is one possible example.",
+    [
+      "Describe what and where you study or work.",
+      "Describe your schedule and what you do afterwards.",
+      "Include a past event and a future date or plan.",
+    ],
+    "Labas, Rasa! Kaip tau sekasi? Aš studijuoju mediciną Vilniaus universitete. Esu antrame kurse. Paskaitos prasideda devintą valandą. Kasdien turiu daug namų darbų. Po paskaitų einu į biblioteką, o vakare su draugais einame į kavinę. Vakar rašėme testą. Gavau aštuonis. Birželį bus egzaminas žodžiu. Per atostogas važiuosiu prie jūros. Mano draugė studijuoja teisę. Savaitgalį mes eisime į koncertą. Ar tu norėtum eiti kartu? Parašyk, kada turėsi laiko. Linkiu tau geros savaitės! Iki pasimatymo!",
+  ],
+  [
+    7,
+    "Describe someone in your family",
+    "165–176",
+    "Introduce a relative in 4–5 sentences. You may invent a family.",
+    [
+      "Say the relationship, name, and age.",
+      "Describe appearance or character.",
+      "Include a comparison or say something they like.",
+    ],
+    "Tai mano sesuo Rasa. Jai dvidešimt treji metai. Ji yra studentė. Rasa aukšta, linksma ir draugiška. Ji jaunesnė už mane. Jai patinka muzika.",
+  ],
+  [
+    8,
+    "Ask to exchange clothes",
+    "189–194",
+    "Write to a shop about an item you want to exchange.",
+    [
+      "Identify the item with a colour or material.",
+      "Explain the fit problem.",
+      "Ask for a different size and mention the receipt.",
+    ],
+    "Laba diena. Vakar nusipirkau mėlyną megztinį. Jis per mažas. Norėčiau pakeisti. Ar turite didesnį dydį? Turiu kvitą. Ačiū.",
+  ],
+  [
+    9,
+    "Explain an absence",
+    "204–210",
+    "Write a short message saying you are unwell and cannot attend a meeting. This is language practice; you may invent the situation.",
+    [
+      "Say how you feel using jaustis.",
+      "Connect your absence and its reason with nes.",
+      "Mention when you will contact the person again.",
+    ],
+    "Labas. Vakar jaučiausi blogai. Šiandien skauda gerklę. Negalėsiu ateiti į paskaitą, nes sergu. Kai pasveiksiu, paskambinsiu. Ačiū už supratimą.",
+  ],
+  [
+    10,
+    "Write a greeting and invitation",
+    "219–234",
+    "Write a birthday greeting, then invite the person to celebrate with you.",
+    [
+      "Address the person and congratulate them.",
+      "Use a wish with genitive.",
+      "Give a place, day, and time, and ask for a reply.",
+    ],
+    "Labas, Tomai! Su gimtadieniu! Linkiu tau sveikatos ir laimės. Kviečiu tave šeštadienį į kavinę. Susitinkame septintą valandą vakaro. Ar galėsi ateiti? Parašyk. Iki!",
+  ],
+];
