@@ -245,6 +245,15 @@ function App() {
       return false;
     }
   }
+  async function resendConfirmation(email) {
+    try {
+      if (!email.trim()) throw new Error("Enter your email address first.");
+      await cloud.resendConfirmation(email.trim());
+      notify("A fresh verification email is on its way.");
+    } catch (e) {
+      notify(e.message);
+    }
+  }
   useEffect(() => {
     const onStorage = (e) => {
       if (e.key === STORAGE_KEY) persist(readProgress());
@@ -724,6 +733,7 @@ function App() {
           user={user}
           configured={cloud.isConfigured()}
           connect={connect}
+          resendConfirmation={resendConfirmation}
           syncing={syncing}
           sync={sync}
           syncStatus={syncStatus}
@@ -2029,6 +2039,7 @@ function Settings({
   user,
   configured,
   connect,
+  resendConfirmation,
   syncing,
   sync,
   syncStatus,
@@ -2173,6 +2184,15 @@ function Settings({
                   ? "Already have an account? Sign in"
                   : "First time here? Create an account"}
               </button>
+              {creating && (
+                <button
+                  type="button"
+                  className="text-button"
+                  onClick={() => resendConfirmation(email)}
+                >
+                  Resend verification email
+                </button>
+              )}
             </form>
           ) : (
             <>

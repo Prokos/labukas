@@ -22,6 +22,7 @@ const supabase = configured
 
 let session = null;
 let chain = Promise.resolve();
+const confirmationRedirect = () => new URL("/", globalThis.location.href).href;
 
 export const isConfigured = () => configured;
 export const isConnected = () => Boolean(session?.user);
@@ -63,7 +64,7 @@ export async function signUp(email, password) {
     email,
     password,
     options: {
-      emailRedirectTo: new URL("/", globalThis.location.href).href,
+      emailRedirectTo: confirmationRedirect(),
     },
   });
   if (error) throw new Error(error.message);
@@ -72,6 +73,15 @@ export async function signUp(email, password) {
     user: data.user,
     signedIn: Boolean(data.session),
   };
+}
+
+export async function resendConfirmation(email) {
+  const { error } = await requireClient().auth.resend({
+    type: "signup",
+    email,
+    options: { emailRedirectTo: confirmationRedirect() },
+  });
+  if (error) throw new Error(error.message);
 }
 
 export async function disconnect() {
