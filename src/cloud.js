@@ -62,6 +62,9 @@ export async function signUp(email, password) {
   const { data, error } = await requireClient().auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: new URL("/", globalThis.location.href).href,
+    },
   });
   if (error) throw new Error(error.message);
   session = data.session;
