@@ -1262,6 +1262,26 @@ select {
   color: #596d4c;
   font-size: 11px;
 }
+.cloud-login {
+  display: grid;
+  gap: 10px;
+}
+.cloud-login label:not(:first-child) {
+  margin-top: 4px;
+}
+.cloud-login .button {
+  margin-top: 6px;
+}
+.text-button {
+  justify-self: start;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: #668455;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .settings-section details small {
   display: block;
   margin: 9px 0;

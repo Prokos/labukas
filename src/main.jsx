@@ -138,7 +138,7 @@ import {
   validateProgress,
   localDay,
 } from "./engine";
-import * as drive from "./drive";
+import * as cloud from "./cloud";
 import { WindowMark, TownArt } from "./Art";
 import "./styles.css";
 const Icon = ({ name, size = 20, ...props }) => {
@@ -162,12 +162,7 @@ function App() {
     [syncStatus, setSyncStatus] = useState("Saved on this device"),
     [syncing, setSyncing] = useState(false),
     [toast, setToast] = useState(""),
-    [clientId, setClientId] = useState(
-      () =>
-        localStorage.getItem("labukas.googleClientId") ||
-        import.meta.env.VITE_GOOGLE_CLIENT_ID ||
-        "",
-    );
+    [user, setUser] = useState(null);
   const progressRef = useRef(progress),
     syncRef = useRef(false),
     timer = useRef(),
@@ -200,7 +195,7 @@ function App() {
   }
   function addEvent(type, data) {
     persist({ version: 1, events: [event(type, data)] });
-    if (drive.isConnected()) {
+    if (cloud.isConnected()) {
       setSyncStatus("Changes waiting to sync");
       clearTimeout(timer.current);
       timer.current = setTimeout(() => sync(), 10000);
@@ -210,10 +205,10 @@ function App() {
     if (syncRef.current) return;
     syncRef.current = true;
     setSyncing(true);
-    setSyncStatus("Syncing with Drive…");
+    setSyncStatus("Syncing…");
     try {
       const snapshot = progressRef.current;
-      const merged = await drive.syncDrive(snapshot);
+      const merged = await cloud.syncCloud(snapshot);
       persist(merged);
       const pending = progressRef.current.events.some(
         (e) => !merged.events.some((x) => x.id === e.id),
@@ -233,13 +228,21 @@ function App() {
       setSyncing(false);
     }
   }
-  async function connect() {
+  async function connect(email, password, createAccount = false) {
     try {
-      await drive.connect(clientId.trim());
-      localStorage.setItem("labukas.googleClientId", clientId.trim());
+      if (createAccount) {
+        const result = await cloud.signUp(email.trim(), password);
+        if (!result.signedIn) {
+          notify("Check your email to confirm your account, then sign in.");
+          return false;
+        }
+      } else await cloud.signIn(email.trim(), password);
+      setUser(cloud.currentUser());
       await sync();
+      return true;
     } catch (e) {
       notify(e.message);
+      return false;
     }
   }
   useEffect(() => {
@@ -247,7 +250,7 @@ function App() {
       if (e.key === STORAGE_KEY) persist(readProgress());
     };
     const onOnline = () => {
-      if (drive.isConnected()) sync();
+      if (cloud.isConnected()) sync();
     };
     window.addEventListener("storage", onStorage);
     window.addEventListener("online", onOnline);
@@ -259,8 +262,22 @@ function App() {
     };
   }, []);
   useEffect(() => {
-    if (settings) drive.loadGoogle().catch((e) => notify(e.message));
-  }, [settings]);
+    if (!cloud.isConfigured()) return;
+    let unsubscribe;
+    cloud
+      .initialize((nextUser) => {
+        setUser(nextUser);
+        setSyncStatus(
+          nextUser ? "Changes waiting to sync" : "Saved on this device",
+        );
+        if (nextUser) setTimeout(() => sync(), 0);
+      })
+      .then((stop) => {
+        unsubscribe = stop;
+      })
+      .catch((e) => notify(e.message));
+    return () => unsubscribe?.();
+  }, []);
   const startLesson = (l, requestedStep) => {
     const current = stats(progressRef.current);
     const step =
@@ -545,15 +562,15 @@ function App() {
                     onClick={() => setSettings(true)}
                   >
                     <Icon
-                      name={drive.isConnected() ? "CloudCheck" : "HardDrive"}
+                      name={cloud.isConnected() ? "CloudCheck" : "HardDrive"}
                       size={16}
                     />
                     <span>
                       {syncStatus}
                       <small>
-                        {drive.isConnected()
+                        {cloud.isConnected()
                           ? "Your journey, across devices"
-                          : "Connect Drive to take it with you"}
+                          : "Sign in to take it with you"}
                       </small>
                     </span>
                     <Icon name="ChevronRight" size={14} />
@@ -696,7 +713,7 @@ function App() {
           onContinue={continueCourse}
           onClose={() => {
             setSession(null);
-            if (drive.isConnected()) sync();
+            if (cloud.isConnected()) sync();
           }}
         />
       )}
@@ -704,15 +721,20 @@ function App() {
         <Settings
           onClose={() => setSettings(false)}
           s={s}
-          clientId={clientId}
-          setClientId={setClientId}
+          user={user}
+          configured={cloud.isConfigured()}
           connect={connect}
           syncing={syncing}
           sync={sync}
           syncStatus={syncStatus}
-          disconnect={() => {
-            drive.disconnect();
-            setSyncStatus("Saved on this device");
+          disconnect={async () => {
+            try {
+              await cloud.disconnect();
+              setUser(null);
+              setSyncStatus("Saved on this device");
+            } catch (e) {
+              notify(e.message);
+            }
           }}
           onGoal={(value) => addEvent("goal", { value })}
           onExport={() => {
@@ -731,7 +753,7 @@ function App() {
             try {
               persist(validateProgress(JSON.parse(await file.text())));
               notify("Backup imported. Your progress has been combined.");
-              if (drive.isConnected()) sync();
+              if (cloud.isConnected()) sync();
             } catch (e) {
               notify(e.message);
             }
@@ -2004,8 +2026,8 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
 function Settings({
   onClose,
   s,
-  clientId,
-  setClientId,
+  user,
+  configured,
   connect,
   syncing,
   sync,
@@ -2016,6 +2038,9 @@ function Settings({
   onImport,
 }) {
   const ref = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [creating, setCreating] = useState(false);
   useEffect(() => {
     const prev = document.activeElement;
     ref.current?.focus();
@@ -2091,53 +2116,81 @@ function Settings({
             Take your progress with you
           </h3>
           <p>
-            Connect the same Google Drive on your phone and computer. Only
-            Labukas’s private app data is accessed.
+            Sign in with the same Labukas account on your phone and computer.
+            Your private progress stays available on every device.
           </p>
           <div className="sync-info">
             <span className="green-dot" />
             {syncStatus}
           </div>
-          {!drive.isConnected() ? (
-            <>
-              <details open={!clientId}>
-                <summary>One-time Google connection setup</summary>
-                <p>
-                  Create a Google OAuth web client with the Drive API enabled.
-                  Add this app’s address as an authorized JavaScript origin. The
-                  project README has the full steps.
-                </p>
-                <label htmlFor="client-id">Google OAuth client ID</label>
-                <input
-                  id="client-id"
-                  value={clientId}
-                  onChange={(e) => setClientId(e.target.value)}
-                  placeholder="…apps.googleusercontent.com"
-                />
-                <small>
-                  Use the same client ID on every device. No client secret is
-                  needed.
-                </small>
-              </details>
-              <Button disabled={syncing} onClick={connect}>
-                <DriveLogo />
-                {syncing ? "Connecting…" : "Connect Google Drive"}
+          {!configured ? (
+            <p className="subtle">
+              Cloud sync will become available after this deployment is linked
+              to its database.
+            </p>
+          ) : !user ? (
+            <form
+              className="cloud-login"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const connected = await connect(email, password, creating);
+                if (connected) setPassword("");
+              }}
+            >
+              <label htmlFor="account-email">Email</label>
+              <input
+                id="account-email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="account-password">Password</label>
+              <input
+                id="account-password"
+                type="password"
+                autoComplete={creating ? "new-password" : "current-password"}
+                minLength={8}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button type="submit" disabled={syncing}>
+                <Icon name="Cloud" size={18} />
+                {syncing
+                  ? "Connecting…"
+                  : creating
+                    ? "Create account"
+                    : "Sign in & sync"}
               </Button>
-            </>
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => setCreating((value) => !value)}
+              >
+                {creating
+                  ? "Already have an account? Sign in"
+                  : "First time here? Create an account"}
+              </button>
+            </form>
           ) : (
-            <div className="button-row">
-              <Button disabled={syncing} onClick={sync}>
-                <Icon name="RefreshCw" size={17} />
-                {syncing ? "Syncing…" : "Sync now"}
-              </Button>
-              <Button secondary onClick={disconnect}>
-                Disconnect
-              </Button>
-            </div>
+            <>
+              <p className="subtle">Signed in as {user.email}</p>
+              <div className="button-row">
+                <Button disabled={syncing} onClick={sync}>
+                  <Icon name="RefreshCw" size={17} />
+                  {syncing ? "Syncing…" : "Sync now"}
+                </Button>
+                <Button secondary onClick={disconnect}>
+                  Sign out
+                </Button>
+              </div>
+            </>
           )}
           <p className="subtle">
-            Progress also saves on this device after every answer. Google may
-            ask you to reconnect when your session expires.
+            Progress also saves on this device after every answer, including
+            while you are offline.
           </p>
         </div>
         <div className="settings-section">
@@ -2166,15 +2219,6 @@ function Settings({
         </div>
       </section>
     </div>
-  );
-}
-function DriveLogo() {
-  return (
-    <svg width="19" height="18" viewBox="0 0 24 22" aria-hidden="true">
-      <path d="M8 0h8l8 14h-8Z" fill="#F5C849" />
-      <path d="M8 0 0 14l4 8 8-14Z" fill="#65B884" />
-      <path d="m4 22 4-8h16l-4 8Z" fill="#8BB5EF" />
-    </svg>
   );
 }
 

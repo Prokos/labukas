@@ -1,6 +1,6 @@
 # Labukas
 
-A personal, responsive Lithuanian learning app for English speakers. React + Vite, entirely in the browser, with local progress and optional Google Drive sync. No application accounts, backend, paid AI calls, audio, or subscriptions.
+A personal, responsive Lithuanian learning app for English speakers. React + Vite, with offline local progress and optional private Supabase sync across devices. No paid AI calls, audio, or subscriptions.
 
 ## Run
 
@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173. On the same Wi-Fi, open the Network URL printed by Vite on your phone. Use an HTTPS deployment for Google authorization and offline installation across devices.
+Open http://localhost:5173. On the same Wi-Fi, open the Network URL printed by Vite on your phone. Use an HTTPS deployment for offline installation across devices.
 
 ```sh
 npm test
@@ -17,27 +17,24 @@ npm run build
 npm run preview
 ```
 
-Deploy `dist/` to any static HTTPS host at the domain root. The build includes a web app manifest and service worker; after the first successful online load, lessons and local progress work offline. Install with your browser’s “Install app” or “Add to Home Screen”. Google authorization and sync require internet access. A new version activates once previous app tabs close. Google Fonts are optional; local system fonts are the fallback offline.
+Deploy `dist/` to any static HTTPS host at the domain root. The build includes a web app manifest and service worker; after the first successful online load, lessons and local progress work offline. Install with your browser’s “Install app” or “Add to Home Screen”. Account login and sync require internet access. A new version activates once previous app tabs close. Google Fonts are optional; local system fonts are the fallback offline.
 
 Node 22.13+ is recommended; the optional PDF extraction script requires it. PDF.js is development-only and is not shipped in the app.
 
-## Your Google Drive connection
+## Cloud sync and deployment
 
-There is no separate Labukas login. The app requests only `https://www.googleapis.com/auth/drive.appdata`, Google's private application-data folder scope. It cannot browse your other Drive files. A connection in the Codex app does not grant this separate website access, so one Google Cloud client is needed:
+The recommended personal deployment uses Vercel for the static app and Supabase for authentication and Postgres storage. Both services have free tiers suitable for one person's learning progress.
 
-1. Create a project in [Google Cloud Console](https://console.cloud.google.com/), and enable **Google Drive API**.
-2. Configure the Google Auth Platform branding and audience. For a personal External app in Testing, add your Google email as a test user. Add the `drive.appdata` scope under Data Access.
-3. Create an **OAuth client ID → Web application**. Under **Authorized JavaScript origins**, add `http://localhost:5173` for development and your exact production HTTPS origin (scheme, hostname, and port when applicable; no path). Google generally requires HTTPS for non-localhost origins, so an HTTP LAN address is only suitable for local learning without Drive authorization.
-4. Copy `.env.example` to `.env.local`, set `VITE_GOOGLE_CLIENT_ID`, and restart Vite / rebuild. Alternatively enter the client ID in **Settings & sync → One-time Google connection setup**. A client ID is public configuration, not a secret. No client secret belongs in this app.
-5. Click **Connect Google Drive** and grant access. On your other device, use the same deployment/client ID and the same Google account, then connect there too.
+1. Create a [Supabase project](https://database.new/).
+2. Open its **SQL Editor**, paste `supabase/schema.sql`, and run it. This creates an event table with row-level security: signed-in users can only read and insert their own rows.
+3. In **Project Settings → API**, copy the Project URL and Publishable key. Copy `.env.example` to `.env.local` and fill in `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. The publishable key is intended for frontend use; never put a service-role key in the app.
+4. For local development, restart Vite. Open Settings in Labukas and create your account. If email confirmation is enabled, confirm it before signing in.
+5. Import the GitHub repository into [Vercel](https://vercel.com/new). Vercel detects Vite automatically. Add the same two environment variables under project settings and deploy.
+6. In Supabase **Authentication → URL Configuration**, set the Site URL to the Vercel production URL. After creating your account, you can disable new-user signups under Authentication settings if this will remain a single-user app.
 
-Answers save locally immediately. Connected sessions sync after 10 seconds without a new answer, on leaving an exercise session, on returning to the app, or via **Sync now**. Google access tokens stay in memory, expire, and are never included in backups or local storage. Reconnect when requested. Disconnect clears this browser session’s token; it does not delete local or cloud progress or revoke Google's underlying permission.
+Answers save locally immediately. Signed-in sessions sync after 10 seconds without a new answer, on leaving an exercise session, on returning to the app, or via **Sync now**. Authentication sessions persist securely in the browser and refresh automatically. Signing out does not delete local or cloud progress.
 
-Drive saves immutable JSON event batches. Downloaded and local events merge by UUID, so simultaneous devices do not overwrite each other’s history. Retrying an upload is safe: repeated events are deduplicated. Sync reads all Labukas batches, so very large histories will eventually benefit from compaction. Do not delete app data unless you intend to discard your cloud backup. A failed sync retains all local data for a later retry.
-
-Live OAuth / Drive authorization requires your client configuration and has not been exercised with a real account in this workspace. Network behavior, upload construction, event merging, and error handling are covered with mocked tests.
-
-Official integration references: [Google token model](https://developers.google.com/identity/oauth2/web/guides/use-token-model), [Drive application data](https://developers.google.com/workspace/drive/api/guides/appdata).
+Sync stores immutable progress events. Downloads and local events merge by UUID, so simultaneous devices do not overwrite each other’s history, and retrying an upload is safe. Do not delete database rows unless you intend to discard the cloud backup. A failed sync retains all local data for a later retry.
 
 ## Learning behavior
 
@@ -72,8 +69,8 @@ The source is the user-provided `LANGAS.pdf`, _Langas į lietuvių kalbą_, fift
 | 9       | Feeling well         | 195–210       | Jaustis present/past, imperative, comparative adverbs, conjunctions             |
 | 10      | Let’s celebrate      | 211–234       | Objects and wishes, per/su, accusative pronouns, vocative                       |
 
-Source data and course structure: `src/curriculum.js`; additional contexts: `src/teaching-content.js`; source-mapped expansion: `src/content/`. Run `npm run content:coverage` to validate mappings and regenerate the coverage ledger. Progress and scheduling: `src/engine.js`. Google integration: `src/drive.js`.
+Source data and course structure: `src/curriculum.js`; additional contexts: `src/teaching-content.js`; source-mapped expansion: `src/content/`. Run `npm run content:coverage` to validate mappings and regenerate the coverage ledger. Progress and scheduling: `src/engine.js`. Cloud integration: `src/cloud.js`; database setup: `supabase/schema.sql`.
 
 ## Verification
 
-`npm test` checks curriculum integrity, staged task plans, class and checkpoint completion, legacy progress, retention timing, event merging, and mocked Drive behavior. With the dev server running and a current build, `node scripts/browser-check.mjs` reproduces the café-class flow, checks productive practice before advancing, separate recall, grammar-specific teaching, checkpoint prerequisites, legacy migration, mobile reading, saved writing drafts and self-review, optional appendix routing, and offline production. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` for an existing browser, or run `npx playwright install chromium`. Screenshots are written to your system temporary directory.
+`npm test` checks curriculum integrity, staged task plans, class and checkpoint completion, legacy progress, retention timing, event merging, and sync behavior. With the dev server running and a current build, `node scripts/browser-check.mjs` reproduces the café-class flow, checks productive practice before advancing, separate recall, grammar-specific teaching, checkpoint prerequisites, legacy migration, mobile reading, saved writing drafts and self-review, optional appendix routing, and offline production. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` for an existing browser, or run `npx playwright install chromium`. Screenshots are written to your system temporary directory.
