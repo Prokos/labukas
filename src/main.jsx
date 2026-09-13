@@ -345,12 +345,6 @@ function App() {
             labukas<span className="brand-dot">.</span>
           </span>
         </a>
-        <div className="language">
-          <span className="flag" />
-          <span>
-            Lithuanian <small>from English</small>
-          </span>
-        </div>
         <nav>
           {nav.map(([id, icon, label]) => (
             <button
@@ -367,14 +361,6 @@ function App() {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <div className="little-note">
-            <Icon name="Sprout" size={24} />
-            <p>
-              A little every day.
-              <br />
-              <strong>A whole new world.</strong>
-            </p>
-          </div>
           <button className="settings-link" onClick={() => setSettings(true)}>
             <Icon name="Settings" />
             Settings & sync
@@ -421,14 +407,10 @@ function App() {
           {page === "today" && (
             <>
               <div className="page-heading">
-                <div className="eyebrow">
-                  MAŽAIS ŽINGSNELIAIS · ONE SMALL STEP AT A TIME
-                </div>
                 <h1>
                   {s.xp ? "Welcome back." : "Labas, new beginnings."}{" "}
                   <span className="hello-wave">✳</span>
                 </h1>
-                <p>Your place in the course, ready when you are.</p>
               </div>
               <div className="dashboard-grid">
                 <div className="main-column">
@@ -483,15 +465,6 @@ function App() {
                       </div>
                     </div>
                   </section>
-                  <div className="section-heading">
-                    <h2>Your learning path</h2>
-                    <button
-                      className="text-link"
-                      onClick={() => setPage("course")}
-                    >
-                      View full course <Icon name="ArrowUpRight" size={15} />
-                    </button>
-                  </div>
                   <LearningPath
                     chapterIndex={s.next?.chapter ?? 9}
                     s={s}
@@ -840,11 +813,6 @@ function DailyGoal({ s, setSettings }) {
           );
         })}
       </div>
-      <p className="goal-note">
-        {percent === 100
-          ? "You showed up. That’s worth celebrating."
-          : "Small steps make a lovely habit."}
-      </p>
     </section>
   );
 }
@@ -1025,9 +993,6 @@ function CourseChapter({ chapter, index, s, onStart }) {
       </button>
       {open && (
         <div className="chapter-open">
-          <p className="source-note">
-            LANGAS · printed pages {chapter.pages} · {chapter.subtitle}
-          </p>
           <StudyReference chapterIndex={index} />
           {cls.map((l) => {
             const sessions = classSteps(l.id),
@@ -1500,7 +1465,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                     sessionOutcome(config.step, attempts).reinforce.length
                   ? "Some of this was tricky. We’ve saved the weak spots for review; you can continue your course."
                   : config.mode === "lesson"
-                    ? `You finished ${config.step.title.toLowerCase()}. This class has ${classSteps(config.lesson.id).length} sessions to build understanding and recall.`
+                    ? `You finished ${config.step.title.toLowerCase()}.`
                     : "Every bit of practice makes a difference."}
           </p>
           <div className="summary-stats">
@@ -1629,11 +1594,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                 </div>
               </>
             )}
-          <p className="source-note">
-            Curriculum: LANGAS, chapter {config.lesson.chapter + 1}, printed pp.{" "}
-            {config.lesson.sourcePages || chapters[config.lesson.chapter].pages}
-            . Exercises and English guidance adapted for self-study.
-          </p>
           <Button onClick={() => setIntro(false)}>
             Let’s try it
             <Icon name="ArrowRight" size={18} />
@@ -1881,11 +1841,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                     </button>
                   ))}
                 </div>
-                <p className="subtle">
-                  {ex.hasDistractors
-                    ? "There are extra words. Choose only what you need."
-                    : "Use the natural word order shown in the lesson."}
-                </p>
               </>
             )}
             {ex.type === "match" && (
@@ -1932,8 +1887,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                   </div>
                 </div>
                 <p role="status" className="match-message">
-                  {matchError ||
-                    "Choose Lithuanian on the left, then its meaning on the right."}
+                  {matchError}
                 </p>
               </>
             )}
@@ -1999,9 +1953,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                       </>
                     )}
                   </>
-                ) : (
-                  <span>Take your time. You’re here to learn.</span>
-                )}
+                ) : null}
               </div>
               <Button
                 type="submit"

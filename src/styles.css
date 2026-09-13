@@ -115,6 +115,7 @@ button svg {
   gap: 12px;
   color: var(--green);
   padding: 0 9px;
+  margin-bottom: 24px;
 }
 .brand > svg {
   width: 35px;
@@ -127,31 +128,6 @@ button svg {
 }
 .brand-dot {
   color: #d59d61;
-}
-.language {
-  margin: 35px 1px 30px;
-  padding: 13px 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid #e7e9df;
-  border-radius: 11px;
-  background: white;
-}
-.language > span:nth-child(2) {
-  flex: 1;
-  font-size: 13px;
-  font-weight: 600;
-}
-.language small {
-  display: block;
-  color: var(--muted);
-  font-weight: 400;
-  margin-top: 2px;
-  font-size: 10px;
-}
-.language > svg {
-  color: #93988c;
 }
 .flag {
   width: 26px;
@@ -200,20 +176,6 @@ button svg {
 }
 .sidebar-bottom {
   margin-top: auto;
-}
-.little-note {
-  padding: 36px 14px 24px;
-  color: #9aa98e;
-}
-.little-note p {
-  font-size: 12px;
-  line-height: 1.8;
-  margin-top: 7px;
-  color: #93998d;
-}
-.little-note strong {
-  font-weight: 400;
-  color: #78876e;
 }
 .settings-link {
   display: flex;
@@ -961,11 +923,6 @@ main {
   border-top: 1px solid var(--border);
   padding: 15px 23px 20px;
 }
-.source-note {
-  font-size: 10px;
-  color: #9ca28e;
-  margin-bottom: 14px;
-}
 .chapter-open > button {
   width: 100%;
   border: 0;
@@ -1457,10 +1414,8 @@ select {
   color: #8d9a7d;
   text-align: right;
 }
-.lesson-intro .source-note {
-  margin: 20px 0;
-}
 .lesson-intro > .button {
+  margin-top: 24px;
   min-width: 200px;
 }
 .exercise-eyebrow {
@@ -2396,9 +2351,6 @@ select {
   .chapter-open {
     padding: 15px;
   }
-  .chapter-open .source-note {
-    font-size: 9px;
-  }
   .chapter-open strong {
     font-size: 12px;
   }
@@ -2495,9 +2447,6 @@ select {
   }
   .intro-words > div > * {
     max-width: 51%;
-  }
-  .lesson-intro .source-note {
-    font-size: 9px;
   }
   .lesson-intro > .button {
     width: 100%;
@@ -2792,6 +2741,7 @@ select {
   background: #f0f3e8;
   border-radius: 12px;
   padding: 24px 25px 18px;
+  margin-bottom: 24px;
 }
 .resume-copy {
   position: relative;
