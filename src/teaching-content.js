@@ -15,8 +15,8 @@ export const contexts = [
     "Mes dirbame Vilniuje|We work in Vilnius|present|Mes ___ Vilniuje",
   ],
   [
-    "Tai yra duona|This is bread|vocabulary",
-    "Tai yra sūris|This is cheese|vocabulary",
+    "Tai yra duona|This is bread|vocabulary||Tai duona",
+    "Tai yra sūris|This is cheese|vocabulary||Tai sūris",
   ],
   [
     "Mes norime kavos|We want coffee|genitive|Mes norime ___",
@@ -168,8 +168,16 @@ export const additions = [
     [
       "Count from one to ten",
       "vocabulary",
-      "Learn the numbers individually, then put them together. Four, five, six, and seven deserve practice too.",
+      "Start with one, two, and three, then continue counting to ten.",
       "keturi|four|numbers\npenki|five|numbers\nšeši|six|numbers\nseptyni|seven|numbers\naštuoni|eight|numbers\ndevyni|nine|numbers\ndešimt|ten|numbers\nvienas|one|numbers\ndu|two|numbers\ntrys|three|numbers",
+      {
+        teachBefore: "c1-lex-ask-and-understand",
+        discovery: {
+          version: "ordered",
+          order: [7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
+          previous: [{ order: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] }],
+        },
+      },
     ],
     [
       "Exchange contact details",

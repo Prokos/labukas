@@ -1,4 +1,3 @@
-// Original text-only counterparts to LANGAS communicative and reading objectives.
 // Questions carry curated alternatives; every answer is supported by the passage.
 // chapter, key, title, source pages, passage, [question, answer, meaning, distractors].
 export const situations = [

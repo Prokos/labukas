@@ -1,5 +1,3 @@
-// Explicit numeral forms and country/language pairs from printed pp. 15, 33,
-// 65, 69, 91–92, 135–138, 157 and appendix pp. 249, 253.
 export const countries = `Belgija|Belgium|Briuselis|Brussels|prancūziškai|French
 Čekija|Czechia|Praha|Prague|čekiškai|Czech
 Danija|Denmark|Kopenhaga|Copenhagen|daniškai|Danish

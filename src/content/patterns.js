@@ -1,5 +1,4 @@
 // Explicit, source-aligned constructions. Each class has new application contexts.
-// chapter, stable key, title, printed pages, rule, core rows, application rows.
 // Rows: Lithuanian | English | skill | cloze | accepted alternatives.
 export const patterns = [
   [

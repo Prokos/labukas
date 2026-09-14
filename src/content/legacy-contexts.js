@@ -1,6 +1,6 @@
 // New application visits have new step IDs; existing application passes stay valid.
 export const legacyContexts = {
-  c1l5: "Tai yra šuo|This is a dog|vocabulary\nTai yra katė|This is a cat|vocabulary",
+  c1l5: "Tai yra šuo|This is a dog|vocabulary||Tai šuo\nTai yra katė|This is a cat|vocabulary||Tai katė",
   c1l7: "Mano adresas Parko gatvė|My address is Parko Street|phrases\nMano pavardė Petrauskas|My surname is Petrauskas|vocabulary|Mano ___ Petrauskas",
   c2l5: "Ar norite vandens?|Do you want water (formal)?|genitive|Ar norite ___?\nNorėčiau arbatos su pienu|I would like tea with milk|instrumental|Norėčiau arbatos su ___",
   c2l6: "Prašom pomidorų|Some tomatoes, please|genitive|Prašom ___\nMan patinka bananai|I like bananas|plural|Man patinka ___",

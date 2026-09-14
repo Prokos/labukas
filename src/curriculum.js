@@ -1,6 +1,7 @@
+import { targetTransfers, lessonOverrides } from "./content/course-layout.js";
+import { discoveryPlan, applyTeachingOrder } from "./lesson-plan.js";
 import { expandCurriculum } from "./content/assemble.js";
 import { contexts, additions } from "./teaching-content.js";
-// Original English-guided exercises aligned to LANGAS, printed pp. 8–10.
 // Each row is Lithuanian | English | skill | optional cloze | optional answer alternatives.
 const lesson = (title, rule, rows) => ({
   title,
@@ -600,8 +601,8 @@ chapters.forEach((chapter, ci) => {
       ),
     );
   });
-  additions[ci].forEach(([title, kind, rule, rows], n) => {
-    const l = lesson(title, rule, rows);
+  additions[ci].forEach(([title, kind, rule, rows, metadata = {}], n) => {
+    const l = { ...lesson(title, rule, rows), ...metadata };
     l.key = `c${ci + 1}l${n + 5}`;
     l.kind = kind;
     l.items = l.items.map((i, j) => ({
@@ -617,24 +618,23 @@ chapters.forEach((chapter, ci) => {
       classOrders[ci].indexOf(Number(b.key.split("l")[1])),
   );
 });
-// Separate unrelated loads in two of the original broad classes.
-for (const [ci, from, to, ids] of [
-  [0, "c1l4", "c1l6", ["c1l4i4", "c1l4i5"]],
-  [1, "c2l1", "c2l7", ["c2l1i4", "c2l1i5"]],
-]) {
-  const source = chapters[ci].lessons.find((l) => l.key === from),
-    target = chapters[ci].lessons.find((l) => l.key === to);
+const authoredLessons = chapters.flatMap((chapter) => chapter.lessons);
+for (const { from, to, items: targetIds } of targetTransfers) {
+  const source = authoredLessons.find((lesson) => lesson.key === from);
+  const target = authoredLessons.find((lesson) => lesson.key === to);
+  if (!source || !target) throw new Error("Invalid target transfer");
   const moved = source.items
-    .filter((i) => ids.includes(i.key))
-    .map((i) => ({ ...i, role: "context", sourceLesson: from }));
-  source.items = source.items.filter((i) => !ids.includes(i.key));
+    .filter((item) => targetIds.includes(item.key))
+    .map((item) => ({ ...item, role: "context", sourceLesson: from }));
+  if (moved.length !== targetIds.length)
+    throw new Error("Missing target in transfer");
+  source.items = source.items.filter((item) => !targetIds.includes(item.key));
   target.items.push(...moved);
 }
-const firstFood = chapters[1].lessons.find((l) => l.key === "c2l1");
-firstFood.kind = "vocabulary";
-firstFood.rule =
-  "Learn a small set of foods, then recognize them in a simple sentence. Duona is bread; sūris is cheese. Obuoliai and bandelės are plural: apples and buns. Preferences have their own class later.";
+for (const lesson of authoredLessons)
+  Object.assign(lesson, lessonOverrides[lesson.key]);
 expandCurriculum(chapters);
+applyTeachingOrder(chapters);
 export const skills = {
   nominative: "Nominative",
   reading: "Reading & situations",
@@ -673,6 +673,14 @@ export const lessons = chapters.flatMap((chapter, ci) =>
 );
 export const items = lessons.flatMap((l) => l.items);
 
+const discoveryPlans = new Map(
+  lessons
+    .filter((l) => l.kind !== "writing")
+    .map((l) => [l.id, discoveryPlan(l)]),
+);
+export const historicalSteps = [...discoveryPlans.values()].flatMap(
+  (plan) => plan.previous,
+);
 export const phaseNames = {
   writing: "Write and review",
   discover: "Meet & use",
@@ -705,7 +713,7 @@ function stepsFor(l) {
       apply: [],
     };
   return {
-    discover: chunk(core, 3).map((g, n) => make("discover", g, n)),
+    discover: discoveryPlans.get(l.id).current,
     guided: chunk(core, 6).map((g, n) => make("guided", g, n)),
     recall: chunk(core, 6).map((g, n) => make("recall", g, n)),
     apply: [
@@ -729,7 +737,9 @@ export const courseSteps = chapters.flatMap((ch, ci) => {
     ...groups.at(-1).apply,
   );
   // Small checks cover every class without one enormous end-of-chapter session.
-  const assessedClasses = cls.filter((l) => l.kind !== "writing");
+  const assessedClasses = cls
+    .filter((l) => l.kind !== "writing")
+    .sort((a, b) => a.assessmentPosition - b.assessmentPosition);
   const checkGroups = Array.from(
     { length: Math.ceil(assessedClasses.length / 4) },
     (_, n) => assessedClasses.slice(n * 4, n * 4 + 4),
@@ -764,6 +774,8 @@ const classStepMap = new Map(
   ]),
 );
 export const classSteps = (id) => classStepMap.get(id) || [];
+export const initialStepId = (id) =>
+  discoveryPlans.get(id)?.previous[0]?.id || classSteps(id)[0]?.id;
 
 // Historical checkpoint events remain readable; they do not award the expanded checks.
 export const legacyCheckpoints = chapters.map((_, ci) => ({

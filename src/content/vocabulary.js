@@ -1,4 +1,3 @@
-// Curated lexical objectives from LANGAS chapter vocabulary pages.
 // These are teaching inventories, not automatically extracted PDF text.
 // Each group is split into small classes by the course assembler.
 export const vocabulary = [

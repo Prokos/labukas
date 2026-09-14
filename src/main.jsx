@@ -138,6 +138,13 @@ import {
   validateProgress,
   localDay,
 } from "./engine";
+import {
+  practiceGroups,
+  practiceSets,
+  wordPracticeSet,
+  practiceSession,
+  dailyWord,
+} from "./practice";
 import * as cloud from "./cloud";
 import { WindowMark, TownArt } from "./Art";
 import "./styles.css";
@@ -168,7 +175,8 @@ function App() {
     timer = useRef(),
     toastTimer = useRef();
   const s = stats(progress),
-    support = reinforcement(progress);
+    support = reinforcement(progress),
+    todayWord = dailyWord();
   const chapterSteps = courseSteps.filter(
     (step) => step.chapter === (s.nextStep?.chapter ?? 9),
   );
@@ -313,13 +321,15 @@ function App() {
       queue: sessionItems(progressRef.current, step),
     });
   };
-  const startPractice = (skill = "all") =>
-    setSession({
-      id: newId(),
-      mode: "practice",
-      skill,
-      queue: practiceItems(progressRef.current, skill),
-    });
+  const startPractice = (selection = "all") => {
+    const config = practiceSession(progressRef.current, selection);
+    if (!config.queue.length) {
+      notify("Choose a topic to start learning.");
+      setPage("practice");
+      return;
+    }
+    setSession({ id: newId(), ...config });
+  };
   function continueCourse() {
     const current = stats(progressRef.current);
     if (current.nextStep) startLesson(current.next, current.nextStep);
@@ -354,6 +364,7 @@ function App() {
     ["course", "Route", "Your course"],
     ["practice", "Dumbbell", "Practice"],
     ["words", "BookOpen", "My words"],
+    ["reference", "Search", "Reference"],
   ];
   return (
     <>
@@ -498,7 +509,7 @@ function App() {
                   />
                   <p className="curriculum-foot">
                     <Icon name="BookOpen" size={14} /> Thoughtfully following{" "}
-                    <em>Langas į lietuvių kalbą</em> <span>·</span> 10 chapters,
+                    <em>Your Lithuanian course</em> <span>·</span> 10 chapters,
                     one clear path
                   </p>
                 </div>
@@ -537,31 +548,9 @@ function App() {
                       A LITTLE WORD TO TAKE WITH YOU
                     </span>
                     <div className="word-of-day" lang="lt">
-                      {
-                        [
-                          "labas",
-                          "ačiū",
-                          "saulė",
-                          "namai",
-                          "draugas",
-                          "rytoj",
-                          "smagu",
-                        ][new Date().getDay()]
-                      }
+                      {todayWord.lt}
                     </div>
-                    <p>
-                      {
-                        [
-                          "hello",
-                          "thank you",
-                          "sun",
-                          "home",
-                          "friend",
-                          "tomorrow",
-                          "fun",
-                        ][new Date().getDay()]
-                      }
-                    </p>
+                    <p>{todayWord.en}</p>
                     <div className="word-divider" />
                     <span>Small words. New connections.</span>
                     <Icon name="Flower2" className="flower" size={54} />
@@ -598,7 +587,7 @@ function App() {
               <div className="course-intro">
                 <Icon name="BookOpen" />
                 <div>
-                  <strong>Inspired by Langas į lietuvių kalbą</strong>
+                  <strong>Learn Lithuanian, step by step</strong>
                   <p>
                     10 chapters · {lessons.length} focused classes ·{" "}
                     {courseSteps.length} short lessons · English explanations
@@ -606,7 +595,11 @@ function App() {
                   </p>
                 </div>
                 <span className="pill">
-                  {s.passedSteps.size} / {courseSteps.length} lessons complete
+                  {
+                    courseSteps.filter((step) => s.passedSteps.has(step.id))
+                      .length
+                  }{" "}
+                  / {courseSteps.length} lessons complete
                 </span>
               </div>
               <div className="course-list">
@@ -623,73 +616,9 @@ function App() {
             </>
           )}
           {page === "practice" && (
-            <>
-              <PageHeading
-                eyebrow="MAKE IT STICK"
-                title="A little repetition. A lot of progress."
-                subtitle="We’ll choose the exercises. You just bring your curiosity."
-              />
-              <section className="practice-hero">
-                <div>
-                  <span className="pill">PERSONALIZED FOR YOU</span>
-                  <h2>Your daily mix</h2>
-                  <p>
-                    Weak spots, due reviews, and familiar words. A fresh mix
-                    each time, for as long as you like.
-                  </p>
-                  <Button onClick={() => startPractice()}>
-                    Start practicing
-                    <Icon name="ArrowRight" size={18} />
-                  </Button>
-                </div>
-                <Icon name="Sprout" size={112} strokeWidth={1} />
-              </section>
-              <div className="section-heading">
-                <h2>Something specific in mind?</h2>
-                <span className="muted">Choose your focus</span>
-              </div>
-              <div className="skills-grid">
-                {Object.entries(skills).map(([id, label], i) => {
-                  const subset = items.filter((x) => x.skill === id),
-                    seen = subset.filter((x) => s.records[x.id]),
-                    weak = seen.filter((x) => s.records[x.id].streak < 2);
-                  return (
-                    <button
-                      className="skill-card"
-                      key={id}
-                      onClick={() => startPractice(id)}
-                    >
-                      <span className={`card-icon color-${i % 4}`}>
-                        <Icon
-                          name={
-                            id === "vocabulary"
-                              ? "BookOpen"
-                              : id === "phrases"
-                                ? "MessagesSquare"
-                                : id.includes("tive")
-                                  ? "Puzzle"
-                                  : "PencilLine"
-                          }
-                        />
-                      </span>
-                      <h3>{label}</h3>
-                      <p>{subset.length} words & patterns</p>
-                      <div>
-                        <span>
-                          {weak.length
-                            ? `${weak.length} to strengthen`
-                            : seen.length
-                              ? "Keep it fresh"
-                              : "Ready to explore"}
-                        </span>
-                        <Icon name="ArrowUpRight" size={17} />
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </>
+            <PracticeBrowser s={s} onStart={startPractice} />
           )}
+          {page === "reference" && <StudyReference />}
           {page === "words" && (
             <WordCollection s={s} onPractice={startPractice} />
           )}
@@ -925,73 +854,202 @@ function LearningPath({ chapterIndex, s, onStart }) {
     </section>
   );
 }
-function StudyReference({ chapterIndex }) {
-  const table = (headers, data) => (
-    <div className="reference-scroll">
-      <table>
-        <thead>
-          <tr>
-            {headers.map((h) => (
-              <th key={h}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row, n) => (
-            <tr key={n}>
-              {row.map((cell, i) => (
-                <td key={i} lang="lt">
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+function PracticeBrowser({ s, onStart }) {
+  const [group, setGroup] = useState("words"),
+    [chapter, setChapter] = useState(s.nextStep?.chapter ?? 0);
+  const sets = practiceSets.filter(
+    (set) => set.group === group && set.chapter === chapter,
   );
   return (
-    <details className="study-reference">
-      <summary>Spelling and grammar reference</summary>
-      <p>
-        Look up a pattern when you need it. Tables support the lessons; they are
-        not a list to memorise at once. LANGAS, printed pp. 13, 250–253.
-      </p>
-      {chapterIndex === 0 && (
-        <details>
-          <summary>The Lithuanian alphabet and letter names</summary>
+    <>
+      <PageHeading
+        eyebrow="PRACTICE"
+        title="Choose a small set."
+        subtitle="Each set has a fixed scope and a finish. New words are introduced before you practise them."
+      />
+      <section className="practice-hero">
+        <div>
+          <span className="pill">FAMILIAR MATERIAL</span>
+          <h2>Your review</h2>
           <p>
-            Č is like ch, š like sh, ž like the s in measure. I and u are short;
-            į/y and ų/ū are long. The letter i can also mark a soft consonant
-            before another vowel.
+            Up to eight targets, chosen from your weak spots and earlier
+            learning.
           </p>
-          {table(["Capital", "Lowercase", "Letter name"], alphabet)}
-        </details>
+          <Button onClick={() => onStart()}>
+            Start practicing <Icon name="ArrowRight" size={18} />
+          </Button>
+        </div>
+        <Icon name="Sprout" size={90} strokeWidth={1} />
+      </section>
+      <div className="word-controls">
+        <select
+          aria-label="Practice category"
+          value={group}
+          onChange={(e) => setGroup(e.target.value)}
+        >
+          {practiceGroups.map((g) => (
+            <option key={g.id} value={g.id}>
+              {g.title}
+            </option>
+          ))}
+        </select>
+        <select
+          aria-label="Practice chapter"
+          value={chapter}
+          onChange={(e) => setChapter(Number(e.target.value))}
+        >
+          {chapters.map((ch, n) => (
+            <option key={n} value={n}>
+              Chapter {n + 1} · {ch.title}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="skills-grid">
+        {sets.map((set) => {
+          const seen = set.items.filter((i) => s.records[i.id]).length;
+          return (
+            <button
+              className="skill-card"
+              key={set.id}
+              onClick={() => onStart(set)}
+            >
+              <h3>{set.title}</h3>
+              <p>
+                {set.items.length}{" "}
+                {set.lesson.kind === "writing" ? "writing task" : "targets"} ·{" "}
+                {seen} familiar
+              </p>
+              <div>
+                <span>
+                  {set.lesson.kind === "writing"
+                    ? "Write and self-review"
+                    : "Learn and practise this set"}
+                </span>
+                <Icon name="ArrowRight" size={17} />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      {!sets.length && (
+        <p className="empty-state">
+          No sets in this category for this chapter. Choose another chapter or
+          category.
+        </p>
       )}
-      <details>
-        <summary>Noun cases · singular</summary>
-        {table(caseColumns, nounForms)}
-      </details>
-      <details>
-        <summary>Noun cases · plural</summary>
-        {table(caseColumns, pluralForms)}
-      </details>
-      <details>
-        <summary>Personal pronouns</summary>
-        {table(caseColumns.slice(0, 6), pronounForms)}
-      </details>
-      <details>
-        <summary>Verb forms across people</summary>
-        {table(["Verb / tense", ...verbPeople], verbForms)}
-      </details>
-      <details>
-        <summary>Numerals and agreement</summary>
-        {table(
-          ["Number", "Cardinal", "Ordinal", "Plural numeral"],
-          numeralForms,
-        )}
-      </details>
-    </details>
+    </>
+  );
+}
+function StudyReference() {
+  const [query, setQuery] = useState("");
+  const sections = [
+    {
+      title: "Alphabet & spelling",
+      note: "Č sounds like ch, š like sh, ž like the s in measure. I and u are short; į/y and ų/ū are long. I can also mark a soft consonant before another vowel.",
+      headers: ["Capital", "Lowercase", "Letter name"],
+      rows: alphabet,
+    },
+    {
+      title: "Noun cases · singular",
+      note: "Compare the same noun across the columns. For example: namas → name (in a house).",
+      headers: caseColumns,
+      rows: nounForms,
+    },
+    {
+      title: "Noun cases · plural",
+      note: "Use these alongside the singular forms to compare how endings change.",
+      headers: caseColumns,
+      rows: pluralForms,
+    },
+    {
+      title: "Personal pronouns",
+      note: "For example: aš (I), man (to me), mane (me). Choose the form for the role in the sentence.",
+      headers: caseColumns.slice(0, 6),
+      rows: pronounForms,
+    },
+    {
+      title: "Verb forms across people",
+      note: "Read across a row to compare people; compare rows to look up a tense.",
+      headers: ["Verb / tense", ...verbPeople],
+      rows: verbForms,
+    },
+    {
+      title: "Numbers & agreement",
+      note: "Compare counting, order, and plural numeral forms: vienas, pirmas, vieni.",
+      headers: ["Number", "Cardinal", "Ordinal", "Plural numeral"],
+      rows: numeralForms,
+    },
+  ];
+  const needle = query.trim().toLocaleLowerCase("lt");
+  const visible = sections
+    .map((section) => ({
+      ...section,
+      rows:
+        !needle ||
+        (section.title + " " + section.headers.join(" "))
+          .toLocaleLowerCase("lt")
+          .includes(needle)
+          ? section.rows
+          : section.rows.filter((row) =>
+              row.join(" ").toLocaleLowerCase("lt").includes(needle),
+            ),
+    }))
+    .filter((section) => section.rows.length);
+  return (
+    <>
+      <PageHeading
+        eyebrow="REFERENCE"
+        title="Spelling & grammar"
+        subtitle="Find a topic or look up a Lithuanian form."
+      />
+      <div className="search">
+        <Icon name="Search" />
+        <input
+          aria-label="Search reference"
+          placeholder="Try genitive, pronouns, or a word…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
+      <div className="reference-topics">
+        {visible.map((section, n) => (
+          <details
+            key={section.title}
+            className="study-reference"
+            open={needle ? true : undefined}
+          >
+            <summary>{section.title}</summary>
+            <p>{section.note}</p>
+            <div className="reference-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    {section.headers.map((h) => (
+                      <th key={h}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.rows.map((row, r) => (
+                    <tr key={r}>
+                      {row.map((cell, c) => (
+                        <td key={c} lang="lt">
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        ))}
+      </div>
+      {!visible.length && (
+        <p>No matching forms. Try a topic name or another spelling.</p>
+      )}
+    </>
   );
 }
 function CourseChapter({ chapter, index, s, onStart }) {
@@ -1025,7 +1083,6 @@ function CourseChapter({ chapter, index, s, onStart }) {
       </button>
       {open && (
         <div className="chapter-open">
-          <StudyReference chapterIndex={index} />
           {cls.map((l) => {
             const sessions = classSteps(l.id),
               passed = sessions.filter((step) =>
@@ -1165,7 +1222,7 @@ function WordCollection({ s, onPractice }) {
               <button
                 key={i.id}
                 className="word-table-row"
-                onClick={() => onPractice(i.skill)}
+                onClick={() => onPractice(wordPracticeSet(i))}
               >
                 <span>
                   <strong lang="lt">{i.lt}</strong>
@@ -1258,7 +1315,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
         sessionRef.current;
       const els = [
         ...root.querySelectorAll(
-          "button:not([disabled]), input:not([disabled]), summary",
+          "button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), summary",
         ),
       ];
       const first = els[0],
@@ -1280,6 +1337,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   }, []);
   useEffect(() => {
     sessionRef.current?.scrollTo(0, 0);
+    sessionRef.current?.querySelector(".session-content")?.scrollTo(0, 0);
   }, [index, intro, done]);
   useEffect(() => {
     if (!intro && !done && ["type", "cloze"].includes(ex?.type))
@@ -1358,7 +1416,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   function next() {
     reset();
     if (
-      config.mode !== "practice" &&
       index + 1 >= Math.max(24, config.queue.length + 6) &&
       index + 1 < queue.length
     ) {
@@ -1367,28 +1424,17 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       return;
     }
     if (index + 1 >= queue.length) {
-      if (config.mode !== "practice") {
-        if (config.step) {
-          const outcome = sessionOutcome(config.step, attempts);
-          if (outcome.passed)
-            onEvent("lessonPass", {
-              lesson: config.lesson.id,
-              step: config.step.id,
-              ...outcome,
-            });
-          else setPaused(true);
-        }
-        setDone(true);
-      } else {
-        const more = practiceItems(
-          progressRef.current,
-          config.skill,
-          8,
-          queue.slice(-4).map((i) => i.id),
-        );
-        setQueue((q) => [...q, ...more]);
-        setIndex((i) => i + 1);
+      if (config.step) {
+        const outcome = sessionOutcome(config.step, attempts);
+        if (outcome.passed)
+          onEvent("lessonPass", {
+            lesson: config.lesson.id,
+            step: config.step.id,
+            ...outcome,
+          });
+        else setPaused(true);
       }
+      setDone(true);
     } else setIndex((i) => i + 1);
   }
   function match(id) {
@@ -1422,13 +1468,85 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
         : answer.trim().length > 0;
   const source = lessons.find((l) => l.id === item?.lesson);
   const successful = results.filter(Boolean).length;
-  const title = config.lesson
-    ? config.mode === "review"
-      ? `A little more practice: ${config.lesson.title}`
-      : config.lesson.title
-    : config.skill === "all"
-      ? "Your daily mix"
-      : `${skills[config.skill]} practice`;
+  const title =
+    config.title ||
+    (config.lesson
+      ? config.mode === "review"
+        ? `A little more practice: ${config.lesson.title}`
+        : config.lesson.title
+      : config.skill === "all"
+        ? "Your daily mix"
+        : `${skills[config.skill]} practice`);
+  const classSessions = config.lesson ? classSteps(config.lesson.id) : [];
+  const classPosition = config.step
+    ? classSessions.findIndex((s) => s.id === config.step.id) + 1
+    : 0;
+  const chapterTitle = config.lesson
+    ? `Chapter ${config.lesson.chapter + 1} · ${chapters[config.lesson.chapter].title}`
+    : "Practice · Your review";
+  const headerLabel = config.step
+    ? `Chapter ${config.lesson.chapter + 1} - ${config.step.phase === "checkpoint" ? config.step.title : `Lesson ${classPosition} of ${classSessions.length}`}`
+    : "Practice";
+  const firstLessonVisit =
+    config.lesson &&
+    !config.lesson.items.some((i) => stats(progressRef.current).records[i.id]);
+  useEffect(() => {
+    function advance(e) {
+      if (
+        e.key !== "Enter" ||
+        e.repeat ||
+        e.isComposing ||
+        e.altKey ||
+        e.ctrlKey ||
+        e.metaKey ||
+        e.shiftKey ||
+        exit
+      )
+        return;
+      if (e.target.closest("textarea, select, summary, a, [role=alertdialog]"))
+        return;
+      e.preventDefault();
+      if (done) {
+        (config.mode === "practice" ? onClose : onContinue)();
+        return;
+      }
+      if (intro) {
+        setIntro(false);
+        return;
+      }
+      if (
+        !["reading", "writing"].includes(item?.activity) &&
+        !stats(progressRef.current).records[item.id]?.seen &&
+        introduced !== index
+      ) {
+        setIntroduced(index);
+        return;
+      }
+      check();
+    }
+    document.addEventListener("keydown", advance);
+    return () => document.removeEventListener("keydown", advance);
+  });
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    function resize() {
+      sessionRef.current?.style.setProperty(
+        "--session-height",
+        `${viewport?.height || window.innerHeight}px`,
+      );
+      sessionRef.current?.style.setProperty(
+        "--session-top",
+        `${viewport?.offsetTop || 0}px`,
+      );
+    }
+    resize();
+    viewport?.addEventListener("resize", resize);
+    viewport?.addEventListener("scroll", resize);
+    return () => {
+      viewport?.removeEventListener("resize", resize);
+      viewport?.removeEventListener("scroll", resize);
+    };
+  }, []);
   return (
     <div
       className="session"
@@ -1448,27 +1566,23 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           <Icon name="X" size={25} />
         </button>
         <div className="session-top-middle">
-          <span>
-            {config.mode === "lesson"
-              ? `CHAPTER ${config.lesson.chapter + 1} · ${config.step.title.toUpperCase()}`
-              : "YOUR PRACTICE SPACE"}
-          </span>
+          <span>{headerLabel}</span>
           <div className="progress-track">
             <div
               style={{
-                width: `${done ? 100 : intro ? 0 : config.mode === "lesson" ? (index / queue.length) * 100 : ((index % 8) / 8) * 100}%`,
+                width: `${done ? 100 : intro ? 0 : (index / queue.length) * 100}%`,
               }}
             />
           </div>
         </div>
         <span className="session-count">
           {intro
-            ? "Let’s get ready"
+            ? `${config.queue.length} exercises`
             : done
-              ? "Beautiful work"
-              : config.mode === "lesson"
-                ? `${index + 1} / ${queue.length}`
-                : `${results.length} done`}
+              ? paused
+                ? "Saved"
+                : "Complete"
+              : `${index + 1} / ${queue.length}`}
         </span>
       </div>
       {done ? (
@@ -1485,8 +1599,10 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           </span>
           <h1>
             {paused
-              ? "A little practice is enough for now."
-              : "Puikiai! Nicely done."}
+              ? "Progress saved."
+              : config.step
+                ? `${config.step.title} complete.`
+                : "Practice complete."}
           </h1>
           <p>
             {config.lesson?.kind === "writing"
@@ -1498,7 +1614,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                   ? "Some of this was tricky. We’ve saved the weak spots for review; you can continue your course."
                   : config.mode === "lesson"
                     ? `You finished ${config.step.title.toLowerCase()}.`
-                    : "Every bit of practice makes a difference."}
+                    : `${config.targets || new Set(config.queue.map((i) => i.id)).size} targets practised in ${results.length} exercises.`}
           </p>
           <div className="summary-stats">
             <div>
@@ -1530,9 +1646,17 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               <span>exercises</span>
             </div>
           </div>
-          <p className="subtle">
-            We’ve saved what went well and what needs another look.
-          </p>
+          {config.step && (
+            <p className="subtle">
+              {title} ·{" "}
+              {
+                classSessions.filter((step) =>
+                  stats(progressRef.current).passedSteps.has(step.id),
+                ).length
+              }{" "}
+              of {classSessions.length} lessons complete
+            </p>
+          )}
           {config.mode !== "practice" && (
             <p className="next-course-preview">
               {stats(progressRef.current).nextStep
@@ -1558,13 +1682,20 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               secondary
               onClick={() => {
                 reset();
-                setQueue(practiceItems(progressRef.current, config.skill));
+                setQueue(
+                  practiceSession(
+                    progressRef.current,
+                    config.practiceSet || "all",
+                  ).queue,
+                );
+                setAttempts([]);
+                setPaused(false);
                 setIndex(0);
                 setResults([]);
                 setDone(false);
               }}
             >
-              Keep practicing
+              Practise another round
             </Button>
           )}
         </div>
@@ -1573,17 +1704,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           <span className="card-icon green">
             <Icon name="BookOpen" size={27} />
           </span>
-          <span className="eyebrow">
-            {config.lesson.kind === "writing"
-              ? "WRITE YOUR OWN MESSAGE"
-              : config.lesson.kind === "reading"
-                ? "READ AND RESPOND"
-                : config.lesson.kind === "pattern"
-                  ? "NOTICE THE PATTERN"
-                  : config.lesson.kind === "conversation"
-                    ? "IN A REAL CONVERSATION"
-                    : "WORDS YOU CAN USE"}
-          </span>
+          <span className="eyebrow">{chapterTitle}</span>
           <h1>{title}</h1>
           {config.step && (
             <div className="session-phase">
@@ -1595,14 +1716,12 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               </span>
             </div>
           )}
-          <div className="rule-box">
-            <Icon name="Lightbulb" size={23} />
-            <p>
-              {["recall", "checkpoint"].includes(config.step?.phase)
-                ? "Try to retrieve the answer before opening a hint. We will give explanations after a mistake. This session checks what you can produce, not just recognize."
-                : config.lesson.rule}
-            </p>
-          </div>
+          {firstLessonVisit && config.step?.phase !== "checkpoint" && (
+            <div className="rule-box">
+              <Icon name="Lightbulb" size={23} />
+              <p>{config.lesson.rule}</p>
+            </div>
+          )}
           {!["reading", "writing"].includes(config.lesson.kind) &&
             !["recall", "checkpoint"].includes(config.step?.phase) &&
             (config.step?.phase !== "apply" ||
@@ -1616,7 +1735,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                 <div className="intro-words">
                   {(config.step?.phase === "apply"
                     ? config.step.items.filter((i) => i.role === "context")
-                    : config.step?.items || config.lesson.items
+                    : config.practiceSet?.items ||
+                      config.step?.items ||
+                      config.lesson.items
                   ).map((i) => (
                     <div key={i.id}>
                       <strong lang="lt">{i.lt}</strong>
@@ -1647,13 +1768,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           )}
           <h1 lang="lt">{item.lt}</h1>
           <p>{item.en}</p>
-          <p className="subtle">
-            {source.kind === "pattern"
-              ? "Look at the ending in this example. You’ll choose the form, then build it yourself."
-              : source.kind === "conversation"
-                ? "Read the model reply. Next, choose and build it for yourself."
-                : "Meet the meaning, recognize it, and then practise using it."}
-          </p>
           <Button onClick={() => setIntroduced(index)}>
             Try it <Icon name="ArrowRight" size={18} />
           </Button>
@@ -1683,7 +1797,11 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                             ? "COMPLETE THE SENTENCE"
                             : "WRITE IN LITHUANIAN"}
               </span>
-              <span className="skill-tag">{skills[item.skill]}</span>
+              <span className="skill-tag">
+                {config.step && !config.step.items.some((i) => i.id === item.id)
+                  ? "Earlier review"
+                  : skills[item.skill]}
+              </span>
             </div>
             <h1>
               {item.activity === "writing"
@@ -1698,7 +1816,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                         ? "Find the missing word."
                         : ex.type === "order"
                           ? "Put the words in order."
-                          : "How would you say this?"}
+                          : ex.reverse
+                            ? "What does this mean?"
+                            : "How would you say this?"}
             </h1>
             {ex.passage && (
               <div className="reading-passage" lang="lt">
@@ -1975,13 +2095,11 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                             ? " · We’ll revisit these pairs."
                             : ""}
                         </p>
-                        <details className="feedback-explanation">
-                          <summary>Why this answer?</summary>
-                          <p>{source.rule}</p>
-                          {skillNotes[item.skill] && (
-                            <p>{skillNotes[item.skill]}</p>
-                          )}
-                        </details>
+                        {item.explanation && (
+                          <p className="feedback-explanation">
+                            {item.explanation}
+                          </p>
+                        )}
                       </>
                     )}
                   </>
@@ -2003,12 +2121,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               </Button>
             </div>
           </form>
-          {config.mode === "practice" && (
-            <button className="finish-practice" onClick={() => setDone(true)}>
-              Finish practice
-              <Icon name="Check" size={15} />
-            </button>
-          )}
         </>
       )}
       {exit && (

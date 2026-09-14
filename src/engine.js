@@ -1,3 +1,4 @@
+import { inheritedTargets } from "./lesson-plan.js";
 import { nounForms, pluralForms, pronounForms } from "./content/reference.js";
 import {
   items,
@@ -5,12 +6,16 @@ import {
   courseSteps,
   classSteps,
   legacyCheckpoints,
+  historicalSteps,
+  initialStepId,
   extraSteps,
 } from "./curriculum.js";
 const itemById = new Map(items.map((i) => [i.id, i]));
 const lessonById = new Map(lessons.map((l) => [l.id, l]));
 const stepById = new Map(
-  [...courseSteps, ...extraSteps, ...legacyCheckpoints].map((s) => [s.id, s]),
+  [...courseSteps, ...extraSteps, ...legacyCheckpoints, ...historicalSteps].map(
+    (s) => [s.id, s],
+  ),
 );
 export const STORAGE_KEY = "labukas.progress.v1";
 export const emptyProgress = () => ({ version: 1, events: [] });
@@ -124,7 +129,7 @@ export function stats(progress, now = Date.now()) {
     if (e.type === "complete") {
       const l = lessonById.get(e.lesson);
       activeChapter = l.chapter;
-      passedSteps.add(classSteps(e.lesson)[0].id);
+      passedSteps.add(initialStepId(e.lesson));
     }
     if (e.type === "lessonPass") {
       passedSteps.add(e.step);
@@ -190,6 +195,12 @@ export function stats(progress, now = Date.now()) {
   while (days.has(localDay(date))) {
     streak++;
     date.setDate(date.getDate() - 1);
+  }
+  for (const step of [...courseSteps, ...extraSteps].filter(
+    (s) => s.creditFrom?.length,
+  )) {
+    const covered = inheritedTargets(passedSteps, step, historicalSteps);
+    if (step.items.every((i) => covered.has(i.id))) passedSteps.add(step.id);
   }
   for (const l of lessons)
     if (classSteps(l.id).every((step) => passedSteps.has(step.id)))
@@ -408,11 +419,14 @@ export function practiceItems(progress, skill = "all", limit = 8, recent = []) {
       const priority = (i) => {
         const r = s.records[i.id];
         return (
-          (recent.includes(i.id) ? -100 : 0) +
+          (recent.includes(i.id) ||
+          (r?.streak > 0 && Date.now() - r.last < 10 * 60000)
+            ? -100
+            : 0) +
           (r
             ? (r.streak === 0 ? 35 : 0) +
               (r.due <= Date.now() ? 20 : 0) +
-              (1 - r.correct / r.seen) * 10
+              (r.streak < 2 ? (1 - r.correct / r.seen) * 10 : 0)
             : 5)
         );
       };
@@ -463,13 +477,20 @@ export function sessionItems(progress, step) {
   ];
   let tasks = [];
   if (step.phase === "writing") return step.items.map((i) => task(i, 0, 0));
-  if (step.phase === "discover")
+  if (step.phase === "discover") {
+    const inherited = !state.passedSteps.has(step.id)
+      ? inheritedTargets(state.passedSteps, step, historicalSteps)
+      : new Set();
     tasks = [0, 1, 2].flatMap((stage, n) =>
-      rotate(step.items, n).map((i) => task(i, stage, n)),
+      rotate(
+        step.items.filter((i) => !inherited.has(i.id)),
+        n,
+      ).map((i) => task(i, stage, n)),
     );
+  }
   if (step.phase === "guided")
     tasks = [2, 3].flatMap((stage, n) =>
-      rotate(step.items, n).map((i) => task(i, stage, n)),
+      shuffle(step.items).map((i) => task(i, stage, n)),
     );
   if (step.phase === "recall")
     tasks = shuffle(step.items).map((i) => task(i, 5, 0));
@@ -503,7 +524,11 @@ export function sessionItems(progress, step) {
   if (step.phase !== "checkpoint") {
     const known = practiceItems(progress)
       .filter(
-        (i) => state.records[i.id] && !step.items.some((x) => x.id === i.id),
+        (i) =>
+          state.records[i.id] &&
+          !step.items.some((x) => x.id === i.id) &&
+          (state.records[i.id].streak === 0 ||
+            Date.now() - state.records[i.id].last >= 10 * 60000),
       )
       .slice(0, 2);
     tasks.push(
@@ -512,7 +537,22 @@ export function sessionItems(progress, step) {
       ),
     );
   }
-  return tasks;
+  return separateRepeats(tasks);
+}
+// Swap only within the same round, preserving the order of teaching stages.
+export function separateRepeats(tasks) {
+  const result = [...tasks];
+  for (let n = 1; n < result.length; n++) {
+    if (result[n].id !== result[n - 1].id) continue;
+    const next = result.findIndex(
+      (item, i) =>
+        i > n &&
+        item.id !== result[n].id &&
+        item.taskStage === result[n].taskStage,
+    );
+    if (next !== -1) [result[n], result[next]] = [result[next], result[n]];
+  }
+  return result;
 }
 export function sessionOutcome(step, attempts) {
   const first = new Map();

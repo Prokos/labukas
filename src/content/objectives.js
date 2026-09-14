@@ -1,4 +1,3 @@
-// Objective-level ledger transcribed from LANGAS printed pp. 8–10 and chapter tasks.
 // Each row maps a communicative outcome to authored classes, not just a topic label.
 export const objectives = [
   [

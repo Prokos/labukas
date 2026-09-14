@@ -20,7 +20,7 @@ import {
   sessionOutcome,
 } from "../src/engine.js";
 
-test("Every mapped PDF objective resolves to a taught class; curated vocabulary is present", () => {
+test("Every mapped course objective resolves to a taught class; curated vocabulary is present", () => {
   for (const [chapter, label, ids] of objectives)
     for (const id of ids)
       assert.ok(

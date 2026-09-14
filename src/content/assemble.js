@@ -112,8 +112,6 @@ export function expandCurriculum(chapters) {
             (i) => ({ ...i, extension: true }),
           ),
         );
-  chapters[0].lessons.find((l) => l.key === "c1l5").rule =
-    "Keep Lithuanian spelling marks: š is like sh, č like ch, ž like the s in measure. I and u are short; į/y and ų/ū are long. Use the alphabet reference in Your course to look up letter names. Practise these spellings in words and short sentences.";
 
   function add(
     ch,

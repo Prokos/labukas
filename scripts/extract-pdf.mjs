@@ -1,7 +1,9 @@
 import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 import { readFile, writeFile } from "node:fs/promises";
+const input = process.argv[2];
+if (!input) throw new Error("Usage: node scripts/extract-pdf.mjs <input.pdf>");
 const pdf = await getDocument({
-  data: new Uint8Array(await readFile("LANGAS.pdf")),
+  data: new Uint8Array(await readFile(input)),
   useSystemFonts: true,
 }).promise;
 let output = "";

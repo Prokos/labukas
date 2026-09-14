@@ -1,4 +1,3 @@
-// Study references adapted from the supplied textbook, printed pp. 13, 250–253.
 export const alphabet = [
   ["A", "a", "a"],
   ["Ą", "ą", "a nosinė"],
