@@ -6,6 +6,8 @@ const template = await readFile("scripts/offline-worker.js", "utf8");
 const updates = await readFile("src/app-updates.js", "utf8");
 let version = 1;
 let unavailable = false;
+let freezeWorker = false;
+let versionChecks = 0;
 const files = ["/", "/index.html", "/updates.js"];
 const legacy = `const CACHE='labukas-old';self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(${JSON.stringify(files)}))));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(e.request.mode==='navigate')e.respondWith(caches.match('/index.html').then(c=>c||fetch(e.request)));});`;
 const server = createServer((req, res) => {
@@ -16,6 +18,17 @@ const server = createServer((req, res) => {
   }
   const path = new URL(req.url, "http://localhost").pathname;
   res.setHeader("Cache-Control", "no-store");
+  if (path === "/version.json") {
+    versionChecks++;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ version: String(version) }));
+    return;
+  }
+  if (path === "/sw.js" && freezeWorker) {
+    res.writeHead(503);
+    res.end();
+    return;
+  }
   if (path === "/sw.js" || path === "/updates.js") {
     res.setHeader("Content-Type", "text/javascript");
     res.end(
@@ -31,7 +44,7 @@ const server = createServer((req, res) => {
   }
   res.setHeader("Content-Type", "text/html");
   res.end(
-    `<h1>Version ${version}</h1><button id="start">Start lesson</button><button id="end">End lesson</button><script type="module">import {installAppUpdates,setUpdateBusy} from '/updates.js';window.setBusy=setUpdateBusy;document.querySelector('#start').onclick=()=>setUpdateBusy(true);document.querySelector('#end').onclick=()=>setUpdateBusy(false);${version === 1 ? "navigator.serviceWorker.register('/sw.js');" : "setUpdateBusy(false);installAppUpdates();"}</script>`,
+    `<meta name="app-version" content="${version}"><h1>Version ${version}</h1><button id="start">Start lesson</button><button id="end">End lesson</button><script type="module">import {installAppUpdates,setUpdateBusy} from '/updates.js';window.setBusy=setUpdateBusy;document.querySelector('#start').onclick=()=>setUpdateBusy(true);document.querySelector('#end').onclick=()=>setUpdateBusy(false);${version === 1 ? "navigator.serviceWorker.register('/sw.js');" : "setUpdateBusy(false);installAppUpdates();"}</script>`,
   );
 });
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -99,6 +112,22 @@ try {
   });
   await fresh.getByRole("heading", { name: "Version 4" }).waitFor();
   await fresh.close();
+  // Version checks must detect a deployment even if the worker update fails.
+  const independent = await browser.newPage();
+  await independent.goto(url);
+  await independent.getByRole("heading", { name: "Version 4" }).waitFor();
+  await independent.locator("#start").click();
+  const checksBefore = versionChecks;
+  freezeWorker = true;
+  version = 5;
+  await independent.evaluate(() => window.dispatchEvent(new Event("pageshow")));
+  await independent.waitForTimeout(200);
+  assert.ok(versionChecks > checksBefore);
+  assert.equal(await independent.locator("h1").innerText(), "Version 4");
+  await independent.locator("#end").click();
+  await independent.getByRole("heading", { name: "Version 5" }).waitFor();
+  await independent.close();
+  freezeWorker = false;
   unavailable = true;
   await p.reload();
   await p.getByRole("heading", { name: "Version 3" }).waitFor();

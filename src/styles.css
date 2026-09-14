@@ -3085,3 +3085,9 @@ select {
     flex: 1;
   }
 }
+
+.session-top-middle > span {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}

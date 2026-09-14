@@ -169,14 +169,21 @@ try {
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   );
+  await mobile.evaluate(() => {
+    window.fullscreenCalls = 0;
+    document.documentElement.requestFullscreen = async () => {
+      window.fullscreenCalls++;
+    };
+  });
   await mobile
     .getByRole("button", { name: "Start course", exact: true })
     .click();
+  assert.equal(await mobile.evaluate(() => window.fullscreenCalls), 1);
   await mobile.keyboard.press("Enter");
   await reveal(mobile);
   assert.equal(
     await mobile.locator(".session-top-middle > span").innerText(),
-    "Chapter 1 - Lesson 1 of 5",
+    "Chapter 1 - Module 1 · Lesson 1/5",
   );
   const footer = mobile.locator(".answer-footer");
   let rect = await footer.boundingBox();
@@ -225,6 +232,23 @@ try {
   assert.ok(
     await mobile.evaluate(
       () => document.querySelector(".session").scrollWidth <= innerWidth,
+    ),
+  );
+  await finish(mobile);
+  await mobile
+    .locator(".session")
+    .getByRole("button", { name: "Continue course", exact: true })
+    .click();
+  await mobile.locator(".lesson-intro").waitFor();
+  assert.equal(
+    await mobile.evaluate(
+      () => document.querySelector(".session-content").scrollTop,
+    ),
+    0,
+  );
+  assert.ok(
+    await mobile.evaluate(
+      () => !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName),
     ),
   );
   assert.deepEqual(errors, []);

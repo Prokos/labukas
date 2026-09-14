@@ -17,6 +17,30 @@ export function setUpdateBusy(value) {
   applyUpdate();
 }
 export function installAppUpdates() {
+  const loadedVersion = document.querySelector(
+    'meta[name="app-version"]',
+  )?.content;
+  const checkVersion = async () => {
+    if (!loadedVersion || document.visibilityState !== "visible") return;
+    try {
+      const response = await fetch(`/version.json?t=${Date.now()}`, {
+        cache: "no-store",
+      });
+      if (!response.ok) return;
+      const { version } = await response.json();
+      if (version && version !== loadedVersion) {
+        pending = true;
+        applyUpdate();
+      }
+    } catch {
+      /* Offline: keep the current session. */
+    }
+  };
+  window.addEventListener("pageshow", checkVersion);
+  window.addEventListener("online", checkVersion);
+  document.addEventListener("visibilitychange", checkVersion);
+  setInterval(checkVersion, 60000);
+  checkVersion();
   if (!("serviceWorker" in navigator)) return;
   let controlled = Boolean(navigator.serviceWorker.controller);
   navigator.serviceWorker.addEventListener("controllerchange", () => {

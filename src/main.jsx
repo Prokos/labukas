@@ -300,6 +300,27 @@ function App() {
       .catch((e) => notify(e.message));
     return () => unsubscribe?.();
   }, []);
+  const fullscreenOwned = useRef(false);
+  function enterLessonScreen() {
+    setUpdateBusy(true);
+    if (
+      window.matchMedia("(pointer: coarse)").matches &&
+      !document.fullscreenElement &&
+      document.documentElement.requestFullscreen
+    ) {
+      fullscreenOwned.current = true;
+      document.documentElement
+        .requestFullscreen({ navigationUI: "hide" })
+        .catch(() => {
+          fullscreenOwned.current = false;
+        });
+    }
+  }
+  function leaveLessonScreen() {
+    if (fullscreenOwned.current && document.fullscreenElement)
+      document.exitFullscreen().catch(() => {});
+    fullscreenOwned.current = false;
+  }
   const startLesson = (l, requestedStep) => {
     const current = stats(progressRef.current);
     const step =
@@ -318,6 +339,7 @@ function App() {
       notify("Finish the chapter’s learning sessions before taking its check.");
       return;
     }
+    enterLessonScreen();
     setSession({
       id: newId(),
       mode: "lesson",
@@ -333,17 +355,20 @@ function App() {
       setPage("practice");
       return;
     }
+    enterLessonScreen();
     setSession({ id: newId(), ...config });
   };
   function continueCourse() {
     const current = stats(progressRef.current);
     if (current.nextStep) startLesson(current.next, current.nextStep);
     else {
+      leaveLessonScreen();
       setSession(null);
       setPage("course");
     }
   }
   function startReview() {
+    enterLessonScreen();
     const current = stats(progressRef.current),
       support = reinforcement(progressRef.current);
     if (support)
@@ -655,6 +680,7 @@ function App() {
           onEvent={addEvent}
           onContinue={continueCourse}
           onClose={() => {
+            leaveLessonScreen();
             setSession(null);
             if (cloud.isConnected()) sync();
           }}
@@ -1319,7 +1345,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       top: `-${scrollY}px`,
       width: "100%",
     });
-    sessionRef.current?.querySelector("button")?.focus();
+    sessionRef.current?.querySelector("button")?.focus({ preventScroll: true });
     function trap(e) {
       if (e.key !== "Tab") return;
       const root =
@@ -1334,10 +1360,10 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
         last = els.at(-1);
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
-        last?.focus();
+        last?.focus({ preventScroll: true });
       } else if (!e.shiftKey && document.activeElement === last) {
         e.preventDefault();
-        first?.focus();
+        first?.focus({ preventScroll: true });
       }
     }
     document.addEventListener("keydown", trap);
@@ -1346,7 +1372,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       else document.body.setAttribute("style", savedStyle);
       window.scrollTo(0, scrollY);
       document.removeEventListener("keydown", trap);
-      prev?.focus();
+      prev?.focus({ preventScroll: true });
     };
   }, []);
   useEffect(() => {
@@ -1355,8 +1381,13 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
     sessionRef.current?.querySelector(".exercise-body")?.scrollTo(0, 0);
   }, [index, intro, done]);
   useEffect(() => {
-    if (!intro && !done && ["type", "cloze"].includes(ex?.type))
-      inputRef.current?.focus();
+    if (
+      !intro &&
+      !done &&
+      window.matchMedia("(pointer: fine)").matches &&
+      ["type", "cloze"].includes(ex?.type)
+    )
+      inputRef.current?.focus({ preventScroll: true });
   }, [index, intro, done]);
   function reset() {
     setAnswer("");
@@ -1471,7 +1502,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       end = input.selectionEnd ?? answer.length;
     setAnswer(answer.slice(0, start) + c + answer.slice(end));
     requestAnimationFrame(() => {
-      input.focus();
+      input.focus({ preventScroll: true });
       input.setSelectionRange(start + 1, start + 1);
     });
   }
@@ -1499,8 +1530,14 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   const chapterTitle = config.lesson
     ? `Chapter ${config.lesson.chapter + 1} · ${chapters[config.lesson.chapter].title}`
     : "Practice · Your review";
+  const chapterClasses = config.lesson
+    ? lessons.filter((l) => l.chapter === config.lesson.chapter && !l.optional)
+    : [];
+  const modulePosition = config.lesson
+    ? chapterClasses.findIndex((l) => l.id === config.lesson.id) + 1
+    : 0;
   const headerLabel = config.step
-    ? `Chapter ${config.lesson.chapter + 1} - ${config.step.phase === "checkpoint" ? config.step.title : `Lesson ${classPosition} of ${classSessions.length}`}`
+    ? `Chapter ${config.lesson.chapter + 1} - ${config.step.phase === "checkpoint" ? config.step.title : `Module ${modulePosition || "extra"} · Lesson ${classPosition}/${classSessions.length}`}`
     : "Practice";
   const firstLessonVisit =
     config.lesson &&
@@ -1699,7 +1736,12 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           <span className="card-icon green">
             <Icon name="BookOpen" size={27} />
           </span>
-          <span className="eyebrow">{chapterTitle}</span>
+          <span className="eyebrow">
+            {chapterTitle}
+            {modulePosition > 0
+              ? ` · Module ${modulePosition} of ${chapterClasses.length}`
+              : ""}
+          </span>
           <h1>{title}</h1>
           {config.step && (
             <div className="session-phase">
@@ -2171,7 +2213,7 @@ function Settings({
   const [creating, setCreating] = useState(false);
   useEffect(() => {
     const prev = document.activeElement;
-    ref.current?.focus();
+    ref.current?.focus({ preventScroll: true });
     function key(e) {
       if (e.key === "Escape") onClose();
       if (e.key === "Tab") {
@@ -2190,7 +2232,7 @@ function Settings({
     window.addEventListener("keydown", key);
     return () => {
       window.removeEventListener("keydown", key);
-      prev?.focus();
+      prev?.focus({ preventScroll: true });
     };
   }, []);
   return (
