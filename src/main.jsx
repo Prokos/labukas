@@ -1,3 +1,4 @@
+import { installAppUpdates, setUpdateBusy } from "./app-updates.js";
 import {
   alphabet,
   caseColumns,
@@ -170,6 +171,10 @@ function App() {
     [syncing, setSyncing] = useState(false),
     [toast, setToast] = useState(""),
     [user, setUser] = useState(null);
+  useEffect(
+    () => setUpdateBusy(Boolean(session || settings)),
+    [session, settings],
+  );
   const progressRef = useRef(progress),
     syncRef = useRef(false),
     timer = useRef(),
@@ -1306,7 +1311,14 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   );
   useEffect(() => {
     const prev = document.activeElement;
-    document.body.style.overflow = "hidden";
+    const scrollY = window.scrollY;
+    const savedStyle = document.body.getAttribute("style");
+    Object.assign(document.body.style, {
+      overflow: "hidden",
+      position: "fixed",
+      top: `-${scrollY}px`,
+      width: "100%",
+    });
     sessionRef.current?.querySelector("button")?.focus();
     function trap(e) {
       if (e.key !== "Tab") return;
@@ -1330,7 +1342,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
     }
     document.addEventListener("keydown", trap);
     return () => {
-      document.body.style.overflow = "";
+      if (savedStyle === null) document.body.removeAttribute("style");
+      else document.body.setAttribute("style", savedStyle);
+      window.scrollTo(0, scrollY);
       document.removeEventListener("keydown", trap);
       prev?.focus();
     };
@@ -1338,6 +1352,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   useEffect(() => {
     sessionRef.current?.scrollTo(0, 0);
     sessionRef.current?.querySelector(".session-content")?.scrollTo(0, 0);
+    sessionRef.current?.querySelector(".exercise-body")?.scrollTo(0, 0);
   }, [index, intro, done]);
   useEffect(() => {
     if (!intro && !done && ["type", "cloze"].includes(ex?.type))
@@ -1527,26 +1542,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
     document.addEventListener("keydown", advance);
     return () => document.removeEventListener("keydown", advance);
   });
-  useEffect(() => {
-    const viewport = window.visualViewport;
-    function resize() {
-      sessionRef.current?.style.setProperty(
-        "--session-height",
-        `${viewport?.height || window.innerHeight}px`,
-      );
-      sessionRef.current?.style.setProperty(
-        "--session-top",
-        `${viewport?.offsetTop || 0}px`,
-      );
-    }
-    resize();
-    viewport?.addEventListener("resize", resize);
-    viewport?.addEventListener("scroll", resize);
-    return () => {
-      viewport?.removeEventListener("resize", resize);
-      viewport?.removeEventListener("scroll", resize);
-    };
-  }, []);
   return (
     <div
       className="session"
@@ -1781,289 +1776,299 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
             data-exercise-type={ex.type}
             onSubmit={check}
           >
-            <div className="exercise-eyebrow">
-              <span className="eyebrow">
-                {item.activity === "writing"
-                  ? "WRITE AND REVIEW"
-                  : item.activity === "reading"
-                    ? "READ AND RESPOND"
-                    : ex.type === "choice"
-                      ? "CHOOSE THE TRANSLATION"
-                      : ex.type === "order"
-                        ? "BUILD THE SENTENCE"
-                        : ex.type === "match"
-                          ? "FIND THE PAIRS"
-                          : ex.type === "cloze"
-                            ? "COMPLETE THE SENTENCE"
-                            : "WRITE IN LITHUANIAN"}
-              </span>
-              <span className="skill-tag">
-                {config.step && !config.step.items.some((i) => i.id === item.id)
-                  ? "Earlier review"
-                  : skills[item.skill]}
-              </span>
-            </div>
-            <h1>
-              {item.activity === "writing"
-                ? "Write your own message."
-                : item.activity === "reading"
-                  ? "Use the information in the text."
-                  : ex.isGap
-                    ? "Which form fits here?"
-                    : ex.type === "match"
-                      ? "Match the words and meanings."
-                      : ex.type === "cloze"
-                        ? "Find the missing word."
-                        : ex.type === "order"
-                          ? "Put the words in order."
-                          : ex.reverse
-                            ? "What does this mean?"
-                            : "How would you say this?"}
-            </h1>
-            {ex.passage && (
-              <div className="reading-passage" lang="lt">
-                <span className="eyebrow">SKAITYK · READ</span>
-                <p>{ex.passage}</p>
-              </div>
-            )}
-            {ex.type !== "match" && (
-              <div className="question-bubble">
-                <span className="question-avatar">
-                  <WindowMark />
-                </span>
-                <div>
-                  <small>
-                    {ex.type === "cloze" || ex.isGap
-                      ? "COMPLETE IN LITHUANIAN"
-                      : ex.reverse
-                        ? "LITHUANIAN · CHOOSE THE ENGLISH MEANING"
-                        : "ENGLISH"}
-                  </small>
-                  <p
-                    lang={
-                      ex.type === "cloze" || ex.isGap || ex.reverse
-                        ? "lt"
-                        : "en"
-                    }
-                  >
-                    {ex.type === "cloze" ? item.cloze : ex.prompt}
-                  </p>
-                  {(ex.type === "cloze" || ex.isGap) && <span>{item.en}</span>}
-                </div>
-              </div>
-            )}
-            {ex.type === "choice" && (
-              <div className="answer-options">
-                {ex.options.map((option, i) => (
-                  <button
-                    type="button"
-                    disabled={Boolean(feedback)}
-                    key={option}
-                    className={answer === option ? "selected" : ""}
-                    onClick={() => setAnswer(option)}
-                  >
-                    <span>{i + 1}</span>
-                    <strong lang={ex.reverse ? "en" : "lt"}>{option}</strong>
-                    {answer === option && <Icon name="CircleCheck" size={21} />}
-                  </button>
-                ))}
-              </div>
-            )}
-            {ex.type === "writing" && (
-              <>
-                <label className="answer-label" htmlFor="answer">
-                  Your message ·{" "}
-                  {answer.trim().split(/\s+/).filter(Boolean).length} words
-                </label>
-                <textarea
-                  id="answer"
-                  ref={inputRef}
-                  className="typed-answer writing-answer"
-                  rows={7}
-                  maxLength={5000}
-                  value={answer}
-                  disabled={Boolean(feedback)}
-                  onChange={(e) => setAnswer(e.target.value)}
-                  placeholder="Write in Lithuanian…"
-                />
-                <div className="letter-keys" aria-label="Lithuanian letters">
-                  {"ąčęėįšųūž".split("").map((c) => (
-                    <button
-                      type="button"
-                      key={c}
-                      disabled={Boolean(feedback)}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => letter(c)}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </div>
-                <ul className="writing-rubric">
-                  {item.rubric.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-                {feedback && (
-                  <div className="reading-passage">
-                    <span className="eyebrow">ONE POSSIBLE EXAMPLE</span>
-                    <p lang="lt">{item.lt}</p>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={selfChecked}
-                        onChange={(e) => setSelfChecked(e.target.checked)}
-                      />{" "}
-                      I compared my draft with the checklist and example.
-                    </label>
-                  </div>
-                )}
-              </>
-            )}
-            {["type", "cloze"].includes(ex.type) && (
-              <>
-                <label className="answer-label" htmlFor="answer">
-                  {ex.type === "cloze"
-                    ? "The missing word"
+            <div className="exercise-body">
+              <div className="exercise-eyebrow">
+                <span className="eyebrow">
+                  {item.activity === "writing"
+                    ? "WRITE AND REVIEW"
                     : item.activity === "reading"
-                      ? "Your short answer"
-                      : "Your translation"}
-                </label>
-                <input
-                  autoComplete="off"
-                  autoCapitalize="off"
-                  spellCheck="false"
-                  id="answer"
-                  ref={inputRef}
-                  className="typed-answer"
-                  disabled={Boolean(feedback)}
-                  placeholder="Type in Lithuanian…"
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                />
-                <div className="letter-keys" aria-label="Lithuanian letters">
-                  {"ąčęėįšųūž".split("").map((c) => (
-                    <button
-                      type="button"
-                      key={c}
-                      disabled={Boolean(feedback)}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => letter(c)}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                  <span>Lietuviškos raidės</span>
+                      ? "READ AND RESPOND"
+                      : ex.type === "choice"
+                        ? "CHOOSE THE TRANSLATION"
+                        : ex.type === "order"
+                          ? "BUILD THE SENTENCE"
+                          : ex.type === "match"
+                            ? "FIND THE PAIRS"
+                            : ex.type === "cloze"
+                              ? "COMPLETE THE SENTENCE"
+                              : "WRITE IN LITHUANIAN"}
+                </span>
+                <span className="skill-tag">
+                  {config.step &&
+                  !config.step.items.some((i) => i.id === item.id)
+                    ? "Earlier review"
+                    : skills[item.skill]}
+                </span>
+              </div>
+              <h1>
+                {item.activity === "writing"
+                  ? "Write your own message."
+                  : item.activity === "reading"
+                    ? "Use the information in the text."
+                    : ex.isGap
+                      ? "Which form fits here?"
+                      : ex.type === "match"
+                        ? "Match the words and meanings."
+                        : ex.type === "cloze"
+                          ? "Find the missing word."
+                          : ex.type === "order"
+                            ? "Put the words in order."
+                            : ex.reverse
+                              ? "What does this mean?"
+                              : "How would you say this?"}
+              </h1>
+              {ex.passage && (
+                <div className="reading-passage" lang="lt">
+                  <span className="eyebrow">SKAITYK · READ</span>
+                  <p>{ex.passage}</p>
                 </div>
-              </>
-            )}
-            {ex.type === "order" && (
-              <>
-                <div className="sentence-slots" aria-label="Your sentence">
-                  {selected.length ? (
-                    selected.map((t) => (
-                      <button
-                        type="button"
-                        disabled={Boolean(feedback)}
-                        key={t.id}
-                        onClick={() =>
-                          setSelected((s) => s.filter((x) => x.id !== t.id))
-                        }
-                      >
-                        {t.text}
-                        <Icon name="X" size={12} />
-                      </button>
-                    ))
-                  ) : (
-                    <span>Tap the words below to build a sentence</span>
-                  )}
-                </div>
-                <div className="word-tiles">
-                  {ex.tokens.map((t) => (
-                    <button
-                      type="button"
-                      key={t.id}
-                      disabled={
-                        Boolean(feedback) || selected.some((x) => x.id === t.id)
-                      }
-                      onClick={() => setSelected((s) => [...s, t])}
-                      lang="lt"
-                    >
-                      {t.text}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-            {ex.type === "match" && (
-              <>
-                <div className="matching-grid">
+              )}
+              {ex.type !== "match" && (
+                <div className="question-bubble">
+                  <span className="question-avatar">
+                    <WindowMark />
+                  </span>
                   <div>
-                    {ex.pairs.map((p) => (
+                    <small>
+                      {ex.type === "cloze" || ex.isGap
+                        ? "COMPLETE IN LITHUANIAN"
+                        : ex.reverse
+                          ? "LITHUANIAN · CHOOSE THE ENGLISH MEANING"
+                          : "ENGLISH"}
+                    </small>
+                    <p
+                      lang={
+                        ex.type === "cloze" || ex.isGap || ex.reverse
+                          ? "lt"
+                          : "en"
+                      }
+                    >
+                      {ex.type === "cloze" ? item.cloze : ex.prompt}
+                    </p>
+                    {(ex.type === "cloze" || ex.isGap) && (
+                      <span>{item.en}</span>
+                    )}
+                  </div>
+                </div>
+              )}
+              {ex.type === "choice" && (
+                <div className="answer-options">
+                  {ex.options.map((option, i) => (
+                    <button
+                      type="button"
+                      disabled={Boolean(feedback)}
+                      key={option}
+                      className={answer === option ? "selected" : ""}
+                      onClick={() => setAnswer(option)}
+                    >
+                      <span>{i + 1}</span>
+                      <strong lang={ex.reverse ? "en" : "lt"}>{option}</strong>
+                      {answer === option && (
+                        <Icon name="CircleCheck" size={21} />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {ex.type === "writing" && (
+                <>
+                  <label className="answer-label" htmlFor="answer">
+                    Your message ·{" "}
+                    {answer.trim().split(/\s+/).filter(Boolean).length} words
+                  </label>
+                  <textarea
+                    id="answer"
+                    ref={inputRef}
+                    className="typed-answer writing-answer"
+                    rows={7}
+                    maxLength={5000}
+                    value={answer}
+                    disabled={Boolean(feedback)}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    placeholder="Write in Lithuanian…"
+                  />
+                  <div className="letter-keys" aria-label="Lithuanian letters">
+                    {"ąčęėįšųūž".split("").map((c) => (
                       <button
                         type="button"
-                        key={p.id}
-                        className={
-                          matched.includes(p.id)
-                            ? "matched"
-                            : left === p.id
-                              ? "selected"
-                              : ""
+                        key={c}
+                        disabled={Boolean(feedback)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => letter(c)}
+                      >
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                  <ul className="writing-rubric">
+                    {item.rubric.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                  {feedback && (
+                    <div className="reading-passage">
+                      <span className="eyebrow">ONE POSSIBLE EXAMPLE</span>
+                      <p lang="lt">{item.lt}</p>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={selfChecked}
+                          onChange={(e) => setSelfChecked(e.target.checked)}
+                        />{" "}
+                        I compared my draft with the checklist and example.
+                      </label>
+                    </div>
+                  )}
+                </>
+              )}
+              {["type", "cloze"].includes(ex.type) && (
+                <>
+                  <label className="answer-label" htmlFor="answer">
+                    {ex.type === "cloze"
+                      ? "The missing word"
+                      : item.activity === "reading"
+                        ? "Your short answer"
+                        : "Your translation"}
+                  </label>
+                  <input
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
+                    id="answer"
+                    ref={inputRef}
+                    className="typed-answer"
+                    disabled={Boolean(feedback)}
+                    placeholder="Type in Lithuanian…"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                  />
+                  <div className="letter-keys" aria-label="Lithuanian letters">
+                    {"ąčęėįšųūž".split("").map((c) => (
+                      <button
+                        type="button"
+                        key={c}
+                        disabled={Boolean(feedback)}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => letter(c)}
+                      >
+                        {c}
+                      </button>
+                    ))}
+                    <span>Lietuviškos raidės</span>
+                  </div>
+                </>
+              )}
+              {ex.type === "order" && (
+                <>
+                  <div className="sentence-slots" aria-label="Your sentence">
+                    {selected.length ? (
+                      selected.map((t) => (
+                        <button
+                          type="button"
+                          disabled={Boolean(feedback)}
+                          key={t.id}
+                          onClick={() =>
+                            setSelected((s) => s.filter((x) => x.id !== t.id))
+                          }
+                        >
+                          {t.text}
+                          <Icon name="X" size={12} />
+                        </button>
+                      ))
+                    ) : (
+                      <span>Tap the words below to build a sentence</span>
+                    )}
+                  </div>
+                  <div className="word-tiles">
+                    {ex.tokens.map((t) => (
+                      <button
+                        type="button"
+                        key={t.id}
+                        disabled={
+                          Boolean(feedback) ||
+                          selected.some((x) => x.id === t.id)
                         }
-                        disabled={Boolean(feedback) || matched.includes(p.id)}
-                        onClick={() => {
-                          setLeft(p.id);
-                          setMatchError("");
-                        }}
+                        onClick={() => setSelected((s) => [...s, t])}
                         lang="lt"
                       >
-                        {p.lt}
-                        {matched.includes(p.id) && (
-                          <Icon name="Check" size={16} />
-                        )}
+                        {t.text}
                       </button>
                     ))}
                   </div>
-                  <div>
-                    {ex.right.map((p) => (
-                      <button
-                        type="button"
-                        key={p.id}
-                        className={matched.includes(p.id) ? "matched" : ""}
-                        disabled={Boolean(feedback) || matched.includes(p.id)}
-                        onClick={() => match(p.id)}
-                      >
-                        {p.en}
-                      </button>
-                    ))}
+                </>
+              )}
+              {ex.type === "match" && (
+                <>
+                  <div className="matching-grid">
+                    <div>
+                      {ex.pairs.map((p) => (
+                        <button
+                          type="button"
+                          key={p.id}
+                          className={
+                            matched.includes(p.id)
+                              ? "matched"
+                              : left === p.id
+                                ? "selected"
+                                : ""
+                          }
+                          disabled={Boolean(feedback) || matched.includes(p.id)}
+                          onClick={() => {
+                            setLeft(p.id);
+                            setMatchError("");
+                          }}
+                          lang="lt"
+                        >
+                          {p.lt}
+                          {matched.includes(p.id) && (
+                            <Icon name="Check" size={16} />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                    <div>
+                      {ex.right.map((p) => (
+                        <button
+                          type="button"
+                          key={p.id}
+                          className={matched.includes(p.id) ? "matched" : ""}
+                          disabled={Boolean(feedback) || matched.includes(p.id)}
+                          onClick={() => match(p.id)}
+                        >
+                          {p.en}
+                        </button>
+                      ))}
+                    </div>
                   </div>
+                  <p role="status" className="match-message">
+                    {matchError}
+                  </p>
+                </>
+              )}
+              {!feedback && ex.type !== "writing" && (
+                <button
+                  type="button"
+                  className="hint-button"
+                  onClick={() => {
+                    setHint(!hint);
+                    setUsedHint(true);
+                  }}
+                >
+                  <Icon name="Lightbulb" size={16} />
+                  {hint ? "Hide explanation" : "A little help?"}
+                </button>
+              )}
+              {hint && (
+                <div className="exercise-hint">
+                  <p>{source.rule}</p>
+                  {skillNotes[item.skill] && <p>{skillNotes[item.skill]}</p>}
+                  <strong lang="lt">{item.lt}</strong>
+                  <span>
+                    We’ll revisit this without a hint to help it stick.
+                  </span>
                 </div>
-                <p role="status" className="match-message">
-                  {matchError}
-                </p>
-              </>
-            )}
-            {!feedback && ex.type !== "writing" && (
-              <button
-                type="button"
-                className="hint-button"
-                onClick={() => {
-                  setHint(!hint);
-                  setUsedHint(true);
-                }}
-              >
-                <Icon name="Lightbulb" size={16} />
-                {hint ? "Hide explanation" : "A little help?"}
-              </button>
-            )}
-            {hint && (
-              <div className="exercise-hint">
-                <p>{source.rule}</p>
-                {skillNotes[item.skill] && <p>{skillNotes[item.skill]}</p>}
-                <strong lang="lt">{item.lt}</strong>
-                <span>We’ll revisit this without a hint to help it stick.</span>
-              </div>
-            )}
+              )}
+            </div>
             <div
               className={`answer-footer ${feedback ? (feedback.mastered ? "correct" : "retry") : ""}`}
             >
@@ -2355,10 +2360,4 @@ function Settings({
 }
 
 createRoot(document.getElementById("root")).render(<App />);
-if (import.meta.env.PROD && "serviceWorker" in navigator) {
-  window.addEventListener("load", () =>
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      /* Online use and local saving remain available. */
-    }),
-  );
-}
+if (import.meta.env.PROD) installAppUpdates();

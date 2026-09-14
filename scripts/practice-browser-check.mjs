@@ -101,7 +101,10 @@ try {
     .locator(".word-table-row")
     .filter({ has: p.locator("strong").getByText("šuo", { exact: true }) })
     .click();
-  assert.equal(await p.locator(".session-top-middle > span").innerText(), "Practice");
+  assert.equal(
+    await p.locator(".session-top-middle > span").innerText(),
+    "Practice",
+  );
   assert.equal(await p.locator(".intro-words > div").count(), 3);
   await p.keyboard.press("Enter");
   await finish(p);
@@ -184,12 +187,34 @@ try {
   await mobile.screenshot({
     path: join(tmpdir(), "labukas-lesson-bottom.png"),
   });
-  await mobile.setViewportSize({ width: 390, height: 520 });
-  await mobile.waitForTimeout(150);
+  // The keyboard changes the visual viewport, not the layout viewport.
+  // Reproduce the resize/offset that previously shrank and shifted the overlay.
+  const baseline = await mobile.locator(".session").boundingBox();
+  await mobile.evaluate(() => {
+    Object.defineProperty(window.visualViewport, "height", {
+      configurable: true,
+      value: 420,
+    });
+    Object.defineProperty(window.visualViewport, "offsetTop", {
+      configurable: true,
+      value: 50,
+    });
+    window.visualViewport.dispatchEvent(new Event("resize"));
+    window.visualViewport.dispatchEvent(new Event("scroll"));
+  });
+  await mobile.waitForTimeout(100);
+  assert.deepEqual(await mobile.locator(".session").boundingBox(), baseline);
   rect = await footer.boundingBox();
+  assert.ok(rect.y + rect.height >= 820, JSON.stringify(rect));
+  const bodyRect = await mobile.locator(".exercise-body").boundingBox();
   assert.ok(
-    rect.y + rect.height <= 522 && rect.y + rect.height >= 500,
-    JSON.stringify(rect),
+    bodyRect.y + bodyRect.height <= rect.y + 1,
+    "Action must not overlap scrollable exercise content",
+  );
+  assert.ok(
+    await mobile.evaluate(
+      () => document.elementFromPoint(10, 700)?.closest(".session") !== null,
+    ),
   );
   await solve(mobile, true);
   assert.equal(
@@ -204,7 +229,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: bounded word practice, no course credit from practice, Enter through the complete session, writing newlines, reference search, four categories, mobile bottom action at full and reduced viewport heights.",
+    "PASS: bounded word practice, no course credit from practice, Enter through the complete session, writing newlines, reference search, four categories, full-screen overlay and non-overlapping bottom action during visual viewport resize.",
   );
 } finally {
   await browser.close();

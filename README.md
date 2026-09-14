@@ -61,3 +61,9 @@ Course structure: `src/curriculum.js`; teaching material: `src/content/` and `sr
 ## Verification
 
 `npm test` checks curriculum integrity, staged task plans, class and checkpoint completion, legacy progress, retention timing, event merging, and sync behavior. With the dev server running and a current build, `node scripts/browser-check.mjs` reproduces the café-class flow, checks productive practice before advancing, separate recall, grammar-specific teaching, checkpoint prerequisites, legacy migration, mobile reading, saved writing drafts and self-review, optional appendix routing, and offline production. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` for an existing browser, or run `npx playwright install chromium`. `npm run test:practice:browser` checks finite word practice, Enter navigation, writing newlines, reference search, and mobile action placement. Screenshots are written to your system temporary directory.
+
+## App updates
+
+Navigations check the network for the latest page and fall back to the bundled page offline. Each build has a versioned asset cache. Worker updates bypass the HTTP cache, activate after precaching succeeds, and trigger a page reload only outside an active lesson or settings screen. Cookies, local storage, and saved progress are not cleared. Vercel headers prevent caching the worker and require page revalidation. An existing installation using the old worker may need another normal refresh after its replacement activates.
+
+`npm run test:updates:browser` tests replacement of the old worker, deferred reload during a lesson, preservation of progress and cookies, and unavailable-server fallback. The mobile layout check simulates visual viewport resize separately from layout resize; it does not emulate a physical phone keyboard.

@@ -8,18 +8,26 @@ function offline() {
     apply: "build",
     async closeBundle() {
       const assets = (await readdir("dist/assets")).map((f) => "/assets/" + f);
+      const worker = await readFile("scripts/offline-worker.js", "utf8");
       const hash = createHash("sha256")
         .update(await readFile("dist/index.html"))
+        .update(worker)
         .digest("hex")
         .slice(0, 12);
-      // Bundled assets are immutable public files. Ignore Vary (for example
-      // Origin from a preview server) when matching their precached responses.
       await writeFile(
         "dist/sw.js",
-        `const CACHE='labukas-${hash}';const FILES=${JSON.stringify(["/", "/index.html", "/icon.svg", "/manifest.webmanifest", ...assets])};
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('labukas-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;if(e.request.mode==='navigate'){e.respondWith(caches.match('/index.html').then(c=>c||fetch(e.request)));return;}e.respondWith(caches.open(CACHE).then(cache=>cache.match(e.request,{ignoreVary:true})).then(c=>c||fetch(e.request)));});`,
+        worker
+          .replace("__BUILD_ID__", hash)
+          .replace(
+            "__PRECACHE_FILES__",
+            JSON.stringify([
+              "/",
+              "/index.html",
+              "/icon.svg",
+              "/manifest.webmanifest",
+              ...assets,
+            ]),
+          ),
       );
     },
   };
