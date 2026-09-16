@@ -147,7 +147,7 @@ import {
   dailyWord,
 } from "./practice";
 import * as cloud from "./cloud";
-import { WindowMark, TownArt } from "./Art";
+import { SakykMark, Wordmark, BrandArt } from "./Art";
 import "./styles.css";
 const Icon = ({ name, size = 20, ...props }) => {
   const C = I[name] || I.BookOpen;
@@ -401,17 +401,17 @@ function App() {
       <aside className="sidebar" inert={Boolean(session || settings)}>
         <a
           className="brand"
+          aria-label="Sakyk home"
           href="#"
           onClick={(e) => {
             e.preventDefault();
             setPage("today");
           }}
         >
-          <WindowMark />
-          <span>
-            labukas<span className="brand-dot">.</span>
-          </span>
+          <SakykMark />
+          <Wordmark />
         </a>
+        <p className="brand-tagline">Learn Lithuanian naturally.</p>
         <nav>
           {nav.map(([id, icon, label]) => (
             <button
@@ -435,7 +435,7 @@ function App() {
           <div className="profile">
             <span className="avatar">L</span>
             <span>
-              Your little journey<small>Lithuanian · A1–A1+</small>
+              Speak. Learn. Belong.<small>Lithuanian · A1–A1+</small>
             </span>
           </div>
         </div>
@@ -447,8 +447,8 @@ function App() {
             {nav.find((n) => n[0] === page)?.[2]}
           </span>
           <span className="mobile-brand">
-            <WindowMark />
-            labukas.
+            <SakykMark />
+            <Wordmark />
           </span>
           <div className="top-stats">
             <span title="Consecutive days studied">
@@ -474,10 +474,12 @@ function App() {
           {page === "today" && (
             <>
               <div className="page-heading">
+                <span className="eyebrow">SMALL WORDS. A BRIGHTER YOU.</span>
                 <h1>
                   {s.xp ? "Welcome back." : "Labas, new beginnings."}{" "}
                   <span className="hello-wave">✳</span>
                 </h1>
+                <p>Let Lithuanian find its way to you.</p>
               </div>
               <div className="dashboard-grid">
                 <div className="main-column">
@@ -510,7 +512,7 @@ function App() {
                         <Icon name="ArrowRight" size={18} />
                       </Button>
                     </div>
-                    <TownArt />
+                    <BrandArt />
                     <div className="resume-progress">
                       <span>
                         {chapterDone} of {chapterSteps.length} chapter lessons
@@ -575,15 +577,12 @@ function App() {
                   </section>
                   <section className="word-card">
                     <span className="eyebrow">
-                      A LITTLE WORD TO TAKE WITH YOU
+                      WORD OF THE DAY
                     </span>
                     <div className="word-of-day" lang="lt">
                       {todayWord.lt}
                     </div>
                     <p>{todayWord.en}</p>
-                    <div className="word-divider" />
-                    <span>Small words. New connections.</span>
-                    <Icon name="Flower2" className="flower" size={54} />
                   </section>
                   <button
                     className="save-status"
@@ -715,7 +714,7 @@ function App() {
               url = URL.createObjectURL(blob),
               a = document.createElement("a");
             a.href = url;
-            a.download = `labukas-${localDay()}.json`;
+            a.download = `sakyk-${localDay()}.json`;
             a.click();
             URL.revokeObjectURL(url);
           }}
@@ -1851,7 +1850,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               {ex.type !== "match" && (
                 <div className="question-bubble">
                   <span className="question-avatar">
-                    <WindowMark />
+                    <SakykMark />
                   </span>
                   <div>
                     <small>
@@ -2269,8 +2268,8 @@ function Settings({
             Take your progress with you
           </h3>
           <p>
-            Sign in with the same Labukas account on your phone and computer.
-            Your private progress stays available on every device.
+            Sign in with the same Sakyk account on your phone and computer. Your
+            private progress stays available on every device.
           </p>
           <div className="sync-info">
             <span className="green-dot" />

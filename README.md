@@ -1,4 +1,4 @@
-# Labukas
+# Sakyk
 
 A personal, responsive Lithuanian learning app for English speakers. React + Vite, with offline local progress and optional private Supabase sync across devices. No paid AI calls, audio, or subscriptions.
 
@@ -28,7 +28,7 @@ The recommended personal deployment uses Vercel for the static app and Supabase 
 1. Create a [Supabase project](https://database.new/).
 2. Open its **SQL Editor**, paste `supabase/schema.sql`, and run it. This creates an event table with row-level security: signed-in users can only read and insert their own rows.
 3. In **Project Settings → API**, copy the Project URL and Publishable key. Copy `.env.example` to `.env.local` and fill in `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. The publishable key is intended for frontend use; never put a service-role key in the app.
-4. For local development, restart Vite. Open Settings in Labukas and create your account. If email confirmation is enabled, confirm it before signing in.
+4. For local development, restart Vite. Open Settings in Sakyk and create your account. If email confirmation is enabled, confirm it before signing in.
 5. Import the GitHub repository into [Vercel](https://vercel.com/new). Vercel detects Vite automatically. Add the same two environment variables under project settings and deploy.
 6. In Supabase **Authentication → URL Configuration**, set the Site URL to the Vercel production URL. After creating your account, you can disable new-user signups under Authentication settings if this will remain a single-user app.
 

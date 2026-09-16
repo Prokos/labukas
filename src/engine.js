@@ -21,7 +21,7 @@ export const STORAGE_KEY = "labukas.progress.v1";
 export const emptyProgress = () => ({ version: 1, events: [] });
 export function validateProgress(value) {
   if (!value || value.version !== 1 || !Array.isArray(value.events))
-    throw new Error("This is not a Labukas progress backup.");
+    throw new Error("This is not a valid Sakyk progress backup.");
   const ids = new Set();
   for (const e of value.events) {
     if (
