@@ -1939,13 +1939,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                     <SakykMark />
                   </span>
                   <div>
-                    <small>
-                      {ex.type === "cloze" || ex.isGap
-                        ? "COMPLETE IN LITHUANIAN"
-                        : ex.reverse
-                          ? "LITHUANIAN · CHOOSE THE ENGLISH MEANING"
-                          : "ENGLISH"}
-                    </small>
                     <p
                       lang={
                         ex.type === "cloze" || ex.isGap || ex.reverse
@@ -1961,6 +1954,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                   </div>
                 </div>
               )}
+              <div className="lesson-spacer"></div>
               {ex.type === "choice" && (
                 <div className="answer-options">
                   {ex.options.map((option, i) => (
