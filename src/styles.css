@@ -3882,9 +3882,6 @@ h3 {
   .session-content.exercise > .answer-footer {
     padding-inline: max(20px, calc((100% - 660px) / 2));
   }
-  .answer-footer:is(.correct, .retry) > div > strong {
-    font-size: 20px;
-  }
 
 .session-content.exercise > .answer-footer,
   .session-content.lesson-intro > .intro-footer {
@@ -3954,5 +3951,8 @@ h3 {
 @media (max-width: 720px) {
   .session-content.summary {
     padding-top: 30px;
+  }
+    .answer-footer:is(.correct, .retry) > div > strong {
+    font-size: 16px;
   }
 }
