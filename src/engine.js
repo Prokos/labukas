@@ -396,6 +396,7 @@ export function exerciseFor(item, record = {}, rng = Math.random) {
           ],
           rng,
         ),
+    answerTokens: words.map((text, id) => ({ text, id })),
     tokens: shuffle(
       [...words, ...extras].map((text, id) => ({ text, id })),
       rng,

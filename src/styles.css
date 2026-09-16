@@ -1,7 +1,7 @@
 @import "@fontsource-variable/baloo-2/wght.css";
 @import "@fontsource-variable/inter/wght.css";
 :root {
-  font-family: "Inter Variable", sans-serif;
+  font-family: var(--text);
   color: #22313f;
   background: #ffffff;
   font-synthesis: none;
@@ -14,7 +14,8 @@
   --amber: #f4b400;
   --sky: #3ba7f0;
   --clay: #c94b3c;
-  --display: "Baloo 2 Variable", "Trebuchet MS", sans-serif;
+  --text: "Inter Variable", sans-serif;
+  --brand: "Baloo 2 Variable", "Trebuchet MS", sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -74,7 +75,7 @@ p {
 }
 h1,
 h2 {
-  font-family: var(--display);
+  font-family: var(--text);
   font-weight: 650;
 }
 h1 {
@@ -128,7 +129,7 @@ button svg {
   height: 41px;
 }
 .brand > span {
-  font-family: var(--display);
+  font-family: var(--brand);
   font-size: 36px;
   letter-spacing: -1.3px;
 }
@@ -370,7 +371,7 @@ main {
   align-items: center;
   justify-content: center;
   gap: 15px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
 }
 .button:hover {
@@ -468,7 +469,7 @@ main {
 }
 .path-heading h3 {
   margin-top: 9px;
-  font-family: var(--display);
+  font-family: var(--text);
   font-size: 21px;
   font-weight: 400;
   color: #165c3d;
@@ -784,7 +785,7 @@ main {
   color: #637180;
 }
 .word-of-day {
-  font-family: var(--display);
+  font-family: var(--text);
   font-size: 37px;
   color: #637180;
   margin-top: 15px;
@@ -1411,7 +1412,7 @@ select {
   color: #637180;
   line-height: 1.9;
 }
-.lesson-intro > h3 {
+.lesson-intro h3 {
   font-size: 13px;
   color: #637180;
   margin-bottom: 12px;
@@ -1441,7 +1442,7 @@ select {
   color: #637180;
   text-align: right;
 }
-.lesson-intro > .button {
+.lesson-intro .intro-footer > .button {
   margin-top: 24px;
   min-width: 200px;
 }
@@ -1555,8 +1556,7 @@ select {
   font-size: 16px;
 }
 .typed-answer:focus {
-  outline: 2px solid #3ba7f0;
-  outline-offset: 2px;
+  outline: none;
 }
 .letter-keys {
   display: flex;
@@ -2063,7 +2063,7 @@ select {
     display: flex;
     align-items: center;
     gap: 7px;
-    font-family: var(--display);
+    font-family: var(--brand);
     color: var(--green);
     font-size: 27px;
     letter-spacing: -1px;
@@ -2475,10 +2475,6 @@ select {
   .intro-words > div > * {
     max-width: 51%;
   }
-  .lesson-intro > .button {
-    width: 100%;
-    margin-bottom: 15px;
-  }
   .exercise-eyebrow .eyebrow {
     font-size: 8px;
     letter-spacing: 1px;
@@ -2522,21 +2518,6 @@ select {
   }
   .letter-keys span {
     display: none;
-  }
-  .answer-footer {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 17px;
-    margin-top: 25px;
-  }
-  .answer-footer .button {
-    min-height: 46px;
-  }
-  .answer-footer > div > span {
-    font-size: 10px;
-  }
-  .answer-footer > div > strong {
-    font-size: 12px;
   }
   .matching-grid {
     gap: 12px;
@@ -2669,15 +2650,15 @@ select {
 .first-look {
   padding-top: 45px;
 }
-.first-look > h1 {
+.first-look h1 {
   margin-top: 20px;
 }
-.first-look > p:not(.subtle) {
+.first-look .intro-body > p:not(.subtle) {
   font-size: 22px;
   margin: 14px 0 35px;
   color: #637180;
 }
-.first-look > .button {
+.first-look .intro-footer > .button {
   margin-top: 24px;
 }
 .language {
@@ -2748,7 +2729,7 @@ select {
 .class-block button > span {
   flex: 1;
 }
-.first-look > .first-look-context {
+.first-look .first-look-context {
   font-size: 13px;
   line-height: 1.9;
   background: #f5f7f9;
@@ -3005,13 +2986,17 @@ select {
 .word-controls select {
   max-width: 100%;
 }
-@media (max-width: 700px) {
+
+  /* One scroll surface: header, exercise and action all move together. */
   .session {
     inset: 0;
-    height: 100%;
+    top: var(--session-top, 0px);
+    bottom: auto;
+    height: var(--session-height, 100dvh);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
   }
   .session-top {
     width: 100%;
@@ -3029,53 +3014,29 @@ select {
   .session-content {
     width: 100%;
     max-width: 700px;
-    flex: 1;
-    min-height: 0;
+    flex: 1 0 auto;
     margin: 0 auto;
     padding: 16px 20px 0;
-    overflow: auto;
+    overflow: visible;
   }
-  .session-content.exercise,
-  .session-content.lesson-intro {
-    display: flex;
-    flex-direction: column;
-  }
-  .session-content > * {
-    flex-shrink: 0;
-  }
+
   .session-content h1 {
     font-size: 25px;
   }
-  .session-content.exercise {
-    overflow: hidden;
-  }
-  .session-content.exercise > .exercise-body {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+  .exercise-body,
+  .intro-body {
+    flex: 0 0 auto;
+    overflow: visible;
     padding-bottom: 16px;
   }
-  .session-content.exercise > .answer-footer {
-    flex: 0 0 auto;
-    margin-top: 0;
-    padding: 14px 0 max(14px, env(safe-area-inset-bottom));
-    position: static;
-    background: var(--cream);
-    z-index: 3;
-    gap: 10px;
-  }
+
   .answer-footer > div:empty {
     display: none;
   }
-  .session-content.lesson-intro > .button {
-    position: sticky;
-    bottom: 0;
-    margin-top: auto;
-    margin-bottom: 0;
-    border-radius: 8px 8px 0 0;
-    min-height: 54px;
-    padding-bottom: max(14px, env(safe-area-inset-bottom));
+  .session-content.lesson-intro .intro-footer > .button {
+    width: 100%;
+    margin: 0;
+    min-height: 46px;
   }
   .session-content.summary {
     padding-bottom: max(20px, env(safe-area-inset-bottom));
@@ -3083,7 +3044,7 @@ select {
   .word-controls {
     flex-wrap: wrap;
   }
-}
+
 
 @media (max-width: 700px) {
   .mobile-nav > button {
@@ -3111,7 +3072,7 @@ select {
 }
 .brand .sakyk-wordmark,
 .mobile-brand .sakyk-wordmark {
-  font-family: var(--display);
+  font-family: var(--brand);
   font-weight: 800;
   font-size: 45px;
   line-height: 1.15;
@@ -3125,7 +3086,7 @@ select {
   position: absolute;
   width: 0.3em;
   height: 0.34em;
-  top: 0.09em;
+  top: 0.23em;
   left: 0.12em;
   transform: rotate(9deg);
 }
@@ -3311,7 +3272,7 @@ summary:focus-visible {
 }
 .word-of-day {
   color: var(--dark);
-  font-family: var(--display);
+  font-family: var(--text);
   font-weight: 650;
   font-size: 42px;
 }
@@ -3388,7 +3349,7 @@ summary:focus-visible {
 h1,
 h2,
 h3 {
-  font-family: var(--display);
+  font-family: var(--text);
   font-weight: 600;
   color: var(--dark);
 }
@@ -3415,7 +3376,7 @@ h3 {
 }
 .card h3,
 .optional-practice h3 {
-  font-family: var(--display);
+  font-family: var(--text);
   font-size: 19px;
   font-weight: 600;
 }
@@ -3424,19 +3385,19 @@ h3 {
   font-weight: 600;
 }
 .chapter-toggle strong {
-  font-family: var(--display);
+  font-family: var(--text);
   font-size: 22px;
   font-weight: 600;
   line-height: 1.3;
 }
 .settings-section h3 {
-  font-family: var(--display);
+  font-family: var(--text);
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0;
 }
 .study-reference > summary {
-  font-family: var(--display);
+  font-family: var(--text);
   font-size: 20px;
   color: var(--dark);
 }
@@ -3449,8 +3410,8 @@ h3 {
   color: var(--dark);
 }
 .question-bubble p,
-.first-look > h1 {
-  font-family: var(--display);
+.first-look h1 {
+  font-family: var(--text);
   font-weight: 600;
 }
 .question-bubble p {
@@ -3561,7 +3522,7 @@ h3 {
 }
 .goal-body strong {
   color: var(--dark);
-  font-family: var(--display);
+  font-family: var(--text);
   font-weight: 600;
 }
 .day-dot.current {
@@ -3743,7 +3704,7 @@ h3 {
   color: #245a7a;
 }
 .rule-box,
-.first-look > .first-look-context {
+.first-look .first-look-context {
   background: var(--sky-soft);
   border-color: #cce5f6;
   color: #245a7a;
@@ -3767,7 +3728,7 @@ h3 {
   color: var(--dark);
 }
 .typed-answer:focus {
-  outline: 2px solid var(--sky);
+  outline: none;
   border-color: var(--sky);
 }
 .typed-answer::placeholder {
@@ -3826,7 +3787,7 @@ h3 {
 }
 .summary-stats strong {
   color: var(--dark);
-  font-family: var(--display);
+  font-family: var(--text);
   font-weight: 600;
 }
 @media (max-width: 720px) {
@@ -3840,5 +3801,158 @@ h3 {
   }
   .question-bubble p {
     font-size: 22px;
+  }
+}
+
+.answer-options button.eliminated {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+.hint-spelling {
+  white-space: pre-wrap;
+  letter-spacing: 0.12em;
+}
+
+/* Feedback is a full-width band in the lesson's normal scroll flow. */
+.session-content.exercise {
+  max-width: none;
+  padding-inline: 0;
+}
+.exercise-body {
+  width: 100%;
+  max-width: 700px;
+  margin-inline: auto;
+  padding-inline: 30px;
+}
+.session .button {
+  min-height: 52px;
+  padding: 14px 22px;
+  font-size: 17px;
+  line-height: 1.3;
+}
+.session-content.exercise > .answer-footer {
+  padding-inline: max(30px, calc((100% - 640px) / 2));
+}
+.session-content.exercise > .answer-footer.correct,
+.session-content.exercise > .answer-footer.retry {
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  border: 0;
+  padding-block: 14px max(14px, env(safe-area-inset-bottom));
+  text-align: center;
+}
+.answer-footer.correct {
+  color: var(--green);
+}
+.answer-footer.retry {
+  color: var(--clay);
+}
+.answer-footer:is(.correct, .retry) > div {
+  width: 100%;
+}
+.answer-footer:is(.correct, .retry) > div > strong {
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  font-size: 22px;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+.answer-footer:is(.correct, .retry) > div > strong svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.answer-footer:is(.correct, .retry) > div > p {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.answer-footer .button {
+  width: 100%;
+  max-width: 360px;
+  white-space: normal;
+  margin:0 auto;
+}
+
+  .exercise-body {
+    padding-inline: 20px;
+  }
+  .session-content.exercise > .answer-footer {
+    padding-inline: max(20px, calc((100% - 660px) / 2));
+  }
+  .answer-footer:is(.correct, .retry) > div > strong {
+    font-size: 20px;
+  }
+
+.session-content.exercise > .answer-footer,
+  .session-content.lesson-intro > .intro-footer {
+    flex: 0 0 auto;
+    margin-top: auto;
+    padding: 14px 0 max(14px, env(safe-area-inset-bottom));
+    position: static;
+    gap: 10px;
+  }
+  .session-content.exercise,
+  .session-content.lesson-intro {
+    display: flex;
+    flex-direction: column;
+  }
+  .lesson-intro .intro-footer > .button {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .answer-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 17px;
+    margin-top: 25px;
+  }
+  .answer-footer .button {
+    min-height: 46px;
+  }
+  .answer-footer > div > span {
+    font-size: 10px;
+  }
+.answer-footer > div > strong {
+    font-size: 12px;
+  }
+
+/* Keep every lesson action aligned with the exercise action. */
+.session-content.summary {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 700px;
+  flex: 1 0 auto;
+  margin: 0 auto;
+  padding-top: 45px;
+  padding-bottom: 0;
+}
+.summary-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: auto;
+  padding: 14px 0 max(14px, env(safe-area-inset-bottom));
+}
+.session-content.lesson-intro > .intro-footer {
+  display: flex;
+  justify-content: center;
+}
+.session :is(.intro-footer, .answer-footer, .summary-actions) > .button {
+  width: 100%;
+  max-width: 360px;
+  min-height: 52px;
+  margin: 0 auto;
+  white-space: normal;
+}
+@media (max-width: 720px) {
+  .session-content.summary {
+    padding-top: 30px;
   }
 }

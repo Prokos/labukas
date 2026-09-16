@@ -7,10 +7,10 @@ import {
   pronounForms,
   verbPeople,
   verbForms,
-  skillNotes,
   numeralForms,
 } from "./content/reference.js";
-import React, { useState, useEffect, useRef } from "react";
+import { exerciseHint } from "./exercise-hints.js";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowRight as IconArrowRight,
@@ -300,27 +300,6 @@ function App() {
       .catch((e) => notify(e.message));
     return () => unsubscribe?.();
   }, []);
-  const fullscreenOwned = useRef(false);
-  function enterLessonScreen() {
-    setUpdateBusy(true);
-    if (
-      window.matchMedia("(pointer: coarse)").matches &&
-      !document.fullscreenElement &&
-      document.documentElement.requestFullscreen
-    ) {
-      fullscreenOwned.current = true;
-      document.documentElement
-        .requestFullscreen({ navigationUI: "hide" })
-        .catch(() => {
-          fullscreenOwned.current = false;
-        });
-    }
-  }
-  function leaveLessonScreen() {
-    if (fullscreenOwned.current && document.fullscreenElement)
-      document.exitFullscreen().catch(() => {});
-    fullscreenOwned.current = false;
-  }
   const startLesson = (l, requestedStep) => {
     const current = stats(progressRef.current);
     const step =
@@ -339,7 +318,7 @@ function App() {
       notify("Finish the chapter’s learning sessions before taking its check.");
       return;
     }
-    enterLessonScreen();
+    setUpdateBusy(true);
     setSession({
       id: newId(),
       mode: "lesson",
@@ -355,20 +334,19 @@ function App() {
       setPage("practice");
       return;
     }
-    enterLessonScreen();
+    setUpdateBusy(true);
     setSession({ id: newId(), ...config });
   };
   function continueCourse() {
     const current = stats(progressRef.current);
     if (current.nextStep) startLesson(current.next, current.nextStep);
     else {
-      leaveLessonScreen();
       setSession(null);
       setPage("course");
     }
   }
   function startReview() {
-    enterLessonScreen();
+    setUpdateBusy(true);
     const current = stats(progressRef.current),
       support = reinforcement(progressRef.current);
     if (support)
@@ -576,9 +554,7 @@ function App() {
                     </button>
                   </section>
                   <section className="word-card">
-                    <span className="eyebrow">
-                      WORD OF THE DAY
-                    </span>
+                    <span className="eyebrow">WORD OF THE DAY</span>
                     <div className="word-of-day" lang="lt">
                       {todayWord.lt}
                     </div>
@@ -679,7 +655,6 @@ function App() {
           onEvent={addEvent}
           onContinue={continueCourse}
           onClose={() => {
-            leaveLessonScreen();
             setSession(null);
             if (cloud.isConnected()) sync();
           }}
@@ -1315,12 +1290,14 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
     ),
     [selected, setSelected] = useState([]),
     [feedback, setFeedback] = useState(null),
-    [hint, setHint] = useState(false),
+    [hint, setHint] = useState(null),
+    [eliminated, setEliminated] = useState([]),
+    [revealed, setRevealed] = useState(0),
     [usedHint, setUsedHint] = useState(false),
     [done, setDone] = useState(false),
     [exit, setExit] = useState(false),
     [results, setResults] = useState([]),
-    [left, setLeft] = useState(null),
+    [pendingMatch, setPendingMatch] = useState(null),
     [matched, setMatched] = useState([]),
     [mismatch, setMismatch] = useState(false),
     [matchError, setMatchError] = useState("");
@@ -1344,7 +1321,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       top: `-${scrollY}px`,
       width: "100%",
     });
-    sessionRef.current?.querySelector("button")?.focus({ preventScroll: true });
+    (inputRef.current || sessionRef.current?.querySelector("button"))?.focus({
+      preventScroll: true,
+    });
     function trap(e) {
       if (e.key !== "Tab") return;
       const root =
@@ -1376,29 +1355,99 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   }, []);
   useEffect(() => {
     sessionRef.current?.scrollTo(0, 0);
-    sessionRef.current?.querySelector(".session-content")?.scrollTo(0, 0);
-    sessionRef.current?.querySelector(".exercise-body")?.scrollTo(0, 0);
   }, [index, intro, done]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (
       !intro &&
       !done &&
-      window.matchMedia("(pointer: fine)").matches &&
-      ["type", "cloze"].includes(ex?.type)
+      !exit &&
+      ["type", "cloze", "writing"].includes(ex?.type)
     )
       inputRef.current?.focus({ preventScroll: true });
-  }, [index, intro, done]);
+  }, [index, intro, introduced, done, exit, ex?.type]);
+  useLayoutEffect(() => {
+    const viewport = window.visualViewport;
+    const keyboard = navigator.virtualKeyboard;
+    const root = sessionRef.current;
+    let frame;
+    let fullHeight = window.innerHeight;
+    function resize() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const top = viewport?.offsetTop || 0;
+        // Respect both browser layout resizing and visual-viewport resizing.
+        // Do not opt into keyboard overlays: let the browser resize normally.
+        let bottom = Math.min(
+          window.innerHeight,
+          top + (viewport?.height || window.innerHeight),
+        );
+        if (keyboard?.boundingRect.height > 0)
+          bottom = Math.min(bottom, keyboard.boundingRect.top);
+        const height = Math.max(0, bottom - top);
+        fullHeight = Math.max(fullHeight, window.innerHeight);
+        root.style.setProperty("--session-height", `${height}px`);
+        root.style.setProperty("--session-top", `${top}px`);
+        if (fullHeight - height > 150 || keyboard?.boundingRect.height > 0) {
+          // Move the WHOLE lesson up to reveal the in-flow action. The header
+          // scrolls away with the question; nothing is pinned over the content.
+          root.scrollTop = root.scrollHeight;
+        }
+      });
+    }
+    resize();
+    viewport?.addEventListener("resize", resize);
+    viewport?.addEventListener("scroll", resize);
+    keyboard?.addEventListener("geometrychange", resize);
+    window.addEventListener("resize", resize);
+    root.addEventListener("focusin", resize);
+    return () => {
+      cancelAnimationFrame(frame);
+      viewport?.removeEventListener("resize", resize);
+      viewport?.removeEventListener("scroll", resize);
+      keyboard?.removeEventListener("geometrychange", resize);
+      window.removeEventListener("resize", resize);
+      root.removeEventListener("focusin", resize);
+    };
+  }, []);
   function reset() {
     setAnswer("");
     setSelfChecked(false);
     setSelected([]);
     setFeedback(null);
-    setHint(false);
+    setHint(null);
+    setEliminated([]);
+    setRevealed(0);
     setUsedHint(false);
-    setLeft(null);
+    setPendingMatch(null);
     setMatched([]);
     setMismatch(false);
     setMatchError("");
+  }
+  const nextHint = exerciseHint(ex, {
+    eliminated,
+    revealed,
+    selected,
+    matched,
+    pendingMatch,
+  });
+  function help() {
+    if (!nextHint || feedback) return;
+    setUsedHint(true);
+    setHint(nextHint);
+    if (nextHint.eliminated) {
+      setEliminated(nextHint.eliminated);
+      if (nextHint.eliminated.includes(answer)) setAnswer("");
+    }
+    if (nextHint.revealed) {
+      setRevealed(nextHint.revealed);
+      inputRef.current?.focus({ preventScroll: true });
+    }
+    if (nextHint.selected) setSelected(nextHint.selected);
+    if (nextHint.matched) {
+      setMatched(nextHint.matched);
+      setPendingMatch(null);
+      setMatchError("");
+    }
   }
   function check(e) {
     e?.preventDefault();
@@ -1482,17 +1531,20 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       setDone(true);
     } else setIndex((i) => i + 1);
   }
-  function match(id) {
-    if (!left) return;
-    if (id === left) {
+  function match(side, id) {
+    if (feedback || matched.includes(id)) return;
+    setMatchError("");
+    if (!pendingMatch || pendingMatch.side === side) {
+      setPendingMatch(pendingMatch?.id === id ? null : { side, id });
+      return;
+    }
+    if (pendingMatch.id === id) {
       setMatched((a) => [...a, id]);
-      setLeft(null);
-      setMatchError("");
     } else {
       setMismatch(true);
-      setMatchError("Not quite — try another meaning.");
-      setLeft(null);
+      setMatchError("Not quite — try another pair.");
     }
+    setPendingMatch(null);
   }
   function letter(c) {
     const input = inputRef.current;
@@ -1544,7 +1596,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   useEffect(() => {
     function advance(e) {
       if (
-        e.key !== "Enter" ||
         e.repeat ||
         e.isComposing ||
         e.altKey ||
@@ -1554,6 +1605,32 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
         exit
       )
         return;
+      const choiceKey = /^[1-9]$/.test(e.key)
+        ? e.key
+        : /^Numpad[1-9]$/.test(e.code)
+          ? e.code.slice(-1)
+          : null;
+      if (choiceKey) {
+        if (
+          intro ||
+          done ||
+          feedback ||
+          ex?.type !== "choice" ||
+          e.target.closest(
+            "input, textarea, select, [contenteditable]:not([contenteditable=false]), [role=alertdialog]",
+          )
+        )
+          return;
+        const option = sessionRef.current?.querySelectorAll(
+          ".answer-options button",
+        )[Number(choiceKey) - 1];
+        if (option && !option.disabled) {
+          e.preventDefault();
+          setAnswer(ex.options[Number(choiceKey) - 1]);
+        }
+        return;
+      }
+      if (e.key !== "Enter") return;
       if (e.target.closest("textarea, select, summary, a, [role=alertdialog]"))
         return;
       e.preventDefault();
@@ -1695,118 +1772,127 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                 : "You’ve finished every course lesson."}
             </p>
           )}
-          <Button onClick={config.mode === "practice" ? onClose : onContinue}>
-            {config.mode === "practice"
-              ? "Back to your journey"
-              : stats(progressRef.current).nextStep
-                ? "Continue course"
-                : "View completed course"}
-            <Icon name="ArrowRight" size={18} />
-          </Button>
-          {config.mode !== "practice" && (
-            <Button secondary onClick={onClose}>
-              Back to your journey
+          <div className="summary-actions">
+            {config.mode !== "practice" ? (
+              <Button secondary onClick={onClose}>
+                Back to your journey
+              </Button>
+            ) : (
+              <Button
+                secondary
+                onClick={() => {
+                  reset();
+                  setQueue(
+                    practiceSession(
+                      progressRef.current,
+                      config.practiceSet || "all",
+                    ).queue,
+                  );
+                  setAttempts([]);
+                  setPaused(false);
+                  setIndex(0);
+                  setResults([]);
+                  setDone(false);
+                }}
+              >
+                Practise another round
+              </Button>
+            )}
+            <Button onClick={config.mode === "practice" ? onClose : onContinue}>
+              {config.mode === "practice"
+                ? "Back to your journey"
+                : stats(progressRef.current).nextStep
+                  ? "Continue course"
+                  : "View completed course"}
+              <Icon name="ArrowRight" size={18} />
             </Button>
-          )}
-          {config.mode === "practice" && (
-            <Button
-              secondary
-              onClick={() => {
-                reset();
-                setQueue(
-                  practiceSession(
-                    progressRef.current,
-                    config.practiceSet || "all",
-                  ).queue,
-                );
-                setAttempts([]);
-                setPaused(false);
-                setIndex(0);
-                setResults([]);
-                setDone(false);
-              }}
-            >
-              Practise another round
-            </Button>
-          )}
+          </div>
         </div>
       ) : intro ? (
         <div className="session-content lesson-intro">
-          <span className="card-icon green">
-            <Icon name="BookOpen" size={27} />
-          </span>
-          <span className="eyebrow">
-            {chapterTitle}
-            {modulePosition > 0
-              ? ` · Module ${modulePosition} of ${chapterClasses.length}`
-              : ""}
-          </span>
-          <h1>{title}</h1>
-          {config.step && (
-            <div className="session-phase">
-              <strong>{config.step.title}</strong>
-              <span>
-                {config.step.phase === "checkpoint"
-                  ? "Use what you have learned across this chapter. Aim for 80% on your first attempts."
-                  : `Session ${classSteps(config.lesson.id).findIndex((s) => s.id === config.step.id) + 1} of ${classSteps(config.lesson.id).length} in this class`}
-              </span>
-            </div>
-          )}
-          {firstLessonVisit && config.step?.phase !== "checkpoint" && (
-            <div className="rule-box">
-              <Icon name="Lightbulb" size={23} />
-              <p>{config.lesson.rule}</p>
-            </div>
-          )}
-          {!["reading", "writing"].includes(config.lesson.kind) &&
-            !["recall", "checkpoint"].includes(config.step?.phase) &&
-            (config.step?.phase !== "apply" ||
-              config.step.items.some((i) => i.role === "context")) && (
-              <>
-                <h3>
-                  {config.step?.phase === "discover"
-                    ? "A small set to learn and use"
-                    : "Bring these words back"}
-                </h3>
-                <div className="intro-words">
-                  {(config.step?.phase === "apply"
-                    ? config.step.items.filter((i) => i.role === "context")
-                    : config.practiceSet?.items ||
-                      config.step?.items ||
-                      config.lesson.items
-                  ).map((i) => (
-                    <div key={i.id}>
-                      <strong lang="lt">{i.lt}</strong>
-                      <span>{i.en}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
+          <div className="intro-body">
+            <span className="card-icon green">
+              <Icon name="BookOpen" size={27} />
+            </span>
+            <span className="eyebrow">
+              {chapterTitle}
+              {modulePosition > 0
+                ? ` · Module ${modulePosition} of ${chapterClasses.length}`
+                : ""}
+            </span>
+            <h1>{title}</h1>
+            {config.step && (
+              <div className="session-phase">
+                <strong>{config.step.title}</strong>
+                <span>
+                  {config.step.phase === "checkpoint"
+                    ? "Use what you have learned across this chapter. Aim for 80% on your first attempts."
+                    : `Session ${classSteps(config.lesson.id).findIndex((s) => s.id === config.step.id) + 1} of ${classSteps(config.lesson.id).length} in this class`}
+                </span>
+              </div>
             )}
-          <Button onClick={() => setIntro(false)}>
-            Let’s try it
-            <Icon name="ArrowRight" size={18} />
-          </Button>
+            {firstLessonVisit && config.step?.phase !== "checkpoint" && (
+              <div className="rule-box">
+                <Icon name="Lightbulb" size={23} />
+                <p>{config.lesson.rule}</p>
+              </div>
+            )}
+            {!["reading", "writing"].includes(config.lesson.kind) &&
+              !["recall", "checkpoint"].includes(config.step?.phase) &&
+              (config.step?.phase !== "apply" ||
+                config.step.items.some((i) => i.role === "context")) && (
+                <>
+                  <h3>
+                    {config.step?.phase === "discover"
+                      ? "A small set to learn and use"
+                      : "Bring these words back"}
+                  </h3>
+                  <div className="intro-words">
+                    {(config.step?.phase === "apply"
+                      ? config.step.items.filter((i) => i.role === "context")
+                      : config.practiceSet?.items ||
+                        config.step?.items ||
+                        config.lesson.items
+                    ).map((i) => (
+                      <div key={i.id}>
+                        <strong lang="lt">{i.lt}</strong>
+                        <span>{i.en}</span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+          </div>
+          <div className="intro-footer">
+            <Button onClick={() => setIntro(false)}>
+              Let’s try it
+              <Icon name="ArrowRight" size={18} />
+            </Button>
+          </div>
         </div>
       ) : !["reading", "writing"].includes(item.activity) &&
         !stats(progressRef.current).records[item.id]?.seen &&
         introduced !== index ? (
         <div className="session-content lesson-intro first-look">
-          <span className="eyebrow">
-            {source.kind === "pattern"
-              ? "A WORKED EXAMPLE"
-              : source.kind === "conversation"
-                ? "SOMETHING TO SAY"
-                : "MEET A NEW WORD OR PHRASE"}
-          </span>
-          {source.kind !== "vocabulary" && (
-            <p className="first-look-context">{source.rule}</p>
-          )}
-          <h1 lang="lt">{item.lt}</h1>
-          <p>{item.en}</p>
-          <Button onClick={() => setIntroduced(index)}>
-            Try it <Icon name="ArrowRight" size={18} />
-          </Button>
+          <div className="intro-body">
+            <span className="eyebrow">
+              {source.kind === "pattern"
+                ? "A WORKED EXAMPLE"
+                : source.kind === "conversation"
+                  ? "SOMETHING TO SAY"
+                  : "MEET A NEW WORD OR PHRASE"}
+            </span>
+            {source.kind !== "vocabulary" && (
+              <p className="first-look-context">{source.rule}</p>
+            )}
+            <h1 lang="lt">{item.lt}</h1>
+            <p>{item.en}</p>
+          </div>
+          <div className="intro-footer">
+            <Button onClick={() => setIntroduced(index)}>
+              Try it <Icon name="ArrowRight" size={18} />
+            </Button>
+          </div>
         </div>
       ) : (
         <>
@@ -1880,9 +1966,17 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                   {ex.options.map((option, i) => (
                     <button
                       type="button"
-                      disabled={Boolean(feedback)}
+                      disabled={
+                        Boolean(feedback) || eliminated.includes(option)
+                      }
                       key={option}
-                      className={answer === option ? "selected" : ""}
+                      className={
+                        eliminated.includes(option)
+                          ? "eliminated"
+                          : answer === option
+                            ? "selected"
+                            : ""
+                      }
                       onClick={() => setAnswer(option)}
                     >
                       <span>{i + 1}</span>
@@ -1902,6 +1996,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                   </label>
                   <textarea
                     id="answer"
+                    autoFocus
                     ref={inputRef}
                     className="typed-answer writing-answer"
                     rows={7}
@@ -1959,6 +2054,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                     autoCapitalize="off"
                     spellCheck="false"
                     id="answer"
+                    autoFocus
                     ref={inputRef}
                     className="typed-answer"
                     disabled={Boolean(feedback)}
@@ -2032,15 +2128,17 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                           className={
                             matched.includes(p.id)
                               ? "matched"
-                              : left === p.id
+                              : pendingMatch?.side === "left" &&
+                                  pendingMatch.id === p.id
                                 ? "selected"
                                 : ""
                           }
                           disabled={Boolean(feedback) || matched.includes(p.id)}
-                          onClick={() => {
-                            setLeft(p.id);
-                            setMatchError("");
-                          }}
+                          aria-pressed={
+                            pendingMatch?.side === "left" &&
+                            pendingMatch.id === p.id
+                          }
+                          onClick={() => match("left", p.id)}
                           lang="lt"
                         >
                           {p.lt}
@@ -2055,9 +2153,20 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                         <button
                           type="button"
                           key={p.id}
-                          className={matched.includes(p.id) ? "matched" : ""}
+                          className={
+                            matched.includes(p.id)
+                              ? "matched"
+                              : pendingMatch?.side === "right" &&
+                                  pendingMatch.id === p.id
+                                ? "selected"
+                                : ""
+                          }
+                          aria-pressed={
+                            pendingMatch?.side === "right" &&
+                            pendingMatch.id === p.id
+                          }
                           disabled={Boolean(feedback) || matched.includes(p.id)}
-                          onClick={() => match(p.id)}
+                          onClick={() => match("right", p.id)}
                         >
                           {p.en}
                         </button>
@@ -2069,24 +2178,25 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                   </p>
                 </>
               )}
-              {!feedback && ex.type !== "writing" && (
+              {!feedback && nextHint && (
                 <button
                   type="button"
                   className="hint-button"
-                  onClick={() => {
-                    setHint(!hint);
-                    setUsedHint(true);
-                  }}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={help}
                 >
                   <Icon name="Lightbulb" size={16} />
-                  {hint ? "Hide explanation" : "A little help?"}
+                  {usedHint ? "A little more help?" : "A little help?"}
                 </button>
               )}
               {hint && (
-                <div className="exercise-hint">
-                  <p>{source.rule}</p>
-                  {skillNotes[item.skill] && <p>{skillNotes[item.skill]}</p>}
-                  <strong lang="lt">{item.lt}</strong>
+                <div className="exercise-hint" role="status">
+                  <p>{hint.message}</p>
+                  {hint.spelling && (
+                    <strong className="hint-spelling" lang="lt">
+                      {hint.spelling}
+                    </strong>
+                  )}
                   <span>
                     We’ll revisit this without a hint to help it stick.
                   </span>
