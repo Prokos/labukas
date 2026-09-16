@@ -1842,23 +1842,6 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                     : skills[item.skill]}
                 </span>
               </div>
-              <h1>
-                {item.activity === "writing"
-                  ? "Write your own message."
-                  : item.activity === "reading"
-                    ? "Use the information in the text."
-                    : ex.isGap
-                      ? "Which form fits here?"
-                      : ex.type === "match"
-                        ? "Match the words and meanings."
-                        : ex.type === "cloze"
-                          ? "Find the missing word."
-                          : ex.type === "order"
-                            ? "Put the words in order."
-                            : ex.reverse
-                              ? "What does this mean?"
-                              : "How would you say this?"}
-              </h1>
               {ex.passage && (
                 <div className="reading-passage" lang="lt">
                   <span className="eyebrow">SKAITYK · READ</span>

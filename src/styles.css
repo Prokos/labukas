@@ -1346,6 +1346,8 @@ select {
 }
 .session-top-middle {
   flex: 1;
+  position: relative;
+  top: 2px;
 }
 .session-top-middle > span {
   font-size: 8px;
@@ -3089,5 +3091,5 @@ select {
 .session-top-middle > span {
   font-size: 10px;
   letter-spacing: 0.5px;
-  line-height: 1.5;
+  line-height: 0;
 }
