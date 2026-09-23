@@ -1,0 +1,1714 @@
+{
+  "generatedOn": "2026-09-23",
+  "local": {
+    "chapters": 10,
+    "mainClasses": 226,
+    "optionalClasses": 10,
+    "mainSessions": 1663,
+    "optionalSessions": 67,
+    "targets": 2264,
+    "mainClassKinds": {
+      "vocabulary": 87,
+      "pattern": 90,
+      "conversation": 12,
+      "reading": 27,
+      "writing": 10
+    },
+    "phases": {
+      "discover": 642,
+      "guided": 357,
+      "recall": 357,
+      "apply": 239,
+      "writing": 10,
+      "checkpoint": 58
+    },
+    "mappedCommunicativeObjectives": 46,
+    "targetsWithExplanation": 0,
+    "targetsWithTeachingMetadata": 0,
+    "targetsWithAlternatives": 7,
+    "targetsWithCloze": 705,
+    "targetsWithAudio": 0,
+    "vocabularyTargets": 1118,
+    "vocabularyWithSameLessonExactFormExample": 86,
+    "first100SessionClassKinds": {
+      "vocabulary": 60,
+      "pattern": 40
+    },
+    "firstReading": {
+      "oneBasedSession": 175,
+      "stepId": "c1-situation-classmate-discover-0"
+    },
+    "firstWriting": {
+      "oneBasedSession": 183,
+      "stepId": "c1-writing-writing-0"
+    },
+    "examples": [
+      {
+        "id": "c1l3i4",
+        "lt": "Ji gyvena Kaune",
+        "en": "She lives in Kaunas",
+        "skill": "locative",
+        "lesson": "c1l3",
+        "stagePlan": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "Ji gyvena ___",
+            "answer": "Kaune",
+            "options": ["Kaune", "esu", "Lietuvos", "Aš"]
+          },
+          {
+            "stage": 1,
+            "type": "order",
+            "prompt": "She lives in Kaunas",
+            "answer": "Ji gyvena Kaune"
+          },
+          {
+            "stage": 2,
+            "type": "cloze",
+            "prompt": "She lives in Kaunas",
+            "answer": "Kaune"
+          },
+          {
+            "stage": 3,
+            "type": "order",
+            "prompt": "She lives in Kaunas",
+            "answer": "Ji gyvena Kaune"
+          },
+          {
+            "stage": 4,
+            "type": "cloze",
+            "prompt": "She lives in Kaunas",
+            "answer": "Kaune"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "She lives in Kaunas",
+            "answer": "Ji gyvena Kaune"
+          }
+        ]
+      },
+      {
+        "id": "c1-present-people-core-1cjotio",
+        "lt": "Mes gyvename centre",
+        "en": "We live in the centre",
+        "skill": "present",
+        "lesson": "c1-present-people",
+        "stagePlan": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "Mes ___ centre",
+            "answer": "gyvename",
+            "options": ["gyvename", "bendrabutyje", "gyvenate", "Jūs"]
+          },
+          {
+            "stage": 1,
+            "type": "order",
+            "prompt": "We live in the centre",
+            "answer": "Mes gyvename centre"
+          },
+          {
+            "stage": 2,
+            "type": "cloze",
+            "prompt": "We live in the centre",
+            "answer": "gyvename"
+          },
+          {
+            "stage": 3,
+            "type": "order",
+            "prompt": "We live in the centre",
+            "answer": "Mes gyvename centre"
+          },
+          {
+            "stage": 4,
+            "type": "cloze",
+            "prompt": "We live in the centre",
+            "answer": "gyvename"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "We live in the centre",
+            "answer": "Mes gyvename centre"
+          }
+        ]
+      },
+      {
+        "id": "c2-with-without-forms-core-11d6wes",
+        "lt": "Salotos su sūriu",
+        "en": "Salad with cheese",
+        "skill": "instrumental",
+        "lesson": "c2-with-without-forms",
+        "stagePlan": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "Salotos su ___",
+            "answer": "sūriu",
+            "options": ["sūriu", "be", "sūrio", "Salotos"]
+          },
+          {
+            "stage": 1,
+            "type": "order",
+            "prompt": "Salad with cheese",
+            "answer": "Salotos su sūriu"
+          },
+          {
+            "stage": 2,
+            "type": "cloze",
+            "prompt": "Salad with cheese",
+            "answer": "sūriu"
+          },
+          {
+            "stage": 3,
+            "type": "order",
+            "prompt": "Salad with cheese",
+            "answer": "Salotos su sūriu"
+          },
+          {
+            "stage": 4,
+            "type": "cloze",
+            "prompt": "Salad with cheese",
+            "answer": "sūriu"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "Salad with cheese",
+            "answer": "Salotos su sūriu"
+          }
+        ]
+      }
+    ]
+  },
+  "archive": {
+    "source": "https://duolingodata.com/json/esfen286.7z",
+    "extractedJsonBytes": 1864288,
+    "extractedJsonSha256": "a53dc611e6904584596e4f262eb440efd6871f6cab6fc676fedd787f3a50730a",
+    "direction": {
+      "from": "en",
+      "learning": "es"
+    },
+    "courseId": "DUOLINGO_ES_EN",
+    "learningSections": 8,
+    "learningUnits": 286,
+    "refreshUnits": 1,
+    "sections": [
+      {
+        "index": 0,
+        "type": "learning",
+        "units": 8,
+        "cefr": {
+          "level": "INTRO"
+        }
+      },
+      {
+        "index": 1,
+        "type": "learning",
+        "units": 26,
+        "cefr": {
+          "level": "A1",
+          "sublevel": 1,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 2,
+        "type": "learning",
+        "units": 28,
+        "cefr": {
+          "level": "A1",
+          "sublevel": 2,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 3,
+        "type": "learning",
+        "units": 52,
+        "cefr": {
+          "level": "A2",
+          "sublevel": 1,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 4,
+        "type": "learning",
+        "units": 50,
+        "cefr": {
+          "level": "B1",
+          "sublevel": 1,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 5,
+        "type": "learning",
+        "units": 50,
+        "cefr": {
+          "level": "B1",
+          "sublevel": 3,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 6,
+        "type": "learning",
+        "units": 36,
+        "cefr": {
+          "level": "B2",
+          "sublevel": 1,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 7,
+        "type": "learning",
+        "units": 36,
+        "cefr": {
+          "level": "B2",
+          "sublevel": 3,
+          "granularLevel": ""
+        }
+      },
+      {
+        "index": 8,
+        "type": "daily_refresh",
+        "units": 1,
+        "cefr": null
+      }
+    ],
+    "nodes": 2695,
+    "nodeTypes": {
+      "skill/regular": 572,
+      "practice/unit_practice": 286,
+      "chest/chest": 392,
+      "unit_review/unit_review": 287,
+      "story/read": 397,
+      "practice/practice": 286,
+      "skill/grammar": 37,
+      "duo_radio/duo_radio": 104,
+      "story/listen": 334
+    },
+    "learningNodeTypes": {
+      "skill/regular": 572,
+      "practice/unit_practice": 286,
+      "chest/chest": 392,
+      "unit_review/unit_review": 286,
+      "story/read": 396,
+      "practice/practice": 283,
+      "skill/grammar": 37,
+      "duo_radio/duo_radio": 104,
+      "story/listen": 333
+    },
+    "nodesExcludingRewardChests": 2303,
+    "declaredSessionSlotsExcludingRewardChests": 6440,
+    "legacySkillRows": 217,
+    "legacySkills": 327,
+    "skillsWithExplanationResource": 151,
+    "skillsWithInlineNotes": 5,
+    "smartTipReferences": 150,
+    "unitsWithGuidebookReference": 286,
+    "distinctStories": 396,
+    "firstStory": {
+      "absoluteNodeIndex": 16,
+      "sectionIndex": 0,
+      "unitIndex": 3
+    },
+    "firstRadio": {
+      "absoluteNodeIndex": 40,
+      "sectionIndex": 0,
+      "unitIndex": 5
+    },
+    "firstEightUnits": [
+      {
+        "unitIndex": 0,
+        "nodeTypes": {
+          "skill": 2,
+          "practice": 1,
+          "chest": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 4,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 4,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 1,
+        "nodeTypes": {
+          "skill": 2,
+          "practice": 1,
+          "chest": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 4,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 4,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 2,
+        "nodeTypes": {
+          "skill": 2,
+          "practice": 1,
+          "chest": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 3,
+        "nodeTypes": {
+          "skill": 2,
+          "story": 3,
+          "practice": 2,
+          "chest": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 4,
+        "nodeTypes": {
+          "skill": 2,
+          "story": 3,
+          "chest": 1,
+          "practice": 2,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 5,
+        "nodeTypes": {
+          "skill": 3,
+          "story": 2,
+          "chest": 2,
+          "practice": 2,
+          "duo_radio": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "skill",
+            "subtype": "grammar",
+            "sessions": 5,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "practice",
+            "sessions": 2
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "duo_radio",
+            "subtype": "duo_radio",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 6,
+        "nodeTypes": {
+          "skill": 2,
+          "story": 2,
+          "chest": 1,
+          "practice": 2,
+          "duo_radio": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 5,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "practice",
+            "sessions": 2
+          },
+          {
+            "type": "duo_radio",
+            "subtype": "duo_radio",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      },
+      {
+        "unitIndex": 7,
+        "nodeTypes": {
+          "skill": 2,
+          "story": 3,
+          "chest": 2,
+          "practice": 2,
+          "duo_radio": 1,
+          "unit_review": 1
+        },
+        "sequence": [
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 4,
+            "crownLevelIndex": 0
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "skill",
+            "subtype": "regular",
+            "sessions": 4,
+            "crownLevelIndex": 1
+          },
+          {
+            "type": "story",
+            "subtype": "listen",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "practice",
+            "sessions": 2
+          },
+          {
+            "type": "duo_radio",
+            "subtype": "duo_radio",
+            "sessions": 1
+          },
+          {
+            "type": "practice",
+            "subtype": "unit_practice",
+            "sessions": 2
+          },
+          {
+            "type": "story",
+            "subtype": "read",
+            "sessions": 1
+          },
+          {
+            "type": "chest",
+            "subtype": "chest",
+            "sessions": 1
+          },
+          {
+            "type": "unit_review",
+            "subtype": "unit_review",
+            "sessions": 1
+          }
+        ]
+      }
+    ],
+    "declaredInventoryCountsNotContainedContent": {
+      "words": 6415,
+      "sentences": 60218
+    },
+    "exercisePayloadKeysPresent": [],
+    "fieldNames": [
+      "absoluteNodeIndex",
+      "accessible",
+      "activePathSectionId",
+      "alphabetsPathProgressKey",
+      "anchorSkillId",
+      "assignmentInfo",
+      "assignments",
+      "authorId",
+      "bonus",
+      "cefr",
+      "cefrContentUrl",
+      "cefrLevel",
+      "checkpointAccessible",
+      "checkpointFinished",
+      "checkpointSessionType",
+      "checkpointTests",
+      "chest",
+      "clientNotifications",
+      "completedLevels",
+      "completedLevelsPerUnit",
+      "completedUnits",
+      "completions",
+      "course_id",
+      "course_subject",
+      "course_topic_id",
+      "crownLevelIndex",
+      "crowns",
+      "dailyRefreshIndex",
+      "dailyRefreshInfo",
+      "debugName",
+      "direction",
+      "duoRadioProgress",
+      "duoRadioSummary",
+      "duo_radio",
+      "eligibleModes",
+      "episode_id",
+      "exampleSentence",
+      "experimentIds",
+      "experimentalLessons",
+      "expiresAt",
+      "explanation",
+      "extraCrowns",
+      "finalCheckpointSession",
+      "finalLevelTimeLimit",
+      "finishedLessons",
+      "finishedLevels",
+      "finishedSessions",
+      "firstUnitTestNode",
+      "fixedXpAward",
+      "fluency",
+      "fromLanguage",
+      "globalPracticeMetadata",
+      "grammar",
+      "grammarConceptUrl",
+      "granularLevel",
+      "guidebook",
+      "hardModeLevelIndex",
+      "hasFinalLevel",
+      "hasLevelReview",
+      "healthEnabled",
+      "iconId",
+      "id",
+      "inLessonAvatars",
+      "index",
+      "indexSinceAnchorSkill",
+      "intro",
+      "isGrammar",
+      "isInProgressSequence",
+      "isPathExtension",
+      "lastLessonPerfect",
+      "lastUnitReviewNode",
+      "learningLanguage",
+      "learning_language",
+      "lessons",
+      "level",
+      "levels",
+      "managedInHouse",
+      "masteryScore",
+      "max_cefr_level",
+      "max_section_index",
+      "max_tree_level",
+      "mode",
+      "name",
+      "nodeIndex",
+      "notifications",
+      "numRows",
+      "numberOfSentences",
+      "numberOfWords",
+      "path",
+      "pathDetails",
+      "pathExperiments",
+      "pathLevelClientData",
+      "pathLevelMetadata",
+      "pathSectioned",
+      "pathSectionsSummary",
+      "path_position_active_node_index",
+      "path_position_active_section_cefr",
+      "path_position_active_section_index",
+      "path_position_active_unit_index",
+      "path_position_content_type",
+      "path_uses_unit_vision",
+      "perfectLessonStreak",
+      "placementDepth",
+      "placementTestAvailable",
+      "practice",
+      "preload",
+      "progressVersion",
+      "sections",
+      "shortName",
+      "sideQuestProgress",
+      "skill",
+      "skillId",
+      "skillIds",
+      "skillType",
+      "skill_tree_id",
+      "skills",
+      "smartTipId",
+      "smartTips",
+      "state",
+      "status",
+      "storiesTabPromotionLocation",
+      "story",
+      "storyId",
+      "storyName",
+      "strength",
+      "subject",
+      "sublevel",
+      "subtype",
+      "summary",
+      "teachingObjective",
+      "tipsAndNotes",
+      "title",
+      "took_placementtest",
+      "topic",
+      "totalLevels",
+      "totalLevelsPerUnit",
+      "totalSessions",
+      "totalUnits",
+      "trackingProperties",
+      "transliterationJson",
+      "treeId",
+      "ttsAccents",
+      "type",
+      "ui_language",
+      "unitIndex",
+      "unit_review",
+      "units",
+      "url",
+      "urlName",
+      "version",
+      "viable_skill_ids",
+      "wordsLearned",
+      "xp"
+    ]
+  },
+  "linkedResourceSample": [
+    {
+      "name": "smart-tip-0",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/1e06e427-eaac-4657-a710-4243f2574c1b/web/2/5/2.json",
+      "bytes": 4202,
+      "sha256": "fca4db199df3089663ebe3843aab0dacadf63ecd02c31704037291b9a55ea9a5",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 5,
+        "text": 4,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 0,
+      "hintTables": 0,
+      "styledRanges": 12,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": 3,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": true,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "sectionIndex",
+        "styledString",
+        "styling",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "smart-tip-1",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/bba94207-d686-4990-934f-7e04120a9573/web/2/5/7.json",
+      "bytes": 4498,
+      "sha256": "878e85d65ee1b65bed7d37ea9c9789b96f4a77ba3aaa7073049677ee39da105e",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 5,
+        "text": 4,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 0,
+      "hintTables": 0,
+      "styledRanges": 12,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": null,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": true,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "backgroundColor",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "resourcesToPrefetch",
+        "sectionIndex",
+        "styledString",
+        "styling",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "smart-tip-2",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/16c50ad4-5d11-4548-a3d8-fadb0fe0bb00/web/2/5/6.json",
+      "bytes": 3983,
+      "sha256": "19ac753bfa851fd089afa4522ce09f5e95f115c05a22fe3e1f56366df445019d",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 5,
+        "text": 4,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 0,
+      "hintTables": 0,
+      "styledRanges": 11,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": null,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": true,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "sectionIndex",
+        "styledString",
+        "styling",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "smart-tip-10",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/dba3df93-7979-46f9-a150-88c276b35905/web/2/5/2.json",
+      "bytes": 3981,
+      "sha256": "fbcac8fa6e9c30702029314d837d757c45376b78c030b7932b24a38cb9b71d99",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 5,
+        "text": 4,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 0,
+      "hintTables": 0,
+      "styledRanges": 11,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": null,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": true,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "sectionIndex",
+        "styledString",
+        "styling",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "smart-tip-50",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/2dd82414-0915-40a4-9ff5-6194069690be/web/2/5/2.json",
+      "bytes": 8593,
+      "sha256": "3c2611dd427f9f793054adcd36f7e3cc428a94a59bb3236d2064c90d08e1ab73",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 6,
+        "text": 4,
+        "example": 1,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 7,
+      "hintTables": 0,
+      "styledRanges": 33,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": null,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": false,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "endIndex",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "ttsURL",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "smart-tip-100",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/675d1bbe-78b5-4a14-857b-c3701ae307db/web/2/5/2.json",
+      "bytes": 7500,
+      "sha256": "e98958e637422ffeb8cd7e30ac1dddf5e6bd9938dbbe2f83e1a0151e347c70b1",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 7,
+        "text": 4,
+        "example": 2,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 8,
+      "hintTables": 0,
+      "styledRanges": 23,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": null,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": false,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "endIndex",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "ttsURL",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "smart-tip-149",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/smart_tip_es_en/34c2fc66-203c-46b7-93b0-2fbc76eea246/web/2/5/3.json",
+      "bytes": 5944,
+      "sha256": "fb879d4a9d10cb99d63d4fb64d1a101ebbc44658d064d78a8b1e0e4617a9a1ca",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 7,
+        "text": 4,
+        "example": 2,
+        "challenge": 1
+      },
+      "challenges": 1,
+      "audioReferences": 5,
+      "hintTables": 0,
+      "styledRanges": 14,
+      "policy": {
+        "allowedSkillLevels": [0, 1, 2, 3, 4, 5],
+        "earliestRow": null,
+        "minimumTimeBetweenShows": 86400
+      },
+      "parameterized": true,
+      "hasCorrectSolution": true,
+      "keys": [
+        "alignment",
+        "allowedSkillLevels",
+        "answeredElements",
+        "attributes",
+        "autoPlayableTTS",
+        "controlElements",
+        "correctSolution",
+        "earliestRow",
+        "element",
+        "elements",
+        "endIndex",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hintLinks",
+        "hints",
+        "identifier",
+        "index",
+        "isCorrect",
+        "latestRow",
+        "lineSpacing",
+        "meta",
+        "minimumTimeBetweenShows",
+        "name",
+        "options",
+        "policy",
+        "rangeEnd",
+        "rangeStart",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "ttsURL",
+        "type",
+        "unansweredElements",
+        "underline",
+        "underlineColor",
+        "userDefaultsKey"
+      ]
+    },
+    {
+      "name": "guide-0-0",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/guidebook/compiled/es/en/iOS/1/43ad58c2e974832a01cfea8516a5c584f8f7e45329f4691ff90df19e3043ff396bce4e5bb70bdd852a14b8794bafda2229c7f4a1ba4ea10279597f67a02cfc58/6.json",
+      "bytes": 34574,
+      "sha256": "106190f534e7bb92c7332c0b0fcc468fb9be5855cb42b9aaca4176dcf5dd245c",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 23,
+        "text": 9,
+        "dialogue": 5,
+        "exampleCaptionedImage": 3,
+        "table": 1
+      },
+      "challenges": 0,
+      "audioReferences": 46,
+      "hintTables": 23,
+      "styledRanges": 77,
+      "parameterized": false,
+      "hasCorrectSolution": false,
+      "keys": [
+        "alignment",
+        "attributes",
+        "autoPlayableTTS",
+        "backgroundColor",
+        "blockHints",
+        "cells",
+        "colspan",
+        "element",
+        "elements",
+        "endIndex",
+        "examples",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hasShadedHeader",
+        "hint",
+        "hintLinks",
+        "hintTable",
+        "hints",
+        "image",
+        "index",
+        "layout",
+        "lineSpacing",
+        "meta",
+        "phrases",
+        "rangeEnd",
+        "rangeStart",
+        "references",
+        "required",
+        "resourcesToPrefetch",
+        "rows",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "tts",
+        "ttsURL",
+        "type",
+        "url",
+        "value"
+      ]
+    },
+    {
+      "name": "guide-0-3",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/guidebook/compiled/es/en/iOS/1/01ffb185580f785463ad119d7806af2c95d8f4042bfb6a8e9744b11227c16cbe2a8e18403b3103c0c860ec57c92a743f8384a85f2da1ff181b8602dfe601a94a/6.json",
+      "bytes": 20452,
+      "sha256": "fd7269727310617055531a8e32241590305731843e3bad726e4b0838796a45cc",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 15,
+        "text": 6,
+        "dialogue": 4,
+        "exampleCaptionedImage": 2
+      },
+      "challenges": 0,
+      "audioReferences": 37,
+      "hintTables": 26,
+      "styledRanges": 26,
+      "parameterized": false,
+      "hasCorrectSolution": false,
+      "keys": [
+        "alignment",
+        "attributes",
+        "autoPlayableTTS",
+        "backgroundColor",
+        "blockHints",
+        "colspan",
+        "element",
+        "elements",
+        "endIndex",
+        "examples",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "headers",
+        "hint",
+        "hintLinks",
+        "hintTable",
+        "hints",
+        "image",
+        "index",
+        "layout",
+        "lineSpacing",
+        "meta",
+        "phrases",
+        "rangeEnd",
+        "rangeStart",
+        "references",
+        "required",
+        "resourcesToPrefetch",
+        "rows",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "tts",
+        "ttsURL",
+        "type",
+        "url",
+        "value"
+      ]
+    },
+    {
+      "name": "guide-1-0",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/guidebook/compiled/es/en/iOS/1/356cc24f4eb19ffb79074c05dfaf1c77cf975f4bfab420cf184c39a714f4c26ebe0bf0ece45447f13ecabf81293618adcb04c552ce94ec3c470b72d85a4558b3/6.json",
+      "bytes": 39044,
+      "sha256": "924b8afaca0c2ed69186ec6f826bcdf3d18c3c195f9836689c5623bc387de58d",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 27,
+        "text": 13,
+        "dialogue": 3,
+        "exampleCaptionedImage": 6
+      },
+      "challenges": 0,
+      "audioReferences": 50,
+      "hintTables": 20,
+      "styledRanges": 75,
+      "parameterized": false,
+      "hasCorrectSolution": false,
+      "keys": [
+        "alignment",
+        "attributes",
+        "autoPlayableTTS",
+        "backgroundColor",
+        "blockHints",
+        "colspan",
+        "element",
+        "elements",
+        "endIndex",
+        "examples",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "headers",
+        "hint",
+        "hintLinks",
+        "hintTable",
+        "hints",
+        "image",
+        "index",
+        "layout",
+        "lineSpacing",
+        "meta",
+        "phrases",
+        "rangeEnd",
+        "rangeStart",
+        "references",
+        "required",
+        "resourcesToPrefetch",
+        "rows",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "tts",
+        "ttsURL",
+        "type",
+        "url",
+        "value"
+      ]
+    },
+    {
+      "name": "skill-intro",
+      "url": "https://d1btvuu4dwu627.cloudfront.net/209338530709d160ba0049addfd664ee/3b30749ae4846333bc559fbd065ce19c/web/5/1.json",
+      "bytes": 28502,
+      "sha256": "af9e63c9249bf65e3c5d0d2ccb8857e1c0435fae634aee20d7f4ce83fa838c23",
+      "status": "ok",
+      "elementTypes": {
+        "verticalSpace": 15,
+        "text": 8,
+        "exampleCaptionedImage": 5,
+        "table": 1
+      },
+      "challenges": 0,
+      "audioReferences": 23,
+      "hintTables": 0,
+      "styledRanges": 85,
+      "parameterized": false,
+      "hasCorrectSolution": false,
+      "keys": [
+        "alignment",
+        "attributes",
+        "autoPlayableTTS",
+        "backgroundColor",
+        "cells",
+        "element",
+        "elements",
+        "endIndex",
+        "examples",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hasShadedHeader",
+        "hintLinks",
+        "hints",
+        "image",
+        "index",
+        "intro",
+        "layout",
+        "lineSpacing",
+        "meta",
+        "rangeEnd",
+        "rangeStart",
+        "required",
+        "resourcesToPrefetch",
+        "sectionIndex",
+        "skillID",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "title",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "ttsURL",
+        "type",
+        "url"
+      ]
+    },
+    {
+      "name": "section-grammar-0",
+      "url": "https://s3.amazonaws.com/duolingo-explanations/path_sections/es_en/grammar_content/209338530709d160ba0049addfd664ee/1/web/version_1/section_0.json",
+      "bytes": 36729,
+      "sha256": "c862426fd80bfe20b244cebb60c4c387a7203cbb33ca452abdefe0c7198c67b3",
+      "status": "ok",
+      "elementTypes": {
+        "text": 10,
+        "verticalSpace": 17,
+        "table": 1,
+        "example": 10,
+        "lineBreak": 1
+      },
+      "challenges": 0,
+      "audioReferences": 42,
+      "hintTables": 0,
+      "styledRanges": 89,
+      "parameterized": false,
+      "hasCorrectSolution": false,
+      "keys": [
+        "alignment",
+        "attributes",
+        "autoPlayableTTS",
+        "backgroundColor",
+        "cells",
+        "element",
+        "elements",
+        "endIndex",
+        "fontSize",
+        "fontWeight",
+        "from",
+        "hasShadedHeader",
+        "hintLinks",
+        "hints",
+        "index",
+        "lineSpacing",
+        "meta",
+        "rangeEnd",
+        "rangeStart",
+        "required",
+        "resourcesToPrefetch",
+        "sectionIndex",
+        "startIndex",
+        "styledString",
+        "styling",
+        "subtext",
+        "text",
+        "textColor",
+        "title",
+        "to",
+        "tokenTTS",
+        "tokenTTSCollection",
+        "ttsURL",
+        "type",
+        "url"
+      ]
+    }
+  ]
+}

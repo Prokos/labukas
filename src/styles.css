@@ -3960,3 +3960,108 @@ h3 {
     font-size: 16px;
   }
 }
+
+/* One collection and one clear next practice session. */
+.practice-hero .practice-note {
+  font-size: 12px;
+  margin-top: 16px;
+}
+.practice-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+.practice-list-heading h2 {
+  margin: 0;
+  font-size: 23px;
+}
+.practice-list-heading h2 span {
+  color: var(--text-muted, #637180);
+  font-size: 14px;
+  margin-left: 8px;
+}
+.practice-list-heading > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted, #637180);
+  font-size: 12px;
+}
+.practice-list-heading + .word-controls {
+  margin: 18px 0 12px;
+}
+.practice-list-note {
+  font-size: 12px;
+  color: var(--text-muted, #637180);
+  margin-bottom: 18px;
+}
+.up-next {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: #e8f1eb;
+  color: #165c3d;
+  font-size: 10px;
+  font-weight: 600;
+}
+.mobile-nav .nav-count {
+  margin-left: 4px;
+  font-size: 9px;
+}
+.practice-outcomes {
+  margin: 24px 0;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+.practice-outcomes > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.practice-outcomes span {
+  font-size: 12px;
+  color: #637180;
+}
+.practice-outcomes .text-link {
+  width: 100%;
+}
+.practice-example {
+  margin-top: 22px;
+  padding: 18px;
+  background: #f5f7f9;
+  border-radius: 10px;
+}
+.practice-example strong {
+  display: block;
+  margin-top: 12px;
+}
+.word-table-row .practice-reason {
+  font-size: 10px;
+  margin-top: 8px;
+}
+@media (max-width: 720px) {
+  .practice-hero {
+    padding: 22px;
+  }
+  .practice-hero > svg {
+    display: none;
+  }
+  .practice-hero h2 {
+    font-size: 25px;
+  }
+  .practice-hero .button {
+    width: 100%;
+    margin-top: 14px;
+  }
+  .practice-hero .practice-note {
+    font-size: 11px;
+  }
+}

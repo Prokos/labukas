@@ -49,9 +49,9 @@ async function solve(p, wrong = false) {
     }
   } else {
     const question = await p.locator(".question-bubble p").innerText(),
-      reverse = (
-        await p.locator(".question-bubble small").innerText()
-      ).includes("CHOOSE THE ENGLISH");
+      reverse = (await p.locator(".question-bubble small").allTextContents())
+        .join(" ")
+        .includes("CHOOSE THE ENGLISH");
     const expected =
       card.activity === "reading"
         ? card.lt
@@ -126,7 +126,7 @@ async function chooseClass(p, id, n = 0, mobile = false) {
   await target.locator("button").nth(n).click();
 }
 if (!process.argv.includes("--offline-only")) {
-  await page.goto("http://127.0.0.1:5173/");
+  await page.goto(process.env.APP_URL || "http://127.0.0.1:5173/");
   await page.getByRole("heading", { name: "Labas, new beginnings." }).waitFor();
   await page.screenshot({
     path: join(tmpdir(), "labukas-desktop.png"),
@@ -194,7 +194,7 @@ if (!process.argv.includes("--offline-only")) {
   await chooseClass(page, "c1l2");
   await page
     .locator(".session-top-middle > span")
-    .filter({ hasText: "Lesson 1 of" })
+    .filter({ hasText: /Lesson 1\// })
     .waitFor();
   await page.getByRole("button", { name: "Let’s try it" }).click();
   await page.getByText("A WORKED EXAMPLE").waitFor();
@@ -233,7 +233,7 @@ if (!process.argv.includes("--offline-only")) {
   });
   // Existing saves retain introduction credit but lead back into the same class's practice.
   const legacy = await browser.newPage();
-  await legacy.goto("http://127.0.0.1:5173/");
+  await legacy.goto(process.env.APP_URL || "http://127.0.0.1:5173/");
   await legacy.evaluate(
     (key) =>
       localStorage.setItem(
@@ -267,7 +267,7 @@ if (!process.argv.includes("--offline-only")) {
   await legacy.close();
   // Due work and weak spots must never hijack the curriculum continuation.
   const routing = await browser.newPage();
-  await routing.goto("http://127.0.0.1:5173/");
+  await routing.goto(process.env.APP_URL || "http://127.0.0.1:5173/");
   const old = Date.now() - 7 * 86400000;
   const overdue = {
     version: 1,
@@ -306,11 +306,13 @@ if (!process.argv.includes("--offline-only")) {
   await assertCourse(overdue);
   await routing.getByRole("button", { name: "Close lesson" }).click();
   await routing
-    .getByRole("button", { name: "Review 4 due", exact: true })
+    .getByRole("button", { name: "See your words", exact: true })
     .click();
-  assert.equal(
-    await routing.locator(".session").getAttribute("data-session-mode"),
-    "review",
+  assert.equal(await routing.locator(".session").count(), 0);
+  assert.ok(
+    await routing
+      .getByRole("heading", { name: "Make your words stick." })
+      .isVisible(),
   );
   const weak = {
     version: 1,
@@ -329,11 +331,13 @@ if (!process.argv.includes("--offline-only")) {
   await assertCourse(weak);
   await routing.getByRole("button", { name: "Close lesson" }).click();
   await routing
-    .getByRole("button", { name: "Review weak spots", exact: true })
+    .getByRole("button", { name: "See your words", exact: true })
     .click();
-  assert.equal(
-    await routing.locator(".session").getAttribute("data-session-mode"),
-    "review",
+  assert.equal(await routing.locator(".session").count(), 0);
+  assert.ok(
+    await routing
+      .getByRole("heading", { name: "Make your words stick." })
+      .isVisible(),
   );
   // A difficult completed session still continues into its next scheduled lesson.
   await seedRouting({ version: 1, events: [] });
@@ -372,7 +376,7 @@ if (!process.argv.includes("--offline-only")) {
     hasTouch: true,
   });
   mobile.on("pageerror", (e) => errors.push(e.message));
-  await mobile.goto("http://127.0.0.1:5173/");
+  await mobile.goto(process.env.APP_URL || "http://127.0.0.1:5173/");
   assert.ok(
     await mobile.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -535,6 +539,6 @@ assert.equal(errors.length, 0, errors.join("\n"));
 console.log(
   process.argv.includes("--offline-only")
     ? "PASS: offline production loading and saved answers."
-    : "PASS: reading comprehension, writing self-review and saved drafts, optional appendix, curriculum continuation with overdue reviews and weak spots, explicit review, completed-course routing, café production before advancement, multi-session class progression, separate recall, grammar-specific introduction, checkpoint prerequisites, legacy progress, mobile, offline, no browser errors.",
+    : "PASS: reading comprehension, writing self-review and saved drafts, optional appendix, curriculum continuation with overdue reviews and weak spots, unified practice routing, completed-course routing, café production before advancement, multi-session class progression, separate recall, grammar-specific introduction, checkpoint prerequisites, legacy progress, mobile, offline, no browser errors.",
 );
 await browser.close();

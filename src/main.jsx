@@ -13,6 +13,7 @@ import { exerciseHint } from "./exercise-hints.js";
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import {
+  ArrowDown as IconArrowDown,
   ArrowRight as IconArrowRight,
   ArrowUpRight as IconArrowUpRight,
   Archive as IconArchive,
@@ -64,6 +65,7 @@ import {
   X as IconX,
 } from "lucide-react";
 const I = {
+  ArrowDown: IconArrowDown,
   ArrowRight: IconArrowRight,
   ArrowUpRight: IconArrowUpRight,
   Archive: IconArchive,
@@ -130,19 +132,22 @@ import {
   event,
   stats,
   exerciseFor,
-  reinforcement,
   sessionOutcome,
   sessionItems,
   newId,
   isCorrect,
-  practiceItems,
   validateProgress,
   localDay,
 } from "./engine";
 import {
-  practiceGroups,
-  practiceSets,
-  wordPracticeSet,
+  familiarity,
+  familiarityLabels,
+  practiceReason,
+  practiceTurn,
+  practiceExercise,
+  practiceExample,
+  practiceCollection,
+  nextPracticeItems,
   practiceSession,
   dailyWord,
 } from "./practice";
@@ -180,8 +185,10 @@ function App() {
     timer = useRef(),
     toastTimer = useRef();
   const s = stats(progress),
-    support = reinforcement(progress),
-    todayWord = dailyWord();
+    todayWord = dailyWord(),
+    learningCount = practiceCollection(s.records).filter(
+      (i) => familiarity(s.records[i.id]) < 4,
+    ).length;
   const chapterSteps = courseSteps.filter(
     (step) => step.chapter === (s.nextStep?.chapter ?? 9),
   );
@@ -330,10 +337,11 @@ function App() {
   const startPractice = (selection = "all") => {
     const config = practiceSession(progressRef.current, selection);
     if (!config.queue.length) {
-      notify("Choose a topic to start learning.");
+      notify("Learn a few words in your course to start practicing.");
       setPage("practice");
       return;
     }
+    setPage("practice");
     setUpdateBusy(true);
     setSession({ id: newId(), ...config });
   };
@@ -345,33 +353,10 @@ function App() {
       setPage("course");
     }
   }
-  function startReview() {
-    setUpdateBusy(true);
-    const current = stats(progressRef.current),
-      support = reinforcement(progressRef.current);
-    if (support)
-      setSession({
-        id: newId(),
-        mode: "review",
-        lesson: support.lesson,
-        queue: [...support.items, ...support.items],
-      });
-    else if (current.due.length > 0)
-      setSession({
-        id: newId(),
-        mode: "review",
-        skill: "all",
-        queue: practiceItems(progressRef.current).filter(
-          (i) => current.records[i.id]?.due <= Date.now(),
-        ),
-      });
-    else startPractice();
-  }
   const nav = [
     ["today", "House", "Today"],
     ["course", "Route", "Your course"],
     ["practice", "Dumbbell", "Practice"],
-    ["words", "BookOpen", "My words"],
     ["reference", "Search", "Reference"],
   ];
   return (
@@ -399,8 +384,13 @@ function App() {
             >
               <Icon name={icon} />
               {label}
-              {id === "practice" && s.due.length > 0 && (
-                <span className="nav-count">{s.due.length}</span>
+              {id === "practice" && learningCount > 0 && (
+                <span
+                  className="nav-count"
+                  aria-label={`${learningCount} words still learning`}
+                >
+                  {learningCount}
+                </span>
               )}
             </button>
           ))}
@@ -517,39 +507,26 @@ function App() {
                     s={s}
                     onStart={startLesson}
                   />
-                  <p className="curriculum-foot">
-                    <Icon name="BookOpen" size={14} /> Thoughtfully following{" "}
-                    <em>Your Lithuanian course</em> <span>·</span> 10 chapters,
-                    one clear path
-                  </p>
                 </div>
                 <aside className="right-column">
                   <DailyGoal s={s} setSettings={setSettings} />
                   <section className="card optional-practice">
                     <div className="card-title">
-                      <h3>A little extra practice</h3>
+                      <h3>Practice your words</h3>
                       <Icon name="Dumbbell" size={19} />
                     </div>
                     <p>
-                      {support
-                        ? `${support.items.length} words or patterns could use another look.`
-                        : s.due.length
-                          ? `${s.due.length} familiar words and patterns are due for review.`
-                          : "Revisit familiar words or focus on a specific case."}
+                      {learningCount
+                        ? `${learningCount} words and patterns are still taking shape.`
+                        : Object.keys(s.records).length
+                          ? "Bring back the words you’ve learned."
+                          : "Learn a few words in your course, then return here to practice."}
                     </p>
-                    <button className="text-link" onClick={startReview}>
-                      {support
-                        ? "Review weak spots"
-                        : s.due.length
-                          ? `Review ${s.due.length} due`
-                          : "Start practice"}
-                      <Icon name="ArrowRight" size={15} />
-                    </button>
                     <button
-                      className="text-link topic-link"
+                      className="text-link"
                       onClick={() => setPage("practice")}
                     >
-                      Choose a topic
+                      See your words
                       <Icon name="ArrowUpRight" size={15} />
                     </button>
                   </section>
@@ -621,19 +598,14 @@ function App() {
             </>
           )}
           {page === "practice" && (
-            <PracticeBrowser s={s} onStart={startPractice} />
+            <PracticeBrowser
+              s={s}
+              onStart={startPractice}
+              onCourse={() => setPage("course")}
+            />
           )}
           {page === "reference" && <StudyReference />}
-          {page === "words" && (
-            <WordCollection s={s} onPractice={startPractice} />
-          )}
         </main>
-        <footer className="footer">
-          <span>Made for your own little Lithuanian adventure.</span>
-          <span>
-            Po truputį, kasdien. <Icon name="Sprout" size={15} />
-          </span>
-        </footer>
       </div>
       <nav className="mobile-nav" inert={Boolean(session || settings)}>
         {nav.map(([id, icon, label]) => (
@@ -643,7 +615,17 @@ function App() {
             onClick={() => setPage(id)}
           >
             <Icon name={icon} />
-            <span>{label}</span>
+            <span>
+              {label}
+              {id === "practice" && learningCount > 0 && (
+                <span
+                  className="nav-count"
+                  aria-label={`${learningCount} words still learning`}
+                >
+                  {learningCount}
+                </span>
+              )}
+            </span>
           </button>
         ))}
       </nav>
@@ -654,6 +636,15 @@ function App() {
           progressRef={progressRef}
           onEvent={addEvent}
           onContinue={continueCourse}
+          onNextPractice={() => startPractice()}
+          onStudy={(item) =>
+            startLesson(
+              lessons.find((l) => l.id === item.lesson),
+              classSteps(item.lesson).find((step) =>
+                step.items.some((i) => i.id === item.id),
+              ),
+            )
+          }
           onClose={() => {
             setSession(null);
             if (cloud.isConnected()) sync();
@@ -859,93 +850,7 @@ function LearningPath({ chapterIndex, s, onStart }) {
     </section>
   );
 }
-function PracticeBrowser({ s, onStart }) {
-  const [group, setGroup] = useState("words"),
-    [chapter, setChapter] = useState(s.nextStep?.chapter ?? 0);
-  const sets = practiceSets.filter(
-    (set) => set.group === group && set.chapter === chapter,
-  );
-  return (
-    <>
-      <PageHeading
-        eyebrow="PRACTICE"
-        title="Choose a small set."
-        subtitle="Each set has a fixed scope and a finish. New words are introduced before you practise them."
-      />
-      <section className="practice-hero">
-        <div>
-          <span className="pill">FAMILIAR MATERIAL</span>
-          <h2>Your review</h2>
-          <p>
-            Up to eight targets, chosen from your weak spots and earlier
-            learning.
-          </p>
-          <Button onClick={() => onStart()}>
-            Start practicing <Icon name="ArrowRight" size={18} />
-          </Button>
-        </div>
-        <Icon name="Sprout" size={90} strokeWidth={1} />
-      </section>
-      <div className="word-controls">
-        <select
-          aria-label="Practice category"
-          value={group}
-          onChange={(e) => setGroup(e.target.value)}
-        >
-          {practiceGroups.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.title}
-            </option>
-          ))}
-        </select>
-        <select
-          aria-label="Practice chapter"
-          value={chapter}
-          onChange={(e) => setChapter(Number(e.target.value))}
-        >
-          {chapters.map((ch, n) => (
-            <option key={n} value={n}>
-              Chapter {n + 1} · {ch.title}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="skills-grid">
-        {sets.map((set) => {
-          const seen = set.items.filter((i) => s.records[i.id]).length;
-          return (
-            <button
-              className="skill-card"
-              key={set.id}
-              onClick={() => onStart(set)}
-            >
-              <h3>{set.title}</h3>
-              <p>
-                {set.items.length}{" "}
-                {set.lesson.kind === "writing" ? "writing task" : "targets"} ·{" "}
-                {seen} familiar
-              </p>
-              <div>
-                <span>
-                  {set.lesson.kind === "writing"
-                    ? "Write and self-review"
-                    : "Learn and practise this set"}
-                </span>
-                <Icon name="ArrowRight" size={17} />
-              </div>
-            </button>
-          );
-        })}
-      </div>
-      {!sets.length && (
-        <p className="empty-state">
-          No sets in this category for this chapter. Choose another chapter or
-          category.
-        </p>
-      )}
-    </>
-  );
-}
+
 function StudyReference() {
   const [query, setQuery] = useState("");
   const sections = [
@@ -1176,103 +1081,160 @@ function CourseChapter({ chapter, index, s, onStart }) {
     </section>
   );
 }
-function WordCollection({ s, onPractice }) {
-  const [query, setQuery] = useState(""),
-    [filter, setFilter] = useState("learned");
-  const collection = items.filter(
-    (i) =>
-      (filter === "all" || Boolean(s.records[i.id])) &&
-      (filter !== "weak" || s.records[i.id]?.streak < 2) &&
-      `${i.lt} ${i.en} ${skills[i.skill]}`
-        .toLowerCase()
-        .includes(query.toLowerCase()),
+function PracticeBrowser({ s, onStart, onCourse }) {
+  const [query, setQuery] = useState("");
+  const collection = practiceCollection(s.records);
+  const next = nextPracticeItems(s.records);
+  const nextIds = new Set(next.map((i) => i.id));
+  const learning = collection.filter(
+    (i) => familiarity(s.records[i.id]) < 4,
+  ).length;
+  const visible = collection.filter((i) =>
+    `${i.lt} ${i.en} ${skills[i.skill]}`
+      .toLocaleLowerCase("lt")
+      .includes(query.trim().toLocaleLowerCase("lt")),
   );
   return (
     <>
       <PageHeading
-        eyebrow="YOUR GROWING COLLECTION"
-        title="Words that open doors."
-        subtitle="Every word and pattern you meet has a place here. See what’s sticking and what needs another look."
+        eyebrow="PRACTICE"
+        title="Make your words stick."
+        subtitle="Recent difficulties first, then the least familiar. Practice starts with the words and patterns that need attention."
       />
-      <div className="word-controls">
-        <div className="search">
-          <Icon name="Search" size={19} />
-          <input
-            aria-label="Search words"
-            placeholder="Find a word, meaning, or case…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-        <select
-          aria-label="Filter words"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        >
-          <option value="learned">Encountered words</option>
-          <option value="weak">Needs practice</option>
-          <option value="all">Full course collection</option>
-        </select>
-      </div>
       {collection.length ? (
-        <div className="word-table">
-          <div className="word-table-head">
-            <span>LITHUANIAN / ENGLISH</span>
-            <span>FOCUS</span>
-            <span>FAMILIARITY</span>
+        <>
+          <section className="practice-hero">
+            <div>
+              <span className="pill">
+                {learning} STILL LEARNING · {collection.length - learning}{" "}
+                REMEMBERED ACROSS DAYS
+              </span>
+              <h2>
+                {learning
+                  ? `${next.length} ${next.length === 1 ? "word" : "words"} to work on`
+                  : "Your words are sticking."}
+              </h2>
+              <p>
+                {learning
+                  ? "Meaning first when needed. Then recall without hints, mixed with other words."
+                  : "Keep them fresh with a short review. Remembering words across separate visits helps them stay with you."}
+              </p>
+              <Button onClick={() => onStart()}>
+                {learning
+                  ? `Practice next ${next.length} ${next.length === 1 ? "word" : "words"}`
+                  : "Review your words"}
+                <Icon name="ArrowRight" size={18} />
+              </Button>
+              <p className="practice-note">
+                Recall today. Remember again another day.
+              </p>
+            </div>
+            <Icon name="Sprout" size={70} strokeWidth={1} />
+          </section>
+          <div className="practice-list-heading">
+            <h2>
+              Your words <span>{collection.length}</span>
+            </h2>
+            <span>
+              <Icon name="ArrowDown" size={14} /> Needs attention first
+            </span>
           </div>
-          {collection.map((i) => {
-            const r = s.records[i.id];
-            return (
-              <button
-                key={i.id}
-                className="word-table-row"
-                onClick={() => onPractice(wordPracticeSet(i))}
-              >
-                <span>
-                  <strong lang="lt">{i.lt}</strong>
-                  <small>{i.en}</small>
-                </span>
-                <span className="skill-tag">{skills[i.skill]}</span>
-                <span
-                  className="familiarity"
-                  title={
-                    r
-                      ? `${r.correct} of ${r.seen} correct`
-                      : "Not practiced yet"
-                  }
-                >
-                  {[1, 2, 3, 4].map((n) => (
-                    <i key={n} className={r?.streak >= n ? "filled" : ""} />
-                  ))}
-                  <small>
-                    {r ? (r.streak >= 3 ? "Settling in" : "Growing") : "New"}
-                  </small>
-                </span>
-              </button>
-            );
-          })}
-        </div>
+          <div className="word-controls">
+            <div className="search">
+              <Icon name="Search" size={19} />
+              <input
+                aria-label="Search words"
+                placeholder="Find a word or meaning…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+          </div>
+          <p className="practice-list-note">
+            “Up next” marks your next session. Select a word to include it in a
+            mixed practice session.
+          </p>
+          {visible.length ? (
+            <div className="word-table">
+              <div className="word-table-head">
+                <span>LITHUANIAN / ENGLISH</span>
+                <span>FOCUS</span>
+                <span>FAMILIARITY</span>
+              </div>
+              {visible.map((i) => {
+                const r = s.records[i.id],
+                  level = familiarity(r);
+                return (
+                  <button
+                    key={i.id}
+                    className="word-table-row"
+                    data-item-id={i.id}
+                    onClick={() => onStart({ focus: i })}
+                  >
+                    <span>
+                      <strong lang="lt">{i.lt}</strong>
+                      <small>{i.en}</small>
+                      <small className="practice-reason">
+                        {practiceReason(r)}
+                      </small>
+                      {nextIds.has(i.id) && (
+                        <span className="up-next">Up next</span>
+                      )}
+                    </span>
+                    <span className="skill-tag">{skills[i.skill]}</span>
+                    <span
+                      className="familiarity"
+                      title={`${r.correct} of ${r.seen} correct`}
+                    >
+                      {[1, 2, 3, 4].map((n) => (
+                        <i
+                          aria-hidden="true"
+                          key={n}
+                          className={level >= n ? "filled" : ""}
+                        />
+                      ))}
+                      <small>{familiarityLabels[level]}</small>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <h2>No words found</h2>
+              <p>Try another spelling or meaning.</p>
+              <Button secondary onClick={() => setQuery("")}>
+                Clear search
+              </Button>
+            </div>
+          )}
+        </>
       ) : (
         <div className="empty-state">
           <Icon name="Sprout" size={48} />
-          <h2>
-            {query ? "No words found" : "Your collection starts with a labas."}
-          </h2>
+          <h2>Your collection starts with a labas.</h2>
           <p>
-            {query
-              ? "Try a different spelling or change the filter."
-              : "Words will appear here as you learn. You can also explore the full course collection above."}
+            Learn a few words in your course. They’ll appear here, ready to
+            practice.
           </p>
-          <Button onClick={() => onPractice()}>
-            Practice a little <Icon name="ArrowRight" size={18} />
+          <Button onClick={onCourse}>
+            Go to your course <Icon name="ArrowRight" size={18} />
           </Button>
         </div>
       )}
     </>
   );
 }
-function Session({ config, progressRef, onEvent, onClose, onContinue }) {
+
+function Session({
+  config,
+  progressRef,
+  onEvent,
+  onClose,
+  onContinue,
+  onNextPractice,
+  onStudy,
+}) {
   const [intro, setIntro] = useState(Boolean(config.lesson)),
     [introduced, setIntroduced] = useState(null),
     [selfChecked, setSelfChecked] = useState(false),
@@ -1307,7 +1269,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
   const ex = React.useMemo(
     () =>
       item
-        ? exerciseFor(item, stats(progressRef.current).records[item.id] || {})
+        ? item.practiceKind
+          ? practiceExercise(item)
+          : exerciseFor(item, stats(progressRef.current).records[item.id] || {})
         : null,
     [item, index],
   );
@@ -1423,6 +1387,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
     setMismatch(false);
     setMatchError("");
   }
+  const practiceReport = config.practiceTargets
+    ? practiceTurn(config, attempts)
+    : null;
   const nextHint = exerciseHint(ex, {
     eliminated,
     revealed,
@@ -1487,29 +1454,34 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
     onEvent("answer", {
       item: item.id,
       correct: mastered,
-      stage: ex.stage,
+      stage: item.practiceKind === "recognize" ? 0 : ex.stage,
       ...(config.step ? { step: config.step.id, taskId: item.taskId } : {}),
     });
-    setAttempts((a) => [
-      ...a,
-      {
-        item: item.id,
-        correct: mastered,
-        stage: ex.stage,
-        targetStage: item.taskStage ?? ex.stage,
-      },
-    ]);
+    const attempt = {
+      item: item.id,
+      correct: mastered,
+      stage: ex.stage,
+      targetStage: item.taskStage ?? ex.stage,
+      practiceKind: item.practiceKind,
+    };
+    const nextAttempts = [...attempts, attempt];
+    setAttempts(nextAttempts);
     setResults((r) => [...r, mastered]);
     setFeedback({ correct, mastered });
-    if (
+    if (config.practiceTargets) {
+      const nextTurn = practiceTurn(config, nextAttempts);
+      if (nextTurn.item) setQueue((q) => [...q, nextTurn.item]);
+    } else if (
       !mastered ||
       (item.taskStage !== undefined && ex.stage < item.taskStage)
-    )
+    ) {
       setQueue((q) => [...q, item]);
+    }
   }
   function next() {
     reset();
     if (
+      !config.practiceTargets &&
       index + 1 >= Math.max(24, config.queue.length + 6) &&
       index + 1 < queue.length
     ) {
@@ -1518,6 +1490,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       return;
     }
     if (index + 1 >= queue.length) {
+      if (practiceReport?.revisit.length) setPaused(true);
       if (config.step) {
         const outcome = sessionOutcome(config.step, attempts);
         if (outcome.passed)
@@ -1631,11 +1604,12 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
         return;
       }
       if (e.key !== "Enter") return;
+      if (done && e.target.closest("button")) return;
       if (e.target.closest("textarea, select, summary, a, [role=alertdialog]"))
         return;
       e.preventDefault();
       if (done) {
-        (config.mode === "practice" ? onClose : onContinue)();
+        (config.mode === "practice" ? onNextPractice : onContinue)();
         return;
       }
       if (intro) {
@@ -1644,7 +1618,8 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
       }
       if (
         !["reading", "writing"].includes(item?.activity) &&
-        !stats(progressRef.current).records[item.id]?.seen &&
+        (item.showModel ||
+          !stats(progressRef.current).records[item.id]?.seen) &&
         introduced !== index
       ) {
         setIntroduced(index);
@@ -1678,7 +1653,7 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           <div className="progress-track">
             <div
               style={{
-                width: `${done ? 100 : intro ? 0 : (index / queue.length) * 100}%`,
+                width: `${done ? 100 : intro ? 0 : practiceReport ? (practiceReport.recalled.length / config.targets) * 100 : (index / queue.length) * 100}%`,
               }}
             />
           </div>
@@ -1690,7 +1665,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               ? paused
                 ? "Saved"
                 : "Complete"
-              : `${index + 1} / ${queue.length}`}
+              : practiceReport
+                ? `${practiceReport.recalled.length} / ${config.targets} recalled`
+                : `${index + 1} / ${queue.length}`}
         </span>
       </div>
       {done ? (
@@ -1703,7 +1680,9 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
               ? "LET’S TAKE A SMALLER STEP"
               : config.mode === "lesson"
                 ? "LESSON COMPLETE"
-                : "A LITTLE STRONGER THAN BEFORE"}
+                : config.mode === "practice"
+                  ? "TODAY’S PRACTICE"
+                  : "A LITTLE STRONGER THAN BEFORE"}
           </span>
           <h1>
             {paused
@@ -1716,44 +1695,71 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
             {config.lesson?.kind === "writing"
               ? "Your draft and self-review are saved. This workshop does not award an automatic grammar score."
               : paused
-                ? "Your progress is saved. We’ll revisit this lesson with more support before moving on."
+                ? config.mode === "practice"
+                  ? "Some words need more support. Revisit their lesson below, then return to practice when you’re ready."
+                  : "Your progress is saved. We’ll revisit this lesson with more support before moving on."
                 : config.mode === "lesson" &&
                     sessionOutcome(config.step, attempts).reinforce.length
                   ? "Some of this was tricky. We’ve saved the weak spots for review; you can continue your course."
                   : config.mode === "lesson"
                     ? `You finished ${config.step.title.toLowerCase()}.`
-                    : `${config.targets || new Set(config.queue.map((i) => i.id)).size} targets practised in ${results.length} exercises.`}
+                    : practiceReport
+                      ? `${practiceReport.recalled.length} of ${config.targets} words recalled without help. ${config.targets === 1 ? "With only one word, this was a single recall check. Learn more words in your course so we can mix your practice." : "You brought them back with other words in between."}`
+                      : `${config.targets || new Set(config.queue.map((i) => i.id)).size} targets practised in ${results.length} exercises.`}
           </p>
-          <div className="summary-stats">
-            <div>
-              <Icon name="Sparkles" />
-              <strong>
-                {successful * 10 + (results.length - successful) * 2}
-              </strong>
-              <span>XP earned</span>
+          {practiceReport ? (
+            <div className="practice-outcomes">
+              {config.practiceTargets.map((target) => (
+                <div key={target.id}>
+                  <strong lang="lt">{target.lt}</strong>
+                  <span>
+                    {practiceReport.recalled.some((i) => i.id === target.id)
+                      ? "Recalled without help"
+                      : "Needs more support"}
+                  </span>
+                  {practiceReport.revisit.some((i) => i.id === target.id) && (
+                    <button
+                      className="text-link"
+                      onClick={() => onStudy(target)}
+                    >
+                      Revisit the lesson <Icon name="ArrowRight" size={14} />
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-            <div>
-              <Icon name="Target" />
-              <strong>
-                {results.length
-                  ? config.lesson?.kind === "writing"
-                    ? "✓"
-                    : Math.round((successful / results.length) * 100)
-                  : 0}
-                {config.lesson?.kind === "writing" ? "" : "%"}
-              </strong>
-              <span>
-                {config.lesson?.kind === "writing"
-                  ? "self-reviewed, not graded"
-                  : "without help"}
-              </span>
+          ) : (
+            <div className="summary-stats">
+              <div>
+                <Icon name="Sparkles" />
+                <strong>
+                  {successful * 10 + (results.length - successful) * 2}
+                </strong>
+                <span>XP earned</span>
+              </div>
+              <div>
+                <Icon name="Target" />
+                <strong>
+                  {results.length
+                    ? config.lesson?.kind === "writing"
+                      ? "✓"
+                      : Math.round((successful / results.length) * 100)
+                    : 0}
+                  {config.lesson?.kind === "writing" ? "" : "%"}
+                </strong>
+                <span>
+                  {config.lesson?.kind === "writing"
+                    ? "self-reviewed, not graded"
+                    : "without help"}
+                </span>
+              </div>
+              <div>
+                <Icon name="CheckCheck" />
+                <strong>{results.length}</strong>
+                <span>exercises</span>
+              </div>
             </div>
-            <div>
-              <Icon name="CheckCheck" />
-              <strong>{results.length}</strong>
-              <span>exercises</span>
-            </div>
-          </div>
+          )}
           {config.step && (
             <p className="subtle">
               {title} ·{" "}
@@ -1772,35 +1778,24 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                 : "You’ve finished every course lesson."}
             </p>
           )}
+          {config.mode === "practice" && (
+            <p className="next-course-preview">
+              Today’s success is saved. Remembering these words on another day
+              is what builds lasting recall. Your next session picks again from
+              the words that need attention.
+            </p>
+          )}
           <div className="summary-actions">
-            {config.mode !== "practice" ? (
-              <Button secondary onClick={onClose}>
-                Back to your journey
-              </Button>
-            ) : (
-              <Button
-                secondary
-                onClick={() => {
-                  reset();
-                  setQueue(
-                    practiceSession(
-                      progressRef.current,
-                      config.practiceSet || "all",
-                    ).queue,
-                  );
-                  setAttempts([]);
-                  setPaused(false);
-                  setIndex(0);
-                  setResults([]);
-                  setDone(false);
-                }}
-              >
-                Practise another round
-              </Button>
-            )}
-            <Button onClick={config.mode === "practice" ? onClose : onContinue}>
+            <Button secondary onClick={onClose}>
               {config.mode === "practice"
-                ? "Back to your journey"
+                ? "Back to your words"
+                : "Back to your journey"}
+            </Button>
+            <Button
+              onClick={config.mode === "practice" ? onNextPractice : onContinue}
+            >
+              {config.mode === "practice"
+                ? "Start next practice"
                 : stats(progressRef.current).nextStep
                   ? "Continue course"
                   : "View completed course"}
@@ -1871,7 +1866,8 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
           </div>
         </div>
       ) : !["reading", "writing"].includes(item.activity) &&
-        !stats(progressRef.current).records[item.id]?.seen &&
+        (item.showModel ||
+          !stats(progressRef.current).records[item.id]?.seen) &&
         introduced !== index ? (
         <div className="session-content lesson-intro first-look">
           <div className="intro-body">
@@ -1887,6 +1883,21 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
             )}
             <h1 lang="lt">{item.lt}</h1>
             <p>{item.en}</p>
+            {item.practiceKind && (
+              <>
+                <p className="subtle">
+                  Read the meaning, then try it without looking. We’ll return to
+                  it after other words.
+                </p>
+                {practiceExample(item) && (
+                  <div className="practice-example">
+                    <span className="eyebrow">IN A SENTENCE</span>
+                    <strong lang="lt">{practiceExample(item).lt}</strong>
+                    <p>{practiceExample(item).en}</p>
+                  </div>
+                )}
+              </>
+            )}
           </div>
           <div className="intro-footer">
             <Button onClick={() => setIntroduced(index)}>
@@ -1946,10 +1957,17 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                           : "en"
                       }
                     >
-                      {ex.type === "cloze" ? item.cloze : ex.prompt}
+                      {ex.type === "cloze" ? ex.cloze || item.cloze : ex.prompt}
                     </p>
+                    {ex.type === "choice" && (
+                      <small>
+                        {ex.reverse
+                          ? "CHOOSE THE ENGLISH MEANING"
+                          : "CHOOSE THE LITHUANIAN"}
+                      </small>
+                    )}
                     {(ex.type === "cloze" || ex.isGap) && (
-                      <span>{item.en}</span>
+                      <span>{ex.contextMeaning || item.en}</span>
                     )}
                   </div>
                 </div>
@@ -2228,9 +2246,11 @@ function Session({ config, progressRef, onEvent, onClose, onContinue }) {
                             ? " · We’ll revisit these pairs."
                             : ""}
                         </p>
-                        {item.explanation && (
+                        {(item.explanation ||
+                          (item.practiceKind &&
+                            source?.kind === "pattern")) && (
                           <p className="feedback-explanation">
-                            {item.explanation}
+                            {item.explanation || source.rule}
                           </p>
                         )}
                       </>

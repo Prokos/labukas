@@ -1,0 +1,1535 @@
+{
+  "provenance": {
+    "source": "https://duolingodata.com/json/esfen286.7z",
+    "extractedJsonSha256": "a53dc611e6904584596e4f262eb440efd6871f6cab6fc676fedd787f3a50730a",
+    "numbering": "One-based units, chapters, nodes, and session positions in this report.",
+    "localTaskMethod": "Authored session tasks with empty history and level 5 supplied to exerciseFor, exposing each taskStage. Excludes dynamic review, errors, retries, and actual learner timing. Matching is counted as one exercise slot, not one pair.",
+    "interpretation": "Linked JSON schemas were inventoried exhaustively; content close-reading is documented separately. Path nodes are not individual questions. No normal-lesson challenge bank is contained in the archive."
+  },
+  "duolingo": {
+    "direction": {
+      "from": "en",
+      "learning": "es"
+    },
+    "sections": [
+      {
+        "section": 1,
+        "type": "learning",
+        "cefr": {
+          "level": "INTRO"
+        },
+        "units": 8,
+        "firstUnit": 1,
+        "lastUnit": 8,
+        "nodeTypes": {
+          "skill/regular": 16,
+          "practice/unit_practice": 8,
+          "chest/chest": 10,
+          "unit_review/unit_review": 8,
+          "story/read": 12,
+          "practice/practice": 5,
+          "skill/grammar": 1,
+          "duo_radio/duo_radio": 3,
+          "story/listen": 1
+        },
+        "declaredSessionsExcludingChests": 129
+      },
+      {
+        "section": 2,
+        "type": "learning",
+        "cefr": {
+          "level": "A1",
+          "sublevel": 1,
+          "granularLevel": ""
+        },
+        "units": 26,
+        "firstUnit": 9,
+        "lastUnit": 34,
+        "nodeTypes": {
+          "skill/regular": 52,
+          "story/read": 30,
+          "story/listen": 26,
+          "practice/practice": 26,
+          "chest/chest": 35,
+          "practice/unit_practice": 26,
+          "unit_review/unit_review": 26,
+          "duo_radio/duo_radio": 18,
+          "skill/grammar": 3
+        },
+        "declaredSessionsExcludingChests": 503
+      },
+      {
+        "section": 3,
+        "type": "learning",
+        "cefr": {
+          "level": "A1",
+          "sublevel": 2,
+          "granularLevel": ""
+        },
+        "units": 28,
+        "firstUnit": 35,
+        "lastUnit": 62,
+        "nodeTypes": {
+          "skill/regular": 56,
+          "story/read": 30,
+          "chest/chest": 39,
+          "story/listen": 28,
+          "practice/practice": 28,
+          "practice/unit_practice": 28,
+          "unit_review/unit_review": 28,
+          "skill/grammar": 4,
+          "duo_radio/duo_radio": 8
+        },
+        "declaredSessionsExcludingChests": 534
+      },
+      {
+        "section": 4,
+        "type": "learning",
+        "cefr": {
+          "level": "A2",
+          "sublevel": 1,
+          "granularLevel": ""
+        },
+        "units": 52,
+        "firstUnit": 63,
+        "lastUnit": 114,
+        "nodeTypes": {
+          "skill/regular": 104,
+          "story/read": 60,
+          "story/listen": 62,
+          "chest/chest": 72,
+          "practice/practice": 52,
+          "duo_radio/duo_radio": 26,
+          "practice/unit_practice": 52,
+          "unit_review/unit_review": 52,
+          "skill/grammar": 7
+        },
+        "declaredSessionsExcludingChests": 1042
+      },
+      {
+        "section": 5,
+        "type": "learning",
+        "cefr": {
+          "level": "B1",
+          "sublevel": 1,
+          "granularLevel": ""
+        },
+        "units": 50,
+        "firstUnit": 115,
+        "lastUnit": 164,
+        "nodeTypes": {
+          "skill/regular": 100,
+          "story/read": 84,
+          "story/listen": 59,
+          "practice/practice": 50,
+          "chest/chest": 69,
+          "practice/unit_practice": 50,
+          "unit_review/unit_review": 50,
+          "duo_radio/duo_radio": 31,
+          "skill/grammar": 7
+        },
+        "declaredSessionsExcludingChests": 1234
+      },
+      {
+        "section": 6,
+        "type": "learning",
+        "cefr": {
+          "level": "B1",
+          "sublevel": 3,
+          "granularLevel": ""
+        },
+        "units": 50,
+        "firstUnit": 165,
+        "lastUnit": 214,
+        "nodeTypes": {
+          "skill/regular": 100,
+          "story/read": 60,
+          "story/listen": 72,
+          "practice/practice": 50,
+          "chest/chest": 69,
+          "duo_radio/duo_radio": 18,
+          "practice/unit_practice": 50,
+          "unit_review/unit_review": 50,
+          "skill/grammar": 7
+        },
+        "declaredSessionsExcludingChests": 1235
+      },
+      {
+        "section": 7,
+        "type": "learning",
+        "cefr": {
+          "level": "B2",
+          "sublevel": 1,
+          "granularLevel": ""
+        },
+        "units": 36,
+        "firstUnit": 215,
+        "lastUnit": 250,
+        "nodeTypes": {
+          "skill/regular": 72,
+          "story/read": 60,
+          "story/listen": 48,
+          "practice/practice": 36,
+          "chest/chest": 49,
+          "practice/unit_practice": 36,
+          "unit_review/unit_review": 36,
+          "skill/grammar": 4
+        },
+        "declaredSessionsExcludingChests": 884
+      },
+      {
+        "section": 8,
+        "type": "learning",
+        "cefr": {
+          "level": "B2",
+          "sublevel": 3,
+          "granularLevel": ""
+        },
+        "units": 36,
+        "firstUnit": 251,
+        "lastUnit": 286,
+        "nodeTypes": {
+          "skill/regular": 72,
+          "story/read": 60,
+          "story/listen": 37,
+          "chest/chest": 49,
+          "practice/practice": 36,
+          "practice/unit_practice": 36,
+          "unit_review/unit_review": 36,
+          "skill/grammar": 4
+        },
+        "declaredSessionsExcludingChests": 873
+      },
+      {
+        "section": 9,
+        "type": "daily_refresh",
+        "cefr": null,
+        "units": 1,
+        "firstUnit": 287,
+        "lastUnit": 287,
+        "nodeTypes": {
+          "practice/practice": 3,
+          "story/read": 1,
+          "story/listen": 1,
+          "unit_review/unit_review": 1
+        },
+        "declaredSessionsExcludingChests": 6
+      }
+    ],
+    "regularSkillCrownLevels": {
+      "0": 286,
+      "1": 286
+    },
+    "regularSkillIds": 286,
+    "grammarInsertions": [
+      {
+        "unit": 6,
+        "name": "Pres Tense 1",
+        "objective": "use present tense"
+      },
+      {
+        "unit": 14,
+        "name": "Agreement",
+        "objective": "use gender agreement"
+      },
+      {
+        "unit": 21,
+        "name": "Pres Tense 2",
+        "objective": "form the present tense"
+      },
+      {
+        "unit": 29,
+        "name": "To Be",
+        "objective": "use ser and estar"
+      },
+      {
+        "unit": 36,
+        "name": "Stem Changes",
+        "objective": "use stem-changing verbs"
+      },
+      {
+        "unit": 44,
+        "name": "To Like",
+        "objective": "use verbs like gustar"
+      },
+      {
+        "unit": 51,
+        "name": "Objects",
+        "objective": "use object pronouns"
+      },
+      {
+        "unit": 58,
+        "name": "Past Tense 1",
+        "objective": "form the past tense"
+      },
+      {
+        "unit": 65,
+        "name": "Past Tense 2",
+        "objective": "use the past tense"
+      },
+      {
+        "unit": 74,
+        "name": "Past Tense 3",
+        "objective": "use the imperfect tense"
+      },
+      {
+        "unit": 82,
+        "name": "Past Tense 4",
+        "objective": "form the past tense"
+      },
+      {
+        "unit": 87,
+        "name": "Objects 2",
+        "objective": "use object pronouns"
+      },
+      {
+        "unit": 96,
+        "name": "Past Tense 5",
+        "objective": "use the present perfect"
+      },
+      {
+        "unit": 103,
+        "name": "Commands",
+        "objective": "form commands"
+      },
+      {
+        "unit": 110,
+        "name": "Future Tense",
+        "objective": "use the future tense"
+      },
+      {
+        "unit": 118,
+        "name": "Past Tense 6",
+        "objective": "form the past tense"
+      },
+      {
+        "unit": 124,
+        "name": "Commands 2",
+        "objective": "use commands"
+      },
+      {
+        "unit": 131,
+        "name": "Commands 3",
+        "objective": "form commands"
+      },
+      {
+        "unit": 139,
+        "name": "Pronouns",
+        "objective": "use object pronouns"
+      },
+      {
+        "unit": 147,
+        "name": "Past Tense 7",
+        "objective": "form the past tense"
+      },
+      {
+        "unit": 154,
+        "name": "Subj 1",
+        "objective": "use the subjunctive"
+      },
+      {
+        "unit": 160,
+        "name": "Subj 2",
+        "objective": "form the subjunctive"
+      },
+      {
+        "unit": 166,
+        "name": "Past Tense 8",
+        "objective": "use the past perfect"
+      },
+      {
+        "unit": 172,
+        "name": "Subj 3",
+        "objective": "use the subjunctive"
+      },
+      {
+        "unit": 181,
+        "name": "Pronouns 2",
+        "objective": "use relative pronouns"
+      },
+      {
+        "unit": 188,
+        "name": "Subj 4",
+        "objective": "use the subjunctive"
+      },
+      {
+        "unit": 194,
+        "name": "Subj 5",
+        "objective": "form the past subjunctive"
+      },
+      {
+        "unit": 202,
+        "name": "Passive",
+        "objective": "use passive voice"
+      },
+      {
+        "unit": 208,
+        "name": "Subj 6",
+        "objective": "use the subjunctive"
+      },
+      {
+        "unit": 221,
+        "name": "Conditional",
+        "objective": "use conditional sentences"
+      },
+      {
+        "unit": 228,
+        "name": "Future 2",
+        "objective": "use complex future tenses"
+      },
+      {
+        "unit": 243,
+        "name": "Haber",
+        "objective": "use the verb haber"
+      },
+      {
+        "unit": 250,
+        "name": "Subj 7",
+        "objective": "use the subjunctive"
+      },
+      {
+        "unit": 255,
+        "name": "Subj 8",
+        "objective": "use the past subjunctive"
+      },
+      {
+        "unit": 263,
+        "name": "Verbs",
+        "objective": "use verbs with prepositions"
+      },
+      {
+        "unit": 273,
+        "name": "Pronouns 3",
+        "objective": "use pronouns attached to verbs"
+      },
+      {
+        "unit": 281,
+        "name": "Modifiers",
+        "objective": "use comparative expressions"
+      }
+    ],
+    "firstStory": {
+      "unit": 4,
+      "node": 17,
+      "name": "Good Morning",
+      "declaredSessionStartExcludingChests": 41
+    },
+    "firstStoryListening": {
+      "unit": 8,
+      "node": 58,
+      "name": "Good Morning",
+      "declaredSessionStartExcludingChests": 122
+    },
+    "firstRadio": {
+      "unit": 6,
+      "node": 41,
+      "name": "Radio: Gray Hat",
+      "declaredSessionStartExcludingChests": 90
+    },
+    "declaredEarlierSkillReferenceLagUnits": {
+      "min": 1,
+      "median": 18,
+      "max": 44,
+      "referenceCount": 4626
+    },
+    "storyReadToListenUnitLag": {
+      "4": 1,
+      "5": 3,
+      "6": 11,
+      "7": 7,
+      "8": 14,
+      "9": 7,
+      "10": 3,
+      "11": 26,
+      "12": 21,
+      "13": 16,
+      "14": 11,
+      "15": 41,
+      "16": 16,
+      "17": 23,
+      "18": 7,
+      "19": 6,
+      "20": 13,
+      "21": 11,
+      "22": 17,
+      "23": 11,
+      "24": 6,
+      "25": 9,
+      "26": 11,
+      "27": 14,
+      "28": 5,
+      "29": 3,
+      "30": 4,
+      "31": 8,
+      "32": 8
+    },
+    "resourceStatuses": {
+      "guidebook:ok": 286,
+      "grammarConceptUrl:ok": 8,
+      "cefrContentUrl:ok": 8,
+      "skill-explanation:ok": 151
+    },
+    "resourcePresence": {
+      "guidebook": {
+        "element:verticalSpace": 286,
+        "element:text": 286,
+        "element:dialogue": 286,
+        "hintTable": 286,
+        "audio": 286,
+        "tipMarker": 128,
+        "element:exampleCaptionedImage": 79,
+        "element:table": 49,
+        "element:audioSample": 2,
+        "element:example": 67
+      },
+      "grammarConceptUrl": {
+        "element:text": 8,
+        "element:verticalSpace": 8,
+        "audio": 8,
+        "element:table": 1,
+        "element:example": 8,
+        "element:lineBreak": 3
+      },
+      "cefrContentUrl": {
+        "element:verticalSpace": 8,
+        "element:pathSectionsCefrTable": 8,
+        "audio": 8
+      },
+      "skill-explanation": {
+        "element:verticalSpace": 151,
+        "element:text": 151,
+        "element:exampleCaptionedImage": 101,
+        "audio": 151,
+        "element:table": 56,
+        "element:audioSample": 7,
+        "element:example": 100,
+        "element:expandable": 4
+      }
+    },
+    "resourceElements": {
+      "guidebook": {
+        "element:verticalSpace": 3825,
+        "element:text": 1255,
+        "element:dialogue": 1269,
+        "hintTable": 11609,
+        "audio": 15785,
+        "tipMarker": 174,
+        "element:exampleCaptionedImage": 185,
+        "element:table": 77,
+        "element:audioSample": 7,
+        "element:example": 240
+      },
+      "grammarConceptUrl": {
+        "element:text": 62,
+        "element:verticalSpace": 122,
+        "audio": 231,
+        "element:table": 1,
+        "element:example": 87,
+        "element:lineBreak": 3
+      },
+      "cefrContentUrl": {
+        "element:verticalSpace": 16,
+        "element:pathSectionsCefrTable": 8,
+        "audio": 88
+      },
+      "skill-explanation": {
+        "element:verticalSpace": 1773,
+        "element:text": 822,
+        "element:exampleCaptionedImage": 286,
+        "audio": 3646,
+        "element:table": 99,
+        "element:audioSample": 20,
+        "element:example": 395,
+        "element:expandable": 4
+      }
+    }
+  },
+  "sakyk": {
+    "chapters": [
+      {
+        "chapter": 1,
+        "title": "Hello, Lithuania!",
+        "classes": 27,
+        "coreTargets": 201,
+        "sessions": 193,
+        "firstSession": 1,
+        "lastSession": 193,
+        "firstReadingSession": 175,
+        "writingSession": 183,
+        "firstCheckpointSession": 187,
+        "exerciseTypes": {
+          "choice": 368,
+          "type": 713,
+          "order": 178,
+          "match": 22,
+          "cloze": 147,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 2,
+        "title": "At the café",
+        "classes": 34,
+        "coreTargets": 241,
+        "sessions": 227,
+        "firstSession": 194,
+        "lastSession": 420,
+        "firstReadingSession": 396,
+        "writingSession": 408,
+        "firstCheckpointSession": 412,
+        "exerciseTypes": {
+          "choice": 426,
+          "type": 814,
+          "order": 226,
+          "cloze": 220,
+          "match": 50,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 3,
+        "title": "Around the city",
+        "classes": 25,
+        "coreTargets": 206,
+        "sessions": 188,
+        "firstSession": 421,
+        "lastSession": 608,
+        "firstReadingSession": 586,
+        "writingSession": 599,
+        "firstCheckpointSession": 603,
+        "exerciseTypes": {
+          "choice": 365,
+          "type": 635,
+          "order": 282,
+          "cloze": 93,
+          "match": 68,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 4,
+        "title": "A place to call home",
+        "classes": 21,
+        "coreTargets": 154,
+        "sessions": 145,
+        "firstSession": 609,
+        "lastSession": 753,
+        "firstReadingSession": 732,
+        "writingSession": 745,
+        "firstCheckpointSession": 749,
+        "exerciseTypes": {
+          "choice": 275,
+          "type": 493,
+          "order": 172,
+          "cloze": 129,
+          "match": 24,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 5,
+        "title": "Your free time",
+        "classes": 21,
+        "coreTargets": 154,
+        "sessions": 147,
+        "firstSession": 754,
+        "lastSession": 900,
+        "firstReadingSession": 879,
+        "writingSession": 892,
+        "firstCheckpointSession": 896,
+        "exerciseTypes": {
+          "choice": 269,
+          "type": 480,
+          "order": 169,
+          "cloze": 175,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 6,
+        "title": "Work & study",
+        "classes": 22,
+        "coreTargets": 237,
+        "sessions": 201,
+        "firstSession": 901,
+        "lastSession": 1101,
+        "firstReadingSession": 1079,
+        "writingSession": 1092,
+        "firstCheckpointSession": 1096,
+        "exerciseTypes": {
+          "choice": 430,
+          "type": 700,
+          "order": 324,
+          "cloze": 96,
+          "match": 48,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 7,
+        "title": "The people you love",
+        "classes": 21,
+        "coreTargets": 167,
+        "sessions": 159,
+        "firstSession": 1102,
+        "lastSession": 1260,
+        "firstReadingSession": 1243,
+        "writingSession": 1252,
+        "firstCheckpointSession": 1256,
+        "exerciseTypes": {
+          "choice": 287,
+          "type": 535,
+          "order": 181,
+          "cloze": 146,
+          "match": 28,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 8,
+        "title": "Whatever the weather",
+        "classes": 18,
+        "coreTargets": 161,
+        "sessions": 143,
+        "firstSession": 1261,
+        "lastSession": 1403,
+        "firstReadingSession": 1386,
+        "writingSession": 1395,
+        "firstCheckpointSession": 1399,
+        "exerciseTypes": {
+          "choice": 298,
+          "order": 156,
+          "match": 8,
+          "cloze": 105,
+          "type": 544,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 9,
+        "title": "Feeling well",
+        "classes": 18,
+        "coreTargets": 135,
+        "sessions": 130,
+        "firstSession": 1404,
+        "lastSession": 1533,
+        "firstReadingSession": 1512,
+        "writingSession": 1525,
+        "firstCheckpointSession": 1529,
+        "exerciseTypes": {
+          "choice": 252,
+          "order": 172,
+          "cloze": 113,
+          "type": 393,
+          "match": 20,
+          "writing": 1
+        }
+      },
+      {
+        "chapter": 10,
+        "title": "Let’s celebrate",
+        "classes": 19,
+        "coreTargets": 141,
+        "sessions": 130,
+        "firstSession": 1534,
+        "lastSession": 1663,
+        "firstReadingSession": 1642,
+        "writingSession": 1655,
+        "firstCheckpointSession": 1659,
+        "exerciseTypes": {
+          "choice": 248,
+          "type": 393,
+          "order": 199,
+          "cloze": 148,
+          "match": 6,
+          "writing": 1
+        }
+      }
+    ],
+    "intendedExerciseTypes": {
+      "choice": 3218,
+      "type": 5700,
+      "order": 2059,
+      "match": 274,
+      "cloze": 1372,
+      "writing": 10
+    },
+    "intendedActivityTypes": {
+      "translation-or-form": 12002,
+      "reading": 621,
+      "writing": 10
+    },
+    "first40Sessions": [
+      {
+        "session": 1,
+        "id": "c1l1-discover-0",
+        "classId": "c1l1",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 2,
+          "order": 1
+        }
+      },
+      {
+        "session": 2,
+        "id": "c1l1-discover-1",
+        "classId": "c1l1",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "order": 2,
+          "type": 1
+        }
+      },
+      {
+        "session": 3,
+        "id": "c1l1-guided-0",
+        "classId": "c1l1",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "type": 6,
+          "order": 6
+        }
+      },
+      {
+        "session": 4,
+        "id": "c1l5-discover-0",
+        "classId": "c1l5",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "match": 3
+        }
+      },
+      {
+        "session": 5,
+        "id": "c1l5-discover-1",
+        "classId": "c1l5",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "match": 3
+        }
+      },
+      {
+        "session": 6,
+        "id": "c1l5-guided-0",
+        "classId": "c1l5",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "match": 6,
+          "type": 6
+        }
+      },
+      {
+        "session": 7,
+        "id": "c1l1-recall-0",
+        "classId": "c1l1",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 8,
+        "id": "c1-lex-people-and-possession-discover-0",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 9,
+        "id": "c1-lex-people-and-possession-discover-1",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 10,
+        "id": "c1-lex-people-and-possession-discover-2",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 11,
+        "id": "c1-lex-people-and-possession-discover-3",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 12,
+        "id": "c1-lex-people-and-possession-discover-4",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 13,
+        "id": "c1-lex-people-and-possession-guided-0",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "type": 12
+        }
+      },
+      {
+        "session": 14,
+        "id": "c1-lex-people-and-possession-guided-1",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "type": 12
+        }
+      },
+      {
+        "session": 15,
+        "id": "c1-lex-people-and-possession-guided-2",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 3,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 16,
+        "id": "c1l5-recall-0",
+        "classId": "c1l5",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 17,
+        "id": "c1l1-apply-0",
+        "classId": "c1l1",
+        "chapter": 1,
+        "phase": "apply",
+        "targetCount": 5,
+        "taskCount": 7,
+        "exerciseTypes": {
+          "order": 2,
+          "type": 5
+        }
+      },
+      {
+        "session": 18,
+        "id": "c1l2-discover-0",
+        "classId": "c1l2",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 3,
+          "order": 3,
+          "cloze": 3
+        }
+      },
+      {
+        "session": 19,
+        "id": "c1l2-discover-1",
+        "classId": "c1l2",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 3,
+          "order": 3,
+          "cloze": 3
+        }
+      },
+      {
+        "session": 20,
+        "id": "c1l2-guided-0",
+        "classId": "c1l2",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "cloze": 6,
+          "order": 6
+        }
+      },
+      {
+        "session": 21,
+        "id": "c1-lex-people-and-possession-recall-0",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 22,
+        "id": "c1-lex-people-and-possession-recall-1",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 23,
+        "id": "c1-lex-people-and-possession-recall-2",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 3,
+        "taskCount": 3,
+        "exerciseTypes": {
+          "type": 3
+        }
+      },
+      {
+        "session": 24,
+        "id": "c1l5-apply-0",
+        "classId": "c1l5",
+        "chapter": 1,
+        "phase": "apply",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 25,
+        "id": "c1l5-apply-1",
+        "classId": "c1l5",
+        "chapter": 1,
+        "phase": "apply",
+        "targetCount": 2,
+        "taskCount": 4,
+        "exerciseTypes": {
+          "order": 2,
+          "type": 2
+        }
+      },
+      {
+        "session": 26,
+        "id": "c1-lex-your-first-places-discover-0",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 27,
+        "id": "c1-lex-your-first-places-discover-1",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 28,
+        "id": "c1-lex-your-first-places-discover-2",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 6,
+          "type": 3
+        }
+      },
+      {
+        "session": 29,
+        "id": "c1-lex-your-first-places-guided-0",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "type": 12
+        }
+      },
+      {
+        "session": 30,
+        "id": "c1-lex-your-first-places-guided-1",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 3,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 31,
+        "id": "c1l2-recall-0",
+        "classId": "c1l2",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 32,
+        "id": "c1-lex-people-and-possession-apply-0",
+        "classId": "c1-lex-people-and-possession",
+        "chapter": 1,
+        "phase": "apply",
+        "targetCount": 5,
+        "taskCount": 7,
+        "exerciseTypes": {
+          "order": 2,
+          "type": 3,
+          "cloze": 2
+        }
+      },
+      {
+        "session": 33,
+        "id": "c1-negative-being-discover-0",
+        "classId": "c1-negative-being",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 3,
+          "order": 3,
+          "cloze": 3
+        }
+      },
+      {
+        "session": 34,
+        "id": "c1-negative-being-discover-1",
+        "classId": "c1-negative-being",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 3,
+          "order": 3,
+          "cloze": 3
+        }
+      },
+      {
+        "session": 35,
+        "id": "c1-negative-being-guided-0",
+        "classId": "c1-negative-being",
+        "chapter": 1,
+        "phase": "guided",
+        "targetCount": 6,
+        "taskCount": 12,
+        "exerciseTypes": {
+          "cloze": 6,
+          "order": 6
+        }
+      },
+      {
+        "session": 36,
+        "id": "c1-lex-your-first-places-recall-0",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 6,
+        "taskCount": 6,
+        "exerciseTypes": {
+          "type": 6
+        }
+      },
+      {
+        "session": 37,
+        "id": "c1-lex-your-first-places-recall-1",
+        "classId": "c1-lex-your-first-places",
+        "chapter": 1,
+        "phase": "recall",
+        "targetCount": 3,
+        "taskCount": 3,
+        "exerciseTypes": {
+          "type": 3
+        }
+      },
+      {
+        "session": 38,
+        "id": "c1l2-apply-0",
+        "classId": "c1l2",
+        "chapter": 1,
+        "phase": "apply",
+        "targetCount": 5,
+        "taskCount": 7,
+        "exerciseTypes": {
+          "cloze": 7
+        }
+      },
+      {
+        "session": 39,
+        "id": "c1-possession-discover-0",
+        "classId": "c1-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 3,
+          "order": 3,
+          "cloze": 3
+        }
+      },
+      {
+        "session": 40,
+        "id": "c1-possession-discover-1",
+        "classId": "c1-possession",
+        "chapter": 1,
+        "phase": "discover",
+        "targetCount": 3,
+        "taskCount": 9,
+        "exerciseTypes": {
+          "choice": 3,
+          "order": 3,
+          "cloze": 3
+        }
+      }
+    ],
+    "stageExamples": [
+      {
+        "classId": "c1-lex-people-and-possession",
+        "kind": "vocabulary",
+        "target": "aš",
+        "stages": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "aš",
+            "answer": "I",
+            "options": [
+              "I",
+              "he",
+              "you (informal singular)",
+              "his"
+            ]
+          },
+          {
+            "stage": 1,
+            "type": "choice",
+            "prompt": "I",
+            "answer": "aš",
+            "options": [
+              "aš",
+              "jis",
+              "tu",
+              "jo"
+            ]
+          },
+          {
+            "stage": 2,
+            "type": "type",
+            "prompt": "I",
+            "answer": "aš"
+          },
+          {
+            "stage": 3,
+            "type": "type",
+            "prompt": "I",
+            "answer": "aš"
+          },
+          {
+            "stage": 4,
+            "type": "type",
+            "prompt": "I",
+            "answer": "aš"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "I",
+            "answer": "aš"
+          }
+        ]
+      },
+      {
+        "classId": "c1l2",
+        "kind": "pattern",
+        "target": "Aš esu studentas",
+        "stages": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "Aš ___ studentas",
+            "answer": "esu",
+            "options": [
+              "esu",
+              "studentė",
+              "esi",
+              "Tu"
+            ]
+          },
+          {
+            "stage": 1,
+            "type": "order",
+            "prompt": "I am a student (male)",
+            "answer": "Aš esu studentas"
+          },
+          {
+            "stage": 2,
+            "type": "cloze",
+            "prompt": "I am a student (male)",
+            "answer": "esu"
+          },
+          {
+            "stage": 3,
+            "type": "order",
+            "prompt": "I am a student (male)",
+            "answer": "Aš esu studentas"
+          },
+          {
+            "stage": 4,
+            "type": "cloze",
+            "prompt": "I am a student (male)",
+            "answer": "esu"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "I am a student (male)",
+            "answer": "Aš esu studentas"
+          }
+        ]
+      },
+      {
+        "classId": "c1l7",
+        "kind": "conversation",
+        "target": "Koks jūsų vardas?",
+        "stages": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "What is your name (formal)?",
+            "answer": "Koks jūsų vardas?",
+            "options": [
+              "Koks jūsų vardas?",
+              "Koks jūsų adresas?",
+              "Koks jūsų telefono numeris?",
+              "Mano pavardė Petrauskas"
+            ]
+          },
+          {
+            "stage": 1,
+            "type": "order",
+            "prompt": "What is your name (formal)?",
+            "answer": "Koks jūsų vardas?"
+          },
+          {
+            "stage": 2,
+            "type": "order",
+            "prompt": "What is your name (formal)?",
+            "answer": "Koks jūsų vardas?"
+          },
+          {
+            "stage": 3,
+            "type": "order",
+            "prompt": "What is your name (formal)?",
+            "answer": "Koks jūsų vardas?"
+          },
+          {
+            "stage": 4,
+            "type": "type",
+            "prompt": "What is your name (formal)?",
+            "answer": "Koks jūsų vardas?"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "What is your name (formal)?",
+            "answer": "Koks jūsų vardas?"
+          }
+        ]
+      },
+      {
+        "classId": "c1-situation-classmate",
+        "kind": "reading",
+        "target": "Lina",
+        "stages": [
+          {
+            "stage": 0,
+            "type": "choice",
+            "prompt": "What is her name?",
+            "answer": "Lina",
+            "options": [
+              "Lina",
+              "Jonas",
+              "Rasa"
+            ]
+          },
+          {
+            "stage": 1,
+            "type": "choice",
+            "prompt": "What is her name?",
+            "answer": "Lina",
+            "options": [
+              "Lina",
+              "Jonas",
+              "Rasa"
+            ]
+          },
+          {
+            "stage": 2,
+            "type": "choice",
+            "prompt": "What is her name?",
+            "answer": "Lina",
+            "options": [
+              "Lina",
+              "Jonas",
+              "Rasa"
+            ]
+          },
+          {
+            "stage": 3,
+            "type": "type",
+            "prompt": "What is her name?",
+            "answer": "Lina"
+          },
+          {
+            "stage": 4,
+            "type": "type",
+            "prompt": "What is her name?",
+            "answer": "Lina"
+          },
+          {
+            "stage": 5,
+            "type": "type",
+            "prompt": "What is her name?",
+            "answer": "Lina"
+          }
+        ]
+      },
+      {
+        "classId": "c1-writing",
+        "kind": "writing",
+        "target": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai.",
+        "stages": [
+          {
+            "stage": 0,
+            "type": "writing",
+            "prompt": "Write 3–4 short sentences introducing yourself to a classmate.",
+            "answer": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai."
+          },
+          {
+            "stage": 1,
+            "type": "writing",
+            "prompt": "Write 3–4 short sentences introducing yourself to a classmate.",
+            "answer": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai."
+          },
+          {
+            "stage": 2,
+            "type": "writing",
+            "prompt": "Write 3–4 short sentences introducing yourself to a classmate.",
+            "answer": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai."
+          },
+          {
+            "stage": 3,
+            "type": "writing",
+            "prompt": "Write 3–4 short sentences introducing yourself to a classmate.",
+            "answer": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai."
+          },
+          {
+            "stage": 4,
+            "type": "writing",
+            "prompt": "Write 3–4 short sentences introducing yourself to a classmate.",
+            "answer": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai."
+          },
+          {
+            "stage": 5,
+            "type": "writing",
+            "prompt": "Write 3–4 short sentences introducing yourself to a classmate.",
+            "answer": "Labas! Mano vardas Rasa. Aš esu studentė iš Lietuvos. Gyvenu Kaune. Kalbu lietuviškai ir angliškai."
+          }
+        ]
+      }
+    ]
+  }
+}

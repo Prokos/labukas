@@ -256,3 +256,225 @@ test("Discovery revisions work for arbitrary lesson content without special case
     ]),
   );
 });
+
+function practiceSeed(count = 10) {
+  const pool = items
+    .filter((i) => i.teachingKind === "vocabulary" && i.role === "core")
+    .slice(0, count);
+  return {
+    pool,
+    progress: {
+      version: 1,
+      events: pool.map((i, n) => ({
+        id: `seed-${n}`,
+        type: "answer",
+        item: i.id,
+        stage: 0,
+        correct: false,
+        at: n,
+      })),
+    },
+  };
+}
+
+test("Recent unresolved difficulty outranks incomplete introduction; recovery clears that priority", async () => {
+  const { practiceCollection, familiarity, nextPracticeItems } =
+    await import("../src/practice.js");
+  const { pool, progress } = practiceSeed();
+  const hard = pool[5];
+  for (let n = 0; n < 3; n++)
+    progress.events.push({
+      id: `miss-${n}`,
+      type: "answer",
+      item: hard.id,
+      correct: false,
+      stage: 5,
+      at: 100 + n,
+    });
+  assert.equal(practiceCollection(stats(progress).records)[0].id, hard.id);
+  for (let n = 0; n < 2; n++)
+    progress.events.push({
+      id: `recover-${n}`,
+      type: "answer",
+      item: hard.id,
+      correct: true,
+      stage: 5,
+      at: 200 + n,
+    });
+  const state = stats(progress);
+  assert.equal(state.records[hard.id].recentErrors, 0);
+  assert.notEqual(practiceCollection(state.records)[0].id, hard.id);
+  assert.equal(familiarity(state.records[hard.id]), 3);
+  assert.equal(nextPracticeItems(state.records).length, 5);
+  assert.deepEqual(practiceSession(emptyProgress()).queue, []);
+});
+
+test("Recognition and same-day drilling never count as remembered across days", async () => {
+  const { familiarity } = await import("../src/practice.js");
+  const { pool, progress } = practiceSeed(1);
+  const at = new Date(2026, 8, 23, 9).getTime();
+  for (let n = 0; n < 5; n++)
+    progress.events.push({
+      id: `recognition-${n}`,
+      type: "answer",
+      item: pool[0].id,
+      correct: true,
+      stage: 0,
+      at: at + n * 86400000,
+    });
+  let record = stats(progress).records[pool[0].id];
+  assert.equal(record.recallVisits, 0);
+  assert.ok(familiarity(record) < 4);
+  const later = at + 5 * 86400000;
+  for (let n = 0; n < 10; n++)
+    progress.events.push({
+      id: `recall-${n}`,
+      type: "answer",
+      item: pool[0].id,
+      correct: true,
+      stage: 5,
+      at: later + n,
+    });
+  record = stats(progress).records[pool[0].id];
+  assert.equal(record.recallVisits, 1);
+  assert.equal(familiarity(record), 3);
+  progress.events.push({
+    id: "tomorrow",
+    type: "answer",
+    item: pool[0].id,
+    correct: true,
+    stage: 5,
+    at: later + 86400000,
+  });
+  assert.equal(familiarity(stats(progress).records[pool[0].id]), 4);
+  progress.events.push({
+    id: "forgot",
+    type: "answer",
+    item: pool[0].id,
+    correct: false,
+    stage: 5,
+    at: later + 2 * 86400000,
+  });
+  assert.ok(familiarity(stats(progress).records[pool[0].id]) < 4);
+});
+
+test("A practice session teaches first, spaces retrieval, and reselects from updated progress", async () => {
+  const { practiceTurn, practiceExercise, nextPracticeItems } =
+    await import("../src/practice.js");
+  const { pool, progress } = practiceSeed();
+  const config = practiceSession(progress);
+  const attempts = [];
+  let turn = practiceTurn(config, attempts);
+  while (turn.item) {
+    assert.ok(attempts.length < 35);
+    const item = turn.item,
+      ex = practiceExercise(item);
+    assert.ok(!attempts.slice(-2).some((a) => a.item === item.id));
+    if (attempts.length < 5) {
+      assert.equal(item.showModel, true);
+      assert.equal(item.practiceKind, "recognize");
+      if (ex.type === "choice") assert.ok(ex.options.length >= 2);
+    } else {
+      assert.equal(item.practiceKind, "recall");
+      assert.ok(["type", "cloze"].includes(ex.type));
+    }
+    attempts.push({
+      item: item.id,
+      correct: true,
+      practiceKind: item.practiceKind,
+    });
+    progress.events.push({
+      id: `answer-${attempts.length}`,
+      type: "answer",
+      item: item.id,
+      correct: true,
+      stage: item.practiceKind === "recognize" ? 0 : ex.stage,
+      at: 1000 + attempts.length,
+    });
+    turn = practiceTurn(config, attempts);
+  }
+  assert.equal(turn.recalled.length, 5);
+  assert.equal(turn.revisit.length, 0);
+  assert.equal(attempts.length, 15);
+  assert.equal(stats(progress).passedSteps.size, 0);
+  assert.deepEqual(
+    nextPracticeItems(stats(progress).records).map((i) => i.id),
+    pool.slice(5).map((i) => i.id),
+  );
+});
+
+test("Mistakes and hints restore support and require fresh unaided recall; repeated failure is bounded", async () => {
+  const { practiceTurn } = await import("../src/practice.js");
+  const { progress } = practiceSeed(3);
+  const config = practiceSession(progress),
+    attempts = [];
+  let turn = practiceTurn(config, attempts),
+    failedRecall = false;
+  while (turn.item) {
+    const item = turn.item;
+    const fail = !failedRecall && item.practiceKind === "recall";
+    if (fail) failedRecall = true;
+    attempts.push({
+      item: item.id,
+      correct: !fail,
+      practiceKind: item.practiceKind,
+    });
+    const next = practiceTurn(config, attempts);
+    if (fail) {
+      assert.ok(!next.recalled.some((i) => i.id === item.id));
+      assert.notEqual(next.item.id, item.id);
+    }
+    turn = next;
+    assert.ok(attempts.length <= 35);
+  }
+  assert.equal(turn.recalled.length, 3);
+  const failed = [];
+  turn = practiceTurn(config, failed);
+  while (turn.item) {
+    failed.push({
+      item: turn.item.id,
+      correct: false,
+      practiceKind: turn.item.practiceKind,
+    });
+    turn = practiceTurn(config, failed);
+    assert.ok(failed.length <= 35);
+  }
+  assert.equal(turn.recalled.length, 0);
+  assert.equal(turn.revisit.length, 3);
+});
+
+test("Selecting a word creates mixed practice; a tiny collection does not claim spaced recall", async () => {
+  const { practiceTurn, practiceExercise } = await import("../src/practice.js");
+  const { pool, progress } = practiceSeed(10);
+  const focused = practiceSession(progress, { focus: pool[8] });
+  assert.equal(focused.practiceTargets[0].id, pool[8].id);
+  assert.equal(focused.practiceTargets.length, 5);
+  const tiny = practiceSeed(1),
+    config = practiceSession(tiny.progress);
+  let turn = practiceTurn(config, []);
+  assert.ok(practiceExercise(turn.item).options.length >= 2);
+  const attempts = [
+    { item: tiny.pool[0].id, correct: true, practiceKind: "recognize" },
+  ];
+  turn = practiceTurn(config, attempts);
+  attempts.push({ item: turn.item.id, correct: true, practiceKind: "recall" });
+  assert.equal(practiceTurn(config, attempts).item, undefined);
+});
+
+test("Sentence recall uses an existing exact word form and preserves its target", async () => {
+  const { practiceExample, practiceExercise } =
+    await import("../src/practice.js");
+  const word = items.find((i) => practiceExample(i));
+  assert.ok(word);
+  const context = practiceExample(word);
+  const ex = practiceExercise({
+    ...word,
+    practiceKind: "recall",
+    taskStage: 5,
+    practiceContext: context,
+  });
+  assert.equal(ex.type, "cloze");
+  assert.ok(ex.cloze.includes("___"));
+  assert.ok(isCorrect(word.lt, ex));
+  assert.equal(ex.contextMeaning, context.en);
+});

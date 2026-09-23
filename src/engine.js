@@ -155,6 +155,10 @@ export function stats(progress, now = Date.now()) {
       memoryStreak: 0,
       lastMemory: null,
       production: 0,
+      recentErrors: 0,
+      independentRun: 0,
+      recallVisits: 0,
+      lastRecall: null,
     };
     r.level =
       e.stage === undefined
@@ -170,6 +174,27 @@ export function stats(progress, now = Date.now()) {
       r.lastMemory = e.at;
     }
     if (e.correct && e.stage >= 4) r.production++;
+    // Practice distinguishes recognition from independently retrieving the full
+    // target. Keep legacy course levels and pass credit unchanged.
+    const independent =
+      e.stage === 5 || (e.stage === 4 && !itemById.get(e.item)?.cloze);
+    if (!e.correct) {
+      r.recentErrors = Math.min(3, r.recentErrors + 1);
+      r.independentRun = 0;
+      r.recallVisits = 0;
+      r.lastRecall = null;
+    } else if (independent) {
+      r.independentRun++;
+      if (r.independentRun >= 2) r.recentErrors = 0;
+      if (
+        r.lastRecall === null ||
+        (localDay(e.at) !== localDay(r.lastRecall) &&
+          e.at - r.lastRecall >= 4 * 3600000)
+      ) {
+        r.recallVisits++;
+        r.lastRecall = e.at;
+      }
+    }
     r.seen++;
     r.correct += e.correct ? 1 : 0;
     r.streak = e.correct ? r.streak + 1 : 0;

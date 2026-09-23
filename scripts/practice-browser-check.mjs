@@ -1,8 +1,12 @@
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
 import { items } from "../src/curriculum.js";
-import { normalize, clozeAnswer, STORAGE_KEY } from "../src/engine.js";
-import { wordPracticeSet } from "../src/practice.js";
+import { normalize, clozeAnswer, STORAGE_KEY, stats } from "../src/engine.js";
+import {
+  nextPracticeItems,
+  practiceCollection,
+  familiarity,
+} from "../src/practice.js";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 const browser = await chromium.launch({
@@ -100,14 +104,14 @@ async function solve(p, wrong = false) {
       );
     }
     const question = await p.locator(".question-bubble p").innerText(),
-      reverse = (
-        await p.locator(".question-bubble small").innerText()
-      ).includes("CHOOSE THE ENGLISH");
+      reverse = (await p.locator(".question-bubble small").allTextContents())
+        .join(" ")
+        .includes("CHOOSE THE ENGLISH");
     const expected =
       card.activity === "reading"
         ? card.lt
         : question.includes("___")
-          ? clozeAnswer(card)
+          ? clozeAnswer(card) || card.lt
           : reverse
             ? card.en
             : card.lt;
@@ -172,41 +176,106 @@ try {
   p.on("pageerror", (e) => errors.push(e.message));
   await p.goto(process.env.APP_URL || "http://127.0.0.1:5173/");
   await p
-    .locator(".sidebar")
-    .getByRole("button", { name: "My words", exact: true })
-    .click();
-  await p.getByLabel("Filter words").selectOption("all");
-  await p.getByLabel("Search words").fill("dog");
-  await p
-    .locator(".word-table-row")
-    .filter({ has: p.locator("strong").getByText("šuo", { exact: true }) })
+    .locator(".sidebar nav")
+    .getByRole("button", { name: /^Practice/ })
     .click();
   assert.equal(
-    await p.locator(".session-top-middle > span").innerText(),
-    "Practice",
+    await p.getByRole("button", { name: "My words", exact: true }).count(),
+    0,
   );
-  assert.equal(await p.locator(".intro-words > div").count(), 3);
-  await p.keyboard.press("Enter");
-  await finish(p);
+  await p.getByRole("button", { name: "Go to your course" }).click();
+  assert.ok(await p.locator(".course-chapter").first().isVisible());
+  const pool = items
+    .filter((i) => i.teachingKind === "vocabulary" && i.role === "core")
+    .slice(0, 10);
+  const seed = {
+    version: 1,
+    events: pool.map((i, n) => ({
+      id: `seed-${n}`,
+      type: "answer",
+      item: i.id,
+      stage: 0,
+      correct: false,
+      at: n,
+    })),
+  };
+  await p.evaluate(
+    ({ key, seed }) => localStorage.setItem(key, JSON.stringify(seed)),
+    { key: STORAGE_KEY, seed },
+  );
+  await p.reload();
+  await p
+    .locator(".sidebar nav")
+    .getByRole("button", { name: /^Practice/ })
+    .click();
+  assert.equal(await p.locator(".sidebar .nav-count").innerText(), "10");
+  assert.deepEqual(
+    await p
+      .locator(".word-table-row")
+      .evaluateAll((rows) => rows.map((r) => r.dataset.itemId)),
+    practiceCollection(stats(seed).records).map((i) => i.id),
+  );
+  assert.equal(await p.locator(".up-next").count(), 5);
+  await p.getByLabel("Search words").fill("no such word");
+  assert.ok(
+    await p.getByRole("heading", { name: "No words found" }).isVisible(),
+  );
+  await p.getByRole("button", { name: "Clear search" }).click();
+  await p.screenshot({
+    path: join(tmpdir(), "labukas-practice-desktop.png"),
+    fullPage: true,
+  });
+  await p.getByRole("button", { name: "Practice next 5 words" }).click();
+  await finish(p, 1);
   const progress = await p.evaluate(
     (key) => JSON.parse(localStorage.getItem(key)),
     STORAGE_KEY,
   );
   const allowed = new Set(
-    wordPracticeSet(items.find((i) => i.lt === "šuo")).items.map((i) => i.id),
+    nextPracticeItems(stats(seed).records).map((i) => i.id),
   );
   assert.ok(
     progress.events
-      .filter((e) => e.type === "answer")
-      .every((e) => allowed.has(e.item)),
+      .slice(seed.events.length)
+      .every((e) => e.type === "answer" && allowed.has(e.item)),
   );
   assert.equal(
     progress.events.filter((e) => e.type === "lessonPass").length,
     0,
   );
-  assert.equal(progress.events.filter((e) => e.type === "answer").length, 9);
-  await p.keyboard.press("Enter");
+  assert.ok(
+    pool
+      .slice(0, 5)
+      .every((i) => familiarity(stats(progress).records[i.id]) > 0),
+  );
+  await p.getByRole("button", { name: "Start next practice" }).click();
+  await reveal(p);
+  assert.equal(
+    await p.locator("form.exercise").getAttribute("data-item-id"),
+    nextPracticeItems(stats(progress).records)[0].id,
+  );
+  assert.equal(
+    await p.locator("form.exercise").getAttribute("data-item-id"),
+    pool[5].id,
+  );
+  await finish(p);
+  await p.getByRole("button", { name: "Back to your words" }).click();
   assert.equal(await p.locator(".session").count(), 0);
+  const first = await p
+    .locator(".word-table-row")
+    .first()
+    .getAttribute("data-item-id");
+  await p.locator(".word-table-row").first().click();
+  await reveal(p);
+  assert.equal(
+    await p.locator("form.exercise").getAttribute("data-item-id"),
+    first,
+  );
+  await finish(p);
+  // Selecting a word retains a mixed batch, and the next session repicks it.
+  await p.getByRole("button", { name: "Start next practice" }).click();
+  assert.equal(await p.locator(".session-count").innerText(), "0 / 5 recalled");
+  await p.getByRole("button", { name: "Close lesson" }).click();
   await p
     .locator(".sidebar")
     .getByRole("button", { name: "Reference", exact: true })
@@ -219,24 +288,58 @@ try {
       .isVisible(),
   );
   await p
-    .locator(".sidebar")
-    .getByRole("button", { name: "Practice", exact: true })
+    .locator(".sidebar nav")
+    .getByRole("button", { name: "Your course" })
     .click();
-  assert.equal(
-    await p.getByLabel("Practice category").locator("option").count(),
-    4,
-  );
-  await p.getByLabel("Practice category").selectOption("texts");
-  await p
-    .locator(".skill-card")
-    .filter({ hasText: "Introduce yourself" })
-    .click();
+  const chapter = p.locator(".course-chapter").nth(0);
+  if (
+    (await chapter.locator(".chapter-toggle").getAttribute("aria-expanded")) !==
+    "true"
+  )
+    await chapter.locator(".chapter-toggle").click();
+  const writing = chapter.locator(".class-block").filter({
+    has: p
+      .locator("summary strong")
+      .getByText("Introduce yourself", { exact: true }),
+  });
+  await writing.locator("summary").click();
+  await writing.locator("button").first().click();
   await p.keyboard.press("Enter");
   const draft = p.locator("textarea");
   await draft.fill("Labas");
   await draft.press("Enter");
   assert.equal(await draft.inputValue(), "Labas\n");
   assert.equal(await p.locator(".summary").count(), 0);
+  const practiceMobile = await browser.newPage({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+  });
+  practiceMobile.on("pageerror", (e) => errors.push(e.message));
+  await practiceMobile.addInitScript(
+    ({ key, seed }) => localStorage.setItem(key, JSON.stringify(seed)),
+    { key: STORAGE_KEY, seed },
+  );
+  await practiceMobile.goto(process.env.APP_URL || "http://127.0.0.1:5173/");
+  await practiceMobile
+    .locator(".mobile-nav")
+    .getByRole("button", { name: /^Practice/ })
+    .click();
+  assert.ok(
+    await practiceMobile
+      .getByRole("button", { name: "Practice next 5 words" })
+      .isVisible(),
+  );
+  assert.ok(
+    await practiceMobile.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  );
+  await practiceMobile.screenshot({
+    path: join(tmpdir(), "labukas-practice-mobile.png"),
+    fullPage: true,
+  });
+  await practiceMobile.close();
   const mobile = await browser.newPage({
     viewport: { width: 390, height: 844 },
     isMobile: true,
@@ -438,59 +541,38 @@ try {
   );
   await matching.reload();
   await matching
-    .getByRole("button", { name: "Review 4 due", exact: true })
+    .getByRole("button", { name: "See your words", exact: true })
     .click();
-  await matching.locator('[data-exercise-type="match"]').waitFor();
-  const rightItems = matching
-    .locator(".matching-grid > div")
-    .nth(1)
-    .locator("button");
-  await rightItems.first().click();
-  assert.equal(await rightItems.first().getAttribute("aria-pressed"), "true");
-  await rightItems.first().click();
-  assert.equal(await rightItems.first().getAttribute("aria-pressed"), "false");
-  await rightItems.first().click();
-  await rightItems.nth(1).click();
-  assert.equal(await rightItems.first().getAttribute("aria-pressed"), "false");
-  const selectedMeaning = await rightItems.nth(1).innerText();
-  const correctLeft = items.find((i) => i.en === selectedMeaning)?.lt;
-  for (const b of await matching
-    .locator(".matching-grid > div")
-    .first()
-    .locator("button")
-    .all()) {
-    if ((await b.innerText()) !== correctLeft) {
-      await b.click();
-      break;
-    }
-  }
-  assert.equal(
-    await matching.locator(".match-message").innerText(),
-    "Not quite — try another pair.",
-  );
-  assert.equal(
-    await matching.locator('.matching-grid [aria-pressed="true"]').count(),
-    0,
-  );
-  await rightItems.nth(1).click();
-  const hintedMeaning = await rightItems.nth(1).innerText();
+  await matching.getByRole("button", { name: "Practice next 4 words" }).click();
   await matching.locator(".hint-button").click();
-  assert.equal(await matching.locator(".matching-grid .matched").count(), 2);
-  assert.ok(
-    (await matching.locator(".exercise-hint p").innerText()).includes(
-      hintedMeaning,
-    ),
-  );
   await solve(matching);
+  assert.equal(await matching.locator(".answer-footer.retry").count(), 1);
+  await matching.keyboard.press("Enter");
+  await finish(matching, 35);
+  assert.ok(
+    await matching
+      .getByRole("heading", { name: "Progress saved." })
+      .isVisible(),
+  );
   assert.equal(
-    await matching.locator(".answer-footer.retry").count(),
-    1,
-    "A mismatch still requires another practice round",
+    await matching
+      .locator(".practice-outcomes")
+      .getByText("Needs more support", { exact: true })
+      .count(),
+    4,
+  );
+  await matching
+    .getByRole("button", { name: "Revisit the lesson" })
+    .first()
+    .click();
+  assert.equal(
+    await matching.locator(".session").getAttribute("data-session-mode"),
+    "lesson",
   );
   await matching.close();
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: bounded word practice, no course credit from practice, Enter through the complete session, writing newlines, reference search, four categories, no automatic browser fullscreen, a single lesson scroll surface, and fully visible input/action during keyboard viewport resize.",
+    "PASS: bounded adaptive practice and lesson recovery, no course credit from practice, Enter through the complete session, writing newlines, reference search, familiarity ordering and fresh practice batches, no automatic browser fullscreen, a single lesson scroll surface, and fully visible input/action during keyboard viewport resize.",
   );
 } finally {
   await browser.close();
