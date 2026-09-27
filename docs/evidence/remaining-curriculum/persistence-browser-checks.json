@@ -1,0 +1,7 @@
+{
+  "checks": [
+    "1440px: wrong reply and matching translation, backup export/import restores feedback and paused lesson, original evidence unchanged",
+    "390px: wrong reply and matching translation, backup export/import restores feedback and paused lesson, original evidence unchanged"
+  ],
+  "errors": []
+}

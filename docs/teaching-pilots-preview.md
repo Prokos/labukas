@@ -1,6 +1,8 @@
-# Revised teaching pilot screenshots
+# Teaching pilot screenshots
 
-These are browser viewport captures of the three current pilots. The first task asks the learner to interpret a grammatical signal or apply an ownership situation. The next round chooses the needed form; in the possessive lesson it changes speaker or owner. Guided work writes the form and then produces the complete phrase. The situation is the question itself, with no separate per-item setup. Phone screenshots use a 390 × 844 viewport; the verb intro, first task, and feedback use a 1280 × 900 desktop viewport.
+Historical captures only: the current generated targets lack pilot annotations. These images are not an implementation target; follow the [product plan](product-learning-plan.md).
+
+These are browser viewport captures of the three teaching pilots. The first task asks the learner to interpret a grammatical signal or apply an ownership situation. The next round chooses the needed form; in the possessive lesson it changes speaker or owner. Guided work writes the form and then produces the complete phrase. The situation is the question itself, with no separate per-item setup. Phone screenshots use a 390 × 844 viewport; the verb intro, first task, and feedback use a 1280 × 900 desktop viewport.
 
 | Lesson | Lesson intro | First task | Choose the form | Write the full phrase | Feedback after a wrong answer |
 | --- | --- | --- | --- | --- | --- |

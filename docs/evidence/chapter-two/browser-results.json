@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "desktop: 984 screens, all 53 lessons, menu and writing controls, next-lesson progression, old records untouched",
+    "desktop: chapter Practice, mastery view, bounded review and no extra course pass",
+    "desktop: card and cash variants retain their own Practice answers",
+    "desktop: case-ending mistake, targeted repair, revealed answer evidence, draft/checklist reload",
+    "phone: 984 screens, all 53 lessons, menu and writing controls, next-lesson progression, old records untouched",
+    "phone: chapter Practice, mastery view, bounded review and no extra course pass",
+    "phone: card and cash variants retain their own Practice answers",
+    "phone: case-ending mistake, targeted repair, revealed answer evidence, draft/checklist reload"
+  ],
+  "errors": []
+}

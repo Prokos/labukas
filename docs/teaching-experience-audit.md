@@ -1,8 +1,8 @@
 # Teaching experience audit — 17 September 2026
 
-The main opportunity is to give different learning problems different teaching activities inside the existing course. Keep the current progression and completed work intact. Start with a few representative lessons and evaluate their feel before expanding.
+Reference findings about the chapter/class system. Use the [product plan](product-learning-plan.md) for implementation requirements and delivery order.
 
-This audit inspected the executable curriculum, generated exercises, introduction and feedback rendering, progress storage, and selected sections of LANGAS.pdf. Counts below come from importing the current curriculum. It is a teaching-design audit, not a complete linguistic review or an assessment of the learner's proficiency. The learner's actual saved progress was not accessed.
+This audit inspected the executable curriculum, generated exercises, introduction and feedback rendering, progress storage, and selected sections of the source textbook. Counts below describe the curriculum at audit time. It is a teaching-design audit, not a complete linguistic review or an assessment of the learner's proficiency. The learner's actual saved progress was not accessed.
 
 ## What explains the sameness
 
@@ -20,7 +20,7 @@ The main path contains 226 classes and 1,663 scheduled sessions. Classes compris
 
 6. **Broad class labels hide mixed learning needs.** “Describe a room precisely” combines spatial phrases with adjective agreement. Treating every item in that class as a spatial task would repeat the current architectural mistake. Activity choice needs explicit metadata for the target or a small target group, with a class default.
 
-## What LANGAS contributes beyond its inventory
+## What the source contributes beyond its inventory
 
 The foreword describes a communicative course intended for use with a teacher (printed p. 7 / PDF page 8). The app needs to supply some of the explanation and interaction that a teacher would normally provide.
 
@@ -42,43 +42,12 @@ Selected examples show useful variety: printed pp. 35–36 pair pronoun and verb
 
 These are reusable teaching approaches, not a requirement for a different game on every screen. Keep navigation familiar. Vary the reasoning, context, and response the learner supplies.
 
-## Three concrete pilots
+## Compatibility hazards
 
-**Conjugation: `c1-present-people`, “Present tense across people.”** Introduce the relevant forms together and mark the endings. Show a worked subject change that leads to an existing target, such as `Mes gyvename centre`. During supported work, ask for the changing verb and give plausible alternatives from the same verb. Explain a specific person mismatch. Retain independent whole-response recall where the existing task requires it. A compact form table should support practice and disappear for independent recall.
+- `src/content/assemble.js` derives many item IDs from Lithuanian/English strings and class IDs from title slugs. Copy edits can therefore change identity. Keep instructional copy separate and preserve stable references when changing content.
+- Stage numbers affect support, retries and memory records. Replacing whole-sentence typing with a supported choice must not silently award the same independent-recall evidence.
+- Historical `lessonPass` and answer events refer to scheduled steps and items. Replay representative old and partial histories, writing drafts and backup/sync data against versioned contracts when changing the course.
 
-**Pronouns: `c1-possession`, “Whose name and address?”** Introduce people with names and clearly identify the current speaker. Use the same existing targets, including `Jo vardas Tomas` and `Jos vardas Rasa`, to make ownership and reference visible. Feedback should identify whose name is being discussed. Later examples should vary the referent and context without turning this into memorizing one portrait's position. Approved new transfer examples can initially be optional practice.
+## Research basis
 
-**Prepositions: `c2-with-without-forms`, “With and without ingredients.”** Use a simple order card for salad with or without cheese. Make the meaning of the request explicit, then contrast `sūriu` and `sūrio`, and finally retrieve the existing full phrase. Explain which preposition requires which case. A later spatial pilot can use “Describe a room precisely,” assigning its adjective items a separate agreement activity.
-
-Each pilot should give its existing sessions a specific purpose: notice a difference, practise the choice, retrieve it later, and use it to accomplish something. Introductions and support can show intermediate reasoning without adding mandatory course nodes. Existing application targets can become dialogue turns or meaningful requests at their current positions.
-
-Use one brief explanation for an identifiable error, followed by an opportunity to retry. For example: “The subject is mes, so this verb needs gyvename.” Only claim a particular diagnosis when the supplied answer supports it. Otherwise show the model and explain the relevant rule without guessing the learner's reasoning.
-
-## Preserve progress by construction
-
-The appropriate implementation boundary is teaching metadata and exercise presentation. Existing `lessonPass` events identify scheduled steps, and answer events identify items. Keep the same course/session order, IDs, target membership, completion requirements, review rules, and checkpoint rules. A completed session remains completed; improvements are available in future sessions or voluntary replay.
-
-Two implementation details need particular care:
-
-- `src/content/assemble.js` generates many item IDs from the Lithuanian and English strings; vocabulary class IDs also depend on title slugs. Editing those source strings casually can change identity. Add instructional copy, visual context, and form metadata separately under existing IDs.
-- Stage numbers affect support, retries, and memory records. A supported selection or one-word gap must not be logged as independent whole-sentence recall merely because it replaced a stage-5 screen. Keep current scored endpoints in the first pilot; add demonstrations or supporting interactions without falsely crediting additional mastery. A genuinely different learning target needs its own explicit treatment, not silent reuse of an old item ID.
-
-Validation before any future teaching change ships should compare old and new course definitions and replay representative progress histories, including more than 100 passed sessions, historical completions, partial work, and writing drafts. Assert identical passed sets, completion totals, next session, item records, and export/import/sync behavior for the same existing events. Existing backups should load without a migration or reset. Test a real exported backup locally if it becomes available; do not infer that the learner's personal history has already been checked.
-
-## Priorities and evaluation
-
-First implement the three pilots with focused explanations, plausible distractors, and meaningful visual or conversational context. Then try them with the learner before applying the patterns across the course. Extend vocabulary, numbers, and existing application sessions after that feedback. Preserve scheduled sessions while changing their teaching content and presentation within the compatibility contract.
-
-Judge the pilots on whether they feel meaningfully different, whether mistakes become understandable, and whether the learner can handle a reviewed but previously unpractised example after a delay. Session speed and familiar-item accuracy alone would not establish improvement. Transfer checks can be optional and must not reopen completed lessons or change progression.
-
-The evidence supports retaining retrieval and spaced returns while improving instruction. The [IES learning practice guide](https://ies.ed.gov/ncee/wwc/PracticeGuide/1) recommends spacing, active retrieval, and combining worked examples with practice. A [study of beginning German learners](https://doi.org/10.1017/S014271642100014X) found an advantage for production training on grammatical gender tasks, while noun learning was comparable across training groups. These findings support combining meaningful comprehension with production; they do not validate these proposed Lithuanian activities or prove one universal teaching sequence.
-
-Verification at audit time: all 36 existing automated tests passed. Exercise generation and curriculum counts were inspected directly. No delayed learning experiment was performed.
-
-## Implementation update
-
-The three pilots now have a different teaching sequence within their existing sessions. The per-question worked-example cue was removed. Each discovery session opens with one concise comparison at class level. In the questions, conjugation begins by interpreting a verb form's person, possession begins with a situation requiring an owner form, and the ingredient lesson begins by connecting a noun form to `su` or `be`. The next round selects the relevant form; guided work writes that form and then the complete phrase. Recall and application retain their scheduled targets.
-
-Each pilot target supplies only its focus form, plausible alternatives, and, for ownership, a short situation and a speaker switch. Shared functions generate recognition tasks and rule feedback for the three teaching families. This reduces the writing burden compared with an explanation paragraph for every target. It does not automatically make the other 223 classes pedagogically distinct; extending the approach will require additional family designs and targeted content checks.
-
-No course step, target ID, or completion criterion was changed. Synthetic history containing 125 passed sessions still resolves to the next existing session. The [pilot screenshot gallery](teaching-pilots-preview.md) shows the current intro, discovery, form choice, full phrase, and feedback screens. These checks do not establish how the lessons feel to the learner or how well the material transfers after a delay.
+The [IES learning practice guide](https://ies.ed.gov/ncee/wwc/PracticeGuide/1) supports spacing, retrieval and combining worked examples with practice. A [beginning-German study](https://doi.org/10.1017/S014271642100014X) found an advantage for production training on grammatical gender, with comparable noun learning across groups. These findings motivate varied comprehension and production; they do not validate the proposed Lithuanian activities or a universal sequence.

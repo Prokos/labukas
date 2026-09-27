@@ -1,6 +1,6 @@
 # Main-course comparison: Sakyk and the supplied Duolingo Spanish curriculum
 
-23 September 2026. This replaces the shallow curriculum comparison in the first product plan. The subject is the **main learning journey**, including its syllabus, sequencing, teaching materials, questions, assessment, and review.
+Research snapshot: 23 September 2026. Use alongside the [product plan](product-learning-plan.md); audio/speech recommendations below are deferred. The archive exposes course structure and linked teaching content, not the complete exercise bank or grading rules; it cannot establish that Duolingo never uses situational prompts.
 
 ## Evidence and how to read the comparison
 
@@ -179,7 +179,7 @@ Consequences in the **main course**:
 - Completion checks sample previously authored targets. There is no explicit bank of unseen examples reserved to assess the intended ability.
 - The main course already schedules recall and can add earlier material. The missing piece is a purpose-built unit plan and shared evidence, not the existence of a review function.
 
-The appropriate architectural change is **goal → prerequisites and language content → varied activities → supported assessment → next teaching action**. It should serve the main course first and Practice through the same model. The [revised product plan](product-learning-plan.md) turns that into a whole-course syllabus, an opening sequence and implementation gates.
+The appropriate architectural change is **goal → prerequisites and language content → varied activities → supported assessment → next teaching action**. It should serve the main course first and Practice through the same model. The [product plan](product-learning-plan.md) turns that into a whole-course syllabus, an opening sequence and implementation gates.
 
 ## Reproducing the audit
 

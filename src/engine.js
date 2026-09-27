@@ -1,4 +1,10 @@
+import { isLaterRecallVisit } from "./recall-policy.js";
+import {
+  teachingRecognition,
+  teachingExplanation,
+} from "./content/teaching-pilots.js";
 import { inheritedTargets } from "./lesson-plan.js";
+import { assessAnswer, normalizeAnswer } from "./answer-assessment.js";
 import { nounForms, pluralForms, pronounForms } from "./content/reference.js";
 import {
   items,
@@ -186,11 +192,7 @@ export function stats(progress, now = Date.now()) {
     } else if (independent) {
       r.independentRun++;
       if (r.independentRun >= 2) r.recentErrors = 0;
-      if (
-        r.lastRecall === null ||
-        (localDay(e.at) !== localDay(r.lastRecall) &&
-          e.at - r.lastRecall >= 4 * 3600000)
-      ) {
+      if (isLaterRecallVisit(r.lastRecall, e.at)) {
         r.recallVisits++;
         r.lastRecall = e.at;
       }
@@ -251,13 +253,7 @@ export function stats(progress, now = Date.now()) {
     ).length,
   };
 }
-export const normalize = (s) =>
-  s
-    .normalize("NFC")
-    .toLocaleLowerCase("lt")
-    .replace(/[.,!?;:“”"'‘’]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+export const normalize = normalizeAnswer;
 export const shuffle = (a, rng = Math.random) => {
   const copy = [...a];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -278,11 +274,18 @@ export function isCorrect(answer, exercise) {
     /^(Aš|Tu|Mes|Jūs) /i.test(exercise.answer)
       ? [exercise.answer.replace(/^(Aš|Tu|Mes|Jūs) /i, "")]
       : [];
-  return [
-    exercise.answer,
-    ...(exercise.alternatives || []),
-    ...optionalSubject,
-  ].some((a) => normalize(answer) === normalize(a));
+  // Legacy consumers require a boolean. Keep exact-answer semantics until
+  // their feedback, event readers and scheduling adopt the richer contract.
+  return (
+    assessAnswer(answer, {
+      answers: [
+        exercise.answer,
+        ...(exercise.alternatives || []),
+        ...optionalSubject,
+      ],
+      unknown: "incorrect",
+    }).outcome === "correct"
+  );
 }
 export function exerciseFor(item, record = {}, rng = Math.random) {
   if (item.activity === "writing")
@@ -299,6 +302,38 @@ export function exerciseFor(item, record = {}, rng = Math.random) {
     0,
     Math.min(5, record.level || 0, item.taskStage ?? 5),
   );
+  if (item.teaching) {
+    const recognition = teachingRecognition(item);
+    const fullPhrase = stage === 3 || stage === 5;
+    const type = stage < 2 ? "choice" : fullPhrase ? "type" : "cloze";
+    const focus = item.teaching.focus;
+    const focusedGap = item.lt.replace(focus, "___");
+    return {
+      item,
+      stage,
+      type,
+      prompt:
+        stage === 0
+          ? recognition.prompt
+          : stage === 1 && item.teaching.switchPrompt
+            ? item.teaching.switchPrompt
+            : fullPhrase
+              ? item.en
+              : focusedGap,
+      cloze: focusedGap,
+      answer: stage === 0 ? recognition.answer : fullPhrase ? item.lt : focus,
+      options:
+        stage < 2
+          ? shuffle(
+              stage === 0 ? recognition.options : item.teaching.forms,
+              rng,
+            )
+          : undefined,
+      alternatives: fullPhrase ? item.alternatives || [] : [],
+      reverse: stage === 0 && recognition.answerLanguage === "en",
+      explanation: teachingExplanation(item),
+    };
+  }
   if (item.activity === "reading")
     return {
       item,

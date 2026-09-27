@@ -1,19 +1,18 @@
 # Curriculum audit — 14 September 2026
 
+Reference findings; use the [product plan](product-learning-plan.md) for delivery requirements and [Practice design](practice-design.md) for current review behavior.
+
 This structural audit inspected executable content, selection, completion, feedback, and navigation. It is not a complete linguistic review or a study of delayed learning outcomes.
 
 The course contains 226 main classes and 1,663 generated sessions, plus 10 optional classes and 67 optional sessions. Its 2,264 targets include words, forms, sentences, reading questions and writing prompts. There are 27 reading situations and 10 self-reviewed writing workshops.
 
-## Findings and response
+## Findings
 
-- Preserve small introductions, guided production, later retrieval, application, and chapter checks.
-- Replace the exercise header with one compact chapter/lesson position. Show class and phase detail on the start and end screens. Mobile actions belong at the bottom; desktop Enter checks or continues.
-- Replace 19 raw practice tags with four topic groups plus personal review. Nominative had two explicitly tagged targets while Vocabulary had 1,140; tags are not coherent lesson scopes.
-- Select fixed practice sets from existing introduction groups. Word selection anchors a set. New material is allowed within that set; there is no automatic category refill.
-- Give recent successful recalls a cooldown and stop using a recovered lifetime mistake as a permanent ranking advantage.
-- Introduce numbers in counting order before the collection containing zero. Preserve historical groups as readable compatibility records and transfer only completed targets.
-- Show expected answers without claiming general lesson notes diagnose the response. Accepted variants still need ongoing linguistic review.
-- Make the reference directly accessible and searchable, and draw daily words from the larger vocabulary bank.
+- The course uses small introductions, guided production, later retrieval, application and chapter checks. Repeated visits need to add learning value beyond changing input format.
+- Nominative had two explicitly tagged targets while Vocabulary had 1,140; raw tags did not form coherent practice scopes. Practice selection is now covered by the linked design.
+- Recent recall and recovery need to affect selection; lifetime mistakes alone are a poor priority signal.
+- Number discovery needed authored counting order and compatibility with historical groups.
+- General lesson notes do not diagnose a particular response. Accepted variants need linguistic review.
 
 ## Progress invariants
 

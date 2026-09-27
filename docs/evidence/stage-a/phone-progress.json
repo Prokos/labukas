@@ -1,0 +1,250 @@
+{
+  "version": 1,
+  "started": true,
+  "index": 13,
+  "answer": "",
+  "selected": [],
+  "help": [],
+  "feedback": null,
+  "events": [
+    {
+      "id": "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+      "type": "exposure",
+      "step": "hello-model",
+      "context": "course",
+      "at": 1790238163649,
+      "version": 1
+    },
+    {
+      "id": "dcf9e727-d20a-422a-aeec-a38ca00013db",
+      "type": "answer",
+      "version": 1,
+      "step": "hello-choice",
+      "target": "greeting",
+      "context": "course",
+      "at": 1790238163731,
+      "answer": "Labas!",
+      "correctness": true,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc"
+      ]
+    },
+    {
+      "id": "4c58579d-d618-4259-9582-ddb38d97d1dd",
+      "type": "answer",
+      "version": 1,
+      "step": "thanks-meaning",
+      "target": "thanks",
+      "context": "course",
+      "at": 1790238163831,
+      "answer": "Thank you!",
+      "correctness": true,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc"
+      ]
+    },
+    {
+      "id": "07969b68-754e-4f32-b92b-14a1909951e1",
+      "type": "exposure",
+      "step": "reply-model",
+      "context": "course",
+      "at": 1790238163915,
+      "version": 1
+    },
+    {
+      "id": "164564f4-bef4-4846-9694-fe2ccb259056",
+      "type": "help",
+      "step": "thanks-reply",
+      "kind": "hint",
+      "context": "course",
+      "at": 1790238163948,
+      "version": 1
+    },
+    {
+      "id": "503c2152-2089-492d-86ec-41b087e52a78",
+      "type": "answer",
+      "version": 1,
+      "step": "thanks-reply",
+      "target": "thanks-reply",
+      "context": "course",
+      "at": 1790238164065,
+      "answer": "Prašom!",
+      "correctness": true,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [
+        "hint"
+      ],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1"
+      ]
+    },
+    {
+      "id": "56226bf8-a80b-4de2-a4d3-1c3371e96d60",
+      "type": "exposure",
+      "step": "name-model",
+      "context": "course",
+      "at": 1790238164165,
+      "version": 1
+    },
+    {
+      "id": "e7483c9a-5180-4e5f-b59c-abc4a8ec0f0d",
+      "type": "answer",
+      "version": 1,
+      "step": "name-bank",
+      "target": "naming",
+      "context": "course",
+      "at": 1790238164315,
+      "answer": "Mano vardas Tomas",
+      "correctness": true,
+      "responseMode": "bank",
+      "suppliedSupport": [
+        "word-bank"
+      ],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "fb590b6d-3ffb-4a7f-96fe-86b447d817d1",
+      "type": "answer",
+      "version": 1,
+      "step": "thanks-type",
+      "target": "thanks",
+      "context": "course",
+      "at": 1790238164454,
+      "answer": "Ačiū",
+      "correctness": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "94ad9f0f-ce8c-4579-b1f4-dbe0c6c640ef",
+      "type": "answer",
+      "version": 1,
+      "step": "hello-type",
+      "target": "greeting",
+      "context": "course",
+      "at": 1790238164565,
+      "answer": "Labas!",
+      "correctness": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "f217556b-3996-4a1c-a14d-713d576045cb",
+      "type": "answer",
+      "version": 1,
+      "step": "name-chat",
+      "target": "naming-reply",
+      "context": "course",
+      "at": 1790238164665,
+      "answer": "Mano vardas Tomas.",
+      "correctness": true,
+      "responseMode": "chat",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "93571811-a2c0-4e7f-b66b-85a862aae071",
+      "type": "answer",
+      "version": 1,
+      "step": "meeting-reading",
+      "target": "meeting-meaning",
+      "context": "course",
+      "at": 1790238164781,
+      "answer": "Greeting and sharing their names.",
+      "correctness": true,
+      "responseMode": "reading",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "8a503e13-08a6-4d98-8c5b-667430721f6e",
+      "type": "answer",
+      "version": 1,
+      "step": "reply-type",
+      "target": "thanks-reply",
+      "context": "course",
+      "at": 1790238164865,
+      "answer": "Prašom!",
+      "correctness": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "75bd0bda-321a-415a-a7cd-84e53d70a81e",
+      "type": "answer",
+      "version": 1,
+      "step": "introduction-type",
+      "target": "greeting-and-naming",
+      "context": "course",
+      "at": 1790238165081,
+      "answer": "Labas! Mano vardas Rasa.",
+      "correctness": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [],
+      "exposures": [
+        "d1b154dd-d3f9-4be1-b1e2-2e9245bbfcdc",
+        "07969b68-754e-4f32-b92b-14a1909951e1",
+        "56226bf8-a80b-4de2-a4d3-1c3371e96d60"
+      ]
+    },
+    {
+      "id": "9028f6da-754a-47ba-a284-bd36fc0b2664",
+      "type": "complete",
+      "context": "course",
+      "at": 1790238165115,
+      "version": 1
+    }
+  ]
+}

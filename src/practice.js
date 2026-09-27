@@ -1,3 +1,9 @@
+import {
+  RECALL_POLICY,
+  familiarity,
+  familiarityLabels,
+} from "./recall-policy.js";
+export { familiarity, familiarityLabels } from "./recall-policy.js";
 import { lessons, items, courseSteps } from "./curriculum.js";
 import {
   stats,
@@ -59,24 +65,10 @@ export function wordPracticeSet(item) {
     ],
   };
 }
-export const PRACTICE_BATCH_SIZE = 5;
+export const PRACTICE_BATCH_SIZE = RECALL_POLICY.batchSize;
 
 // Familiarity requires both independent production and recall on separate visits.
 // Repeating a word in one sitting alone cannot mark it as internalized.
-export function familiarity(record) {
-  if (!record || record.level === 0 || record.recentErrors >= 2) return 0;
-  if (record.recallVisits >= 2 && record.independentRun >= 2) return 4;
-  if (record.independentRun >= 1) return 3;
-  if (record.level < 3) return 1;
-  return 2;
-}
-export const familiarityLabels = [
-  "Needs support",
-  "Recognizing",
-  "Building recall",
-  "Recalled unaided",
-  "Remembered later",
-];
 export function practiceReason(record) {
   if (record?.recentErrors >= 2)
     return "Recent difficulty · revisit the explanation";
@@ -168,7 +160,7 @@ export function practiceSession(progress, selection = "all") {
 // A bounded learning loop: explain/recognize as needed, then retrieve twice
 // with other targets in between. Support never satisfies the recall goal.
 export function practiceTurn(config, attempts) {
-  const goal = config.practiceTargets.length === 1 ? 1 : 2;
+  const goal = config.practiceTargets.length === 1 ? 1 : RECALL_POLICY.goal;
   const states = config.practiceTargets.map((item) => ({
     item,
     support: item.needsSupport,
@@ -193,15 +185,19 @@ export function practiceTurn(config, attempts) {
     }
   }
   const complete = (s) => s.recalls >= goal;
-  const deferred = (s) => !complete(s) && (s.failures >= 3 || s.turns >= 7);
+  const deferred = (s) =>
+    !complete(s) &&
+    (s.failures >= RECALL_POLICY.maxFailures ||
+      s.turns >= RECALL_POLICY.maxTurns);
   const remaining = states.filter((s) => !complete(s) && !deferred(s));
   const report = {
     recalled: states.filter(complete).map((s) => s.item),
     revisit: states.filter((s) => !complete(s)).map((s) => s.item),
     deferred: states.filter(deferred).map((s) => s.item),
   };
-  if (!remaining.length || attempts.length >= 35) return report;
-  const gap = Math.min(2, states.length - 1);
+  if (!remaining.length || attempts.length >= RECALL_POLICY.maxSessionTurns)
+    return report;
+  const gap = Math.min(RECALL_POLICY.spacing, states.length - 1);
   const spaced = (s) => s.last < 0 || attempts.length - s.last > gap;
   let candidates = remaining.filter(spaced);
   // A finished word can provide spacing while another target needs repair.

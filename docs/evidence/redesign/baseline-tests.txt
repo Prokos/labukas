@@ -1,0 +1,247 @@
+
+> sakyk@1.0.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: cloud sync uploads only local events missing from the database
+ok 1 - cloud sync uploads only local events missing from the database
+  ---
+  duration_ms: 0.662625
+  ...
+# Subtest: cloud sync rejects malformed database events
+ok 2 - cloud sync rejects malformed database events
+  ---
+  duration_ms: 0.149625
+  ...
+# Subtest: Every mapped course objective resolves to a taught class; curated vocabulary is present
+ok 3 - Every mapped course objective resolves to a taught class; curated vocabulary is present
+  ---
+  duration_ms: 75.853083
+  ...
+# Subtest: Reading questions keep their text and authored distractors through independent recall
+ok 4 - Reading questions keep their text and authored distractors through independent recall
+  ---
+  duration_ms: 0.744833
+  ...
+# Subtest: Checkpoint retakes rotate candidates and remain short
+ok 5 - Checkpoint retakes rotate candidates and remain short
+  ---
+  duration_ms: 2.969083
+  ...
+# Subtest: Historical checks remain readable without crediting expanded assessment
+ok 6 - Historical checks remain readable without crediting expanded assessment
+  ---
+  duration_ms: 11.895208
+  ...
+# Subtest: Self-reviewed drafts merge into progress without word mastery
+ok 7 - Self-reviewed drafts merge into progress without word mastery
+  ---
+  duration_ms: 0.362625
+  ...
+# Subtest: New contexts do not silently reuse already-passed application steps
+ok 8 - New contexts do not silently reuse already-passed application steps
+  ---
+  duration_ms: 0.140667
+  ...
+# Subtest: curriculum has focused classes, stable IDs, valid forms, and real added contexts
+ok 9 - curriculum has focused classes, stable IDs, valid forms, and real added contexts
+  ---
+  duration_ms: 330.22875
+  ...
+# Subtest: every class has guided use and spaced return sessions, and each chapter has a check
+ok 10 - every class has guided use and spaced return sessions, and each chapter has a check
+  ---
+  duration_ms: 26.693959
+  ...
+# Subtest: first café lesson repeats its small target set through supported use before moving on
+ok 11 - first café lesson repeats its small target set through supported use before moving on
+  ---
+  duration_ms: 1.383583
+  ...
+# Subtest: vocabulary, grammatical patterns, and conversation use different introductory tasks
+ok 12 - vocabulary, grammatical patterns, and conversation use different introductory tasks
+  ---
+  duration_ms: 54.622208
+  ...
+# Subtest: recognition never completes a class; all its planned sessions must pass
+ok 13 - recognition never completes a class; all its planned sessions must pass
+  ---
+  duration_ms: 0.569625
+  ...
+# Subtest: legacy completion preserves introduction credit and saved answers, not unearned advanced passes
+ok 14 - legacy completion preserves introduction credit and saved answers, not unearned advanced passes
+  ---
+  duration_ms: 0.513917
+  ...
+# Subtest: same-session success improves support level but does not inflate long-term retention
+ok 15 - same-session success improves support level but does not inflate long-term retention
+  ---
+  duration_ms: 1.097292
+  ...
+# Subtest: punctuation-free builders have surplus words and allow only the intended sentence
+ok 16 - punctuation-free builders have surplus words and allow only the intended sentence
+  ---
+  duration_ms: 0.208584
+  ...
+# Subtest: scheduled stages do not force unseen material directly into typing
+ok 17 - scheduled stages do not force unseen material directly into typing
+  ---
+  duration_ms: 1.339375
+  ...
+# Subtest: checkpoint needs first-attempt production accuracy, not a chain of corrections
+ok 18 - checkpoint needs first-attempt production accuracy, not a chain of corrections
+  ---
+  duration_ms: 0.758208
+  ...
+# Subtest: difficult lessons generate consolidation and clear it after subsequent successes
+ok 19 - difficult lessons generate consolidation and clear it after subsequent successes
+  ---
+  duration_ms: 0.227959
+  ...
+# Subtest: cross-device merging deduplicates answers and course passes
+ok 20 - cross-device merging deduplicates answers and course passes
+  ---
+  duration_ms: 0.181834
+  ...
+# Subtest: general practice uses encountered material; targeted practice respects the selected skill
+ok 21 - general practice uses encountered material; targeted practice respects the selected skill
+  ---
+  duration_ms: 0.720334
+  ...
+# Subtest: typing ignores basic punctuation and case, but retains Lithuanian diacritics
+ok 22 - typing ignores basic punctuation and case, but retains Lithuanian diacritics
+  ---
+  duration_ms: 0.038791
+  ...
+# Subtest: invalid backups and unknown course sessions are rejected
+ok 23 - invalid backups and unknown course sessions are rejected
+  ---
+  duration_ms: 0.121292
+  ...
+# Subtest: every scheduled session has an achievable productive endpoint within the retry budget
+ok 24 - every scheduled session has an achievable productive endpoint within the retry budget
+  ---
+  duration_ms: 17767.944209
+  ...
+# Subtest: Ačiū recognition hints remove distractors, never the English answer
+ok 25 - Ačiū recognition hints remove distractors, never the English answer
+  ---
+  duration_ms: 1.140542
+  ...
+# Subtest: spelling hints reveal Lithuanian letters progressively, without changing the draft
+ok 26 - spelling hints reveal Lithuanian letters progressively, without changing the draft
+  ---
+  duration_ms: 0.536417
+  ...
+# Subtest: word hints keep a correct prefix, repair mistakes and handle repeated words
+ok 27 - word hints keep a correct prefix, repair mistakes and handle repeated words
+  ---
+  duration_ms: 0.176584
+  ...
+# Subtest: matching help completes the pending pair from either column, then only unmatched pairs
+ok 28 - matching help completes the pending pair from either column, then only unmatched pairs
+  ---
+  duration_ms: 0.12925
+  ...
+# Subtest: Every combination of historical number completions preserves exactly the covered targets
+ok 29 - Every combination of historical number completions preserves exactly the covered targets
+  ---
+  duration_ms: 40.292584
+  ...
+# Subtest: Completed historical number class remains completed
+ok 30 - Completed historical number class remains completed
+  ---
+  duration_ms: 0.331625
+  ...
+# Subtest: Word practice is finite, anchored, and introduces only its selected targets
+ok 31 - Word practice is finite, anchored, and introduces only its selected targets
+  ---
+  duration_ms: 0.726959
+  ...
+# Subtest: A recovered old mistake does not outrank a due word or return immediately inside a lesson
+ok 32 - A recovered old mistake does not outrank a due word or return immediately inside a lesson
+  ---
+  duration_ms: 2.315959
+  ...
+# Subtest: Guided rounds vary without adjacent repeats or reversing teaching stages
+ok 33 - Guided rounds vary without adjacent repeats or reversing teaching stages
+  ---
+  duration_ms: 10.129958
+  ...
+# Subtest: Daily words stay stable within a local day and do not repeat weekly
+ok 34 - Daily words stay stable within a local day and do not repeat weekly
+  ---
+  duration_ms: 0.137542
+  ...
+# Subtest: Explicit identification variants retain spelling and do not loosen unrelated answers
+ok 35 - Explicit identification variants retain spelling and do not loosen unrelated answers
+  ---
+  duration_ms: 0.497166
+  ...
+# Subtest: Discovery revisions work for arbitrary lesson content without special cases
+ok 36 - Discovery revisions work for arbitrary lesson content without special cases
+  ---
+  duration_ms: 0.3275
+  ...
+# Subtest: Recent unresolved difficulty outranks incomplete introduction; recovery clears that priority
+ok 37 - Recent unresolved difficulty outranks incomplete introduction; recovery clears that priority
+  ---
+  duration_ms: 2.032875
+  ...
+# Subtest: Recognition and same-day drilling never count as remembered across days
+ok 38 - Recognition and same-day drilling never count as remembered across days
+  ---
+  duration_ms: 1.47575
+  ...
+# Subtest: A practice session teaches first, spaces retrieval, and reselects from updated progress
+ok 39 - A practice session teaches first, spaces retrieval, and reselects from updated progress
+  ---
+  duration_ms: 3.064583
+  ...
+# Subtest: Mistakes and hints restore support and require fresh unaided recall; repeated failure is bounded
+ok 40 - Mistakes and hints restore support and require fresh unaided recall; repeated failure is bounded
+  ---
+  duration_ms: 0.697917
+  ...
+# Subtest: Selecting a word creates mixed practice; a tiny collection does not claim spaced recall
+ok 41 - Selecting a word creates mixed practice; a tiny collection does not claim spaced recall
+  ---
+  duration_ms: 1.178458
+  ...
+# Subtest: Sentence recall uses an existing exact word form and preserves its target
+ok 42 - Sentence recall uses an existing exact word form and preserves its target
+  ---
+  duration_ms: 0.256458
+  ...
+# Subtest: pilot stages interpret a grammar signal, choose and write its form, then produce the phrase
+not ok 43 - pilot stages interpret a grammar signal, choose and write its form, then produce the phrase
+  ---
+  duration_ms: 0.523791
+  location: '/Users/kokos/_projects/labukas/tests/teaching-pilots.test.js:22:1'
+  failureType: 'testCodeFailure'
+  error: 'c1-present-people-core-1cjotio'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/kokos/_projects/labukas/tests/teaching-pilots.test.js:30:14)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:934:25)
+    Test.start (node:internal/test_runner/test:833:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: completed sessions still resolve after a learner has passed over 100 steps
+ok 44 - completed sessions still resolve after a learner has passed over 100 steps
+  ---
+  duration_ms: 5.0315
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 43
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18270.069334

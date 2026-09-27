@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "1440px chapter2: numbered keys, Enter/Space Check and Continue, right-first pairs and reload, bank Space submission",
+    "1440px opening: numbered keys, Enter/Space Check and Continue, right-first pairs and reload, bank Space submission",
+    "1440px: full gap answers visible; Enter submits text; spaces/newlines remain editable",
+    "1440px: phrase spelling in Course and Practice, persisted correction, no meaning penalty and later exact recovery",
+    "390px chapter2: numbered keys, Enter/Space Check and Continue, right-first pairs and reload, bank Space submission",
+    "390px opening: numbered keys, Enter/Space Check and Continue, right-first pairs and reload, bank Space submission",
+    "390px: full gap answers visible; Enter submits text; spaces/newlines remain editable",
+    "390px: phrase spelling in Course and Practice, persisted correction, no meaning penalty and later exact recovery"
+  ]
+}

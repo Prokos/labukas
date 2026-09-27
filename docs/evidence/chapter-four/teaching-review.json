@@ -1,0 +1,2951 @@
+{
+  "status": "Internal teaching revision; not independently teacher-reviewed or learner-validated",
+  "counts": {
+    "lessons": 102,
+    "authoredLessons": 30,
+    "screens": 1182,
+    "distinctChangedContexts": 31,
+    "copiedReturns": 443,
+    "retiredLessons": [
+      "a-c4l1-1",
+      "a-c4-conversation",
+      "a-c4l2-2",
+      "a-c4l3-2",
+      "a-c4-home-absence-1",
+      "a-c4-count-ten-1"
+    ]
+  },
+  "outcomes": [
+    {
+      "key": "home-location",
+      "pages": "88–90, 93",
+      "goal": "Name core home spaces and locate a person or object inside one.",
+      "models": [
+        {
+          "id": "a-c4-route-home-words-model",
+          "kind": "model",
+          "title": "Start with the home",
+          "pairs": [
+            [
+              "butas",
+              "flat"
+            ],
+            [
+              "kambarys",
+              "room"
+            ],
+            [
+              "virtuvė",
+              "kitchen"
+            ]
+          ],
+          "note": "Butas is a flat or apartment. Kambarys is a room; virtuvė is a kitchen. First learn the names, then use their location forms.",
+          "targets": [
+            "c4-route:flat-word",
+            "c4-route:room-word",
+            "c4-route:kitchen-word"
+          ],
+          "lesson": "a-c4-route-home-words",
+          "position": 1
+        },
+        {
+          "id": "a-c4-route-home-location-model",
+          "kind": "model",
+          "title": "One person, three locations",
+          "pairs": [
+            [
+              "Esu bute.",
+              "I am in the flat."
+            ],
+            [
+              "Esu kambaryje.",
+              "I am in the room."
+            ],
+            [
+              "Esu virtuvėje.",
+              "I am in the kitchen."
+            ]
+          ],
+          "note": "A location needs no preposition: butas → bute, kambarys → kambaryje, virtuvė → virtuvėje. Virtuvėje follows the same pattern as kavinėje in the previous chapter.",
+          "targets": [
+            "c4-route:flat-location",
+            "c4-route:room-location",
+            "c4-route:kitchen-location"
+          ],
+          "focus": [
+            "bute",
+            "kambaryje",
+            "virtuvėje"
+          ],
+          "lesson": "a-c4-route-home-location",
+          "position": 3
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-route-transfer-0",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:room-location",
+          "reviewKey": "c4-route:room-location",
+          "source": "Stalas yra ___.",
+          "translation": "The table is in the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "kambaryje"
+          ],
+          "words": [
+            "kambaryje",
+            "kambarys"
+          ],
+          "formAlternatives": [
+            "kambaryje",
+            "kambarys"
+          ],
+          "wrong": [
+            "kambarys"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "In the room: kambaryje.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-room-location-recall",
+          "lesson": "a-c4l2-1",
+          "position": 17
+        }
+      ],
+      "applications": []
+    },
+    {
+      "key": "presence-absence",
+      "pages": "90, 93",
+      "goal": "Distinguish presence from absence and change the noun after nėra.",
+      "models": [
+        {
+          "id": "a-c4-route-table-presence-model",
+          "kind": "model",
+          "title": "Keep the object the same",
+          "pairs": [
+            [
+              "Yra stalas.",
+              "There is a table."
+            ],
+            [
+              "Nėra stalo.",
+              "There is no table."
+            ]
+          ],
+          "note": "Yra uses the naming form stalas. Nėra uses stalo, the genitive. The missing object is still a table; the sentence changes its form.",
+          "targets": [
+            "c4-route:table-present",
+            "c4-route:table-absent"
+          ],
+          "focus": [
+            "stalas",
+            "stalo"
+          ],
+          "lesson": "a-c4-route-presence",
+          "position": 5
+        },
+        {
+          "id": "a-c4-route-chair-presence-model",
+          "kind": "model",
+          "title": "The same contrast with a chair",
+          "pairs": [
+            [
+              "Yra kėdė.",
+              "There is a chair."
+            ],
+            [
+              "Nėra kėdės.",
+              "There is no chair."
+            ]
+          ],
+          "note": "With a noun ending in -ė, the absent-object form ends in -ės: kėdė → kėdės.",
+          "targets": [
+            "c4-route:chair-present",
+            "c4-route:chair-absent"
+          ],
+          "focus": [
+            "kėdė",
+            "kėdės"
+          ],
+          "lesson": "a-c4-route-presence",
+          "position": 5
+        },
+        {
+          "id": "a-c4-route-internet-model",
+          "kind": "model",
+          "title": "Ask about a facility",
+          "pairs": [
+            [
+              "Ar yra internetas?",
+              "Is there internet?"
+            ],
+            [
+              "Yra internetas.",
+              "There is internet."
+            ],
+            [
+              "Nėra interneto.",
+              "There is no internet."
+            ]
+          ],
+          "note": "Ar makes a yes/no question. Internetas stays in its naming form after yra. After nėra, use interneto, just as stalas becomes stalo.",
+          "targets": [
+            "c4-route:internet-question",
+            "c4-route:internet-present",
+            "c4-route:internet-absent"
+          ],
+          "focus": [
+            "Ar",
+            "internetas",
+            "interneto"
+          ],
+          "lesson": "a-c4-route-internet",
+          "position": 10
+        },
+        {
+          "id": "a-c4-route-bath-genitive-model",
+          "kind": "model",
+          "title": "A feminine noun ending in -ia",
+          "pairs": [
+            [
+              "Yra vonia.",
+              "There is a bath."
+            ],
+            [
+              "Nėra vonios.",
+              "There is no bath."
+            ]
+          ],
+          "note": "Vonia becomes vonios after nėra. Compare lova → lovos: both end in -os, but keep the i in vonios.",
+          "targets": [
+            "c4-route:bath-absence"
+          ],
+          "focus": [
+            "vonia",
+            "vonios"
+          ],
+          "lesson": "a-c4-route-more-noun-endings",
+          "position": 47
+        },
+        {
+          "id": "a-c4-route-television-genitive-model",
+          "kind": "model",
+          "title": "A noun ending in -ius",
+          "pairs": [
+            [
+              "Yra televizorius.",
+              "There is a television."
+            ],
+            [
+              "Nėra televizoriaus.",
+              "There is no television."
+            ]
+          ],
+          "note": "Televizorius becomes televizoriaus. This -ius → -iaus change differs from stalas → stalo.",
+          "targets": [
+            "c4-route:television-absence"
+          ],
+          "focus": [
+            "televizorius",
+            "televizoriaus"
+          ],
+          "lesson": "a-c4-route-more-noun-endings",
+          "position": 47
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-route-transfer-1",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:table-absent",
+          "reviewKey": "c4-route:table-absent",
+          "source": "Virtuvėje nėra ___.",
+          "translation": "There is no table in the kitchen.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "stalo"
+          ],
+          "words": [
+            "stalo",
+            "stalas"
+          ],
+          "formAlternatives": [
+            "stalo",
+            "stalas"
+          ],
+          "wrong": [
+            "stalas"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Nėra takes stalo, even when a location is added.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-table-absence-recall",
+          "lesson": "a-c4l2-use",
+          "position": 18
+        },
+        {
+          "id": "a-c4-route-transfer-4",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:internet-absent",
+          "reviewKey": "c4-route:internet-absent",
+          "source": "Bute nėra ___.",
+          "translation": "There is no internet in the flat.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "interneto"
+          ],
+          "words": [
+            "interneto",
+            "internetas"
+          ],
+          "formAlternatives": [
+            "interneto",
+            "internetas"
+          ],
+          "wrong": [
+            "internetas"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Nėra takes interneto.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-internet-absence-recall",
+          "lesson": "a-c4-lex-rooms-and-buildings-4",
+          "position": 22
+        },
+        {
+          "id": "a-c4-function-transfer-2",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:television-absence",
+          "reviewKey": "c4-route:television-absence",
+          "source": "Kambaryje nėra ___.",
+          "translation": "There is no television in the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "televizoriaus"
+          ],
+          "words": [
+            "televizoriaus",
+            "televizorius"
+          ],
+          "formAlternatives": [
+            "televizoriaus",
+            "televizorius"
+          ],
+          "wrong": [
+            "televizorius"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "After nėra: televizoriaus.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-television-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-7",
+          "position": 69
+        },
+        {
+          "id": "a-c4-function-transfer-3",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:bath-absence",
+          "reviewKey": "c4-route:bath-absence",
+          "source": "Bute nėra ___.",
+          "translation": "There is no bath in the flat.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "vonios"
+          ],
+          "words": [
+            "vonios",
+            "vonia"
+          ],
+          "formAlternatives": [
+            "vonios",
+            "vonia"
+          ],
+          "wrong": [
+            "vonia"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "After nėra: vonios.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-bath-recall",
+          "lesson": "a-c4l6-1",
+          "position": 85
+        },
+        {
+          "id": "a-c4-mixed-0",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:table-absent",
+          "reviewKey": "c4-route:table-absent",
+          "source": "Kambaryje nėra ___.",
+          "translation": "There is no table in the room.",
+          "answers": [
+            "stalo"
+          ],
+          "words": [
+            "stalo",
+            "stalas"
+          ],
+          "wrong": [
+            "stalas"
+          ],
+          "formAlternatives": [
+            "stalo",
+            "stalas"
+          ],
+          "instruction": "Complete the sentence.",
+          "hint": "Use the meaning and surrounding words to choose the form.",
+          "correction": "Nėra takes genitive: stalo.",
+          "changedContext": true,
+          "prerequisiteTopic": "l3",
+          "returnOf": "a-c4-route-table-absence-recall",
+          "lesson": "a-c4-mixed-check",
+          "position": 101
+        }
+      ],
+      "applications": []
+    },
+    {
+      "key": "plural-stems",
+      "pages": "90–91",
+      "goal": "Use plural naming forms and selected d→dž / t→č stem changes.",
+      "models": [
+        {
+          "id": "a-c4-route-plural-nouns-model",
+          "kind": "model",
+          "title": "The plural forms",
+          "pairs": [
+            [
+              "stalas → stalai",
+              "table → tables"
+            ],
+            [
+              "kėdė → kėdės",
+              "chair → chairs"
+            ],
+            [
+              "kambarys → kambariai",
+              "room → rooms"
+            ]
+          ],
+          "note": "For these naming forms: -as becomes -ai, -ė becomes -ės, and -ys becomes -iai. Kėdės can also mean of a chair after nėra; the surrounding sentence tells you its role.",
+          "targets": [
+            "c4-route:tables",
+            "c4-route:chairs",
+            "c4-route:rooms"
+          ],
+          "focus": [
+            "stalai",
+            "kėdės",
+            "kambariai"
+          ],
+          "lesson": "a-c4-route-plural-nouns",
+          "position": 6
+        },
+        {
+          "id": "a-c4-route-tree-stems-model",
+          "kind": "model",
+          "title": "Tree: plural naming and counting forms",
+          "pairs": [
+            [
+              "medis",
+              "tree"
+            ],
+            [
+              "du medžiai",
+              "two trees"
+            ],
+            [
+              "Kiek medžių?",
+              "How many trees?"
+            ]
+          ],
+          "note": "The naming plural is medžiai; the counting form after kiek is medžių. Both change d to dž.",
+          "targets": [
+            "c4-route:trees-naming",
+            "c4-route:trees-counting"
+          ],
+          "focus": [
+            "medis",
+            "medžiai",
+            "medžių"
+          ],
+          "lesson": "a-c4-route-changed-stems",
+          "position": 45
+        },
+        {
+          "id": "a-c4-route-dormitory-model",
+          "kind": "model",
+          "title": "A dormitory",
+          "pairs": [
+            [
+              "bendrabutis",
+              "dormitory"
+            ],
+            [
+              "Nėra bendrabučio.",
+              "There is no dormitory."
+            ],
+            [
+              "Du bendrabučiai.",
+              "Two dormitories."
+            ]
+          ],
+          "note": "Bendrabutis changes t to č: bendrabučio after nėra, bendrabučiai as a plural naming form. You saw the same stem change in rankšluostis → rankšluosčio.",
+          "targets": [
+            "c4-route:dormitory-absent",
+            "c4-route:dormitory-plural"
+          ],
+          "focus": [
+            "bendrabutis",
+            "bendrabučio",
+            "bendrabučiai"
+          ],
+          "lesson": "a-c4-route-dormitory-plurals",
+          "position": 48
+        },
+        {
+          "id": "a-c4-route-mirror-genitive-model",
+          "kind": "model",
+          "title": "Mirror: change the ending and stem",
+          "pairs": [
+            [
+              "Yra veidrodis.",
+              "There is a mirror."
+            ],
+            [
+              "Nėra veidrodžio.",
+              "There is no mirror."
+            ]
+          ],
+          "note": "Veidrodis ends in -is. Its genitive is veidrodžio: d changes to dž before -io. Compare the chair form kėdžių you already learned.",
+          "targets": [
+            "c4-route:mirror-absence"
+          ],
+          "focus": [
+            "veidrodis",
+            "veidrodžio"
+          ],
+          "lesson": "a-c4-route-changed-stems",
+          "position": 45
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-transfer-4",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:mirror-absence",
+          "reviewKey": "c4-route:mirror-absence",
+          "source": "Kambaryje nėra ___.",
+          "translation": "There is no mirror in the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "veidrodžio"
+          ],
+          "words": [
+            "veidrodžio",
+            "veidrodis"
+          ],
+          "formAlternatives": [
+            "veidrodžio",
+            "veidrodis"
+          ],
+          "wrong": [
+            "veidrodis"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Nėra takes genitive veidrodžio.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-mirror-recall",
+          "lesson": "a-c4-lex-describe-your-flat-2",
+          "position": 54
+        },
+        {
+          "id": "a-c4-transfer-5",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:trees-counting",
+          "reviewKey": "c4-route:trees-counting",
+          "source": "Kiek ___ yra kieme?",
+          "translation": "How many trees are there in the yard?",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "medžių"
+          ],
+          "words": [
+            "medžių",
+            "medžiai"
+          ],
+          "formAlternatives": [
+            "medžių",
+            "medžiai"
+          ],
+          "wrong": [
+            "medžiai"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Kiek takes genitive plural medžių.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-trees-count-recall",
+          "lesson": "a-c4-lex-describe-your-flat-3",
+          "position": 55
+        },
+        {
+          "id": "a-c4-function-transfer-4",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:dormitory-plural",
+          "reviewKey": "c4-route:dormitory-plural",
+          "source": "Trys ___.",
+          "translation": "Three dormitories.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "bendrabučiai"
+          ],
+          "words": [
+            "bendrabučiai",
+            "bendrabučio"
+          ],
+          "formAlternatives": [
+            "bendrabučiai",
+            "bendrabučio"
+          ],
+          "wrong": [
+            "bendrabučio"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Like du, trys takes the plural naming form: bendrabučiai.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-dormitory-plural-recall",
+          "lesson": "a-c4l6-2",
+          "position": 86
+        }
+      ],
+      "limit": "Samples selected noun classes; this does not establish every Lithuanian plural or stem alternation.",
+      "applications": []
+    },
+    {
+      "key": "counting",
+      "pages": "91, 96–97",
+      "goal": "Match number gender and contrast naming plurals after two with genitive plurals after ten/kiek.",
+      "models": [
+        {
+          "id": "a-c4-route-count-gender-model",
+          "kind": "model",
+          "title": "Two has two forms",
+          "pairs": [
+            [
+              "Du stalai.",
+              "Two tables."
+            ],
+            [
+              "Dvi kėdės.",
+              "Two chairs."
+            ],
+            [
+              "Du kambariai.",
+              "Two rooms."
+            ]
+          ],
+          "note": "Stalas and kambarys are masculine, so use du. Kėdė is feminine, so use dvi. The number still means two; the noun determines its form.",
+          "targets": [
+            "c4-route:two-tables",
+            "c4-route:two-chairs",
+            "c4-route:two-rooms"
+          ],
+          "focus": [
+            "Du",
+            "Dvi",
+            "Du"
+          ],
+          "lesson": "a-c4-route-count-gender",
+          "position": 7
+        },
+        {
+          "id": "a-c4-route-room-count-model",
+          "kind": "model",
+          "title": "The question and the answer use different forms",
+          "pairs": [
+            [
+              "Kiek kambarių?",
+              "How many rooms?"
+            ],
+            [
+              "Du kambariai.",
+              "Two rooms."
+            ]
+          ],
+          "note": "When asking how many rooms, use kiek + genitive plural: kambarių. In the answer, du takes the plural naming form kambariai.",
+          "targets": [
+            "c4-route:room-count-question",
+            "c4-route:two-rooms"
+          ],
+          "focus": [
+            "kambarių",
+            "kambariai"
+          ],
+          "lesson": "a-c4-route-room-count",
+          "position": 8
+        },
+        {
+          "id": "a-c4-route-one-model",
+          "kind": "model",
+          "title": "One object",
+          "pairs": [
+            [
+              "Vienas stalas.",
+              "One table."
+            ],
+            [
+              "Viena kėdė.",
+              "One chair."
+            ]
+          ],
+          "note": "One agrees with a singular noun: vienas stalas, viena kėdė. For two or more, use the plural forms you learned earlier.",
+          "targets": [
+            "c4-route:one-table",
+            "c4-route:one-chair"
+          ],
+          "focus": [
+            "Vienas",
+            "Viena"
+          ],
+          "lesson": "a-c4-route-one-three-five",
+          "position": 26
+        },
+        {
+          "id": "a-c4-route-three-model",
+          "kind": "model",
+          "title": "Three uses the same number form",
+          "pairs": [
+            [
+              "Trys stalai.",
+              "Three tables."
+            ],
+            [
+              "Trys kėdės.",
+              "Three chairs."
+            ]
+          ],
+          "note": "Trys is the same for these masculine and feminine nouns. The nouns are still plural.",
+          "targets": [
+            "c4-route:three-objects"
+          ],
+          "focus": [
+            "Trys",
+            "Trys"
+          ],
+          "lesson": "a-c4-route-one-three-five",
+          "position": 26
+        },
+        {
+          "id": "a-c4-route-five-model",
+          "kind": "model",
+          "title": "Five agrees with the noun",
+          "pairs": [
+            [
+              "Penki stalai.",
+              "Five tables."
+            ],
+            [
+              "Penkios kėdės.",
+              "Five chairs."
+            ]
+          ],
+          "note": "Penki goes with masculine stalai; penkios with feminine kėdės. Four and six through nine also have separate masculine and feminine forms, introduced in the next lessons.",
+          "targets": [
+            "c4-route:five-tables",
+            "c4-route:five-chairs"
+          ],
+          "focus": [
+            "Penki",
+            "Penkios"
+          ],
+          "lesson": "a-c4-route-one-three-five",
+          "position": 26
+        },
+        {
+          "id": "a-c4-route-ten-chairs-model",
+          "kind": "model",
+          "title": "The number changes the noun form",
+          "pairs": [
+            [
+              "Dvi kėdės.",
+              "Two chairs."
+            ],
+            [
+              "Dešimt kėdžių.",
+              "Ten chairs."
+            ],
+            [
+              "Kiek kėdžių?",
+              "How many chairs?"
+            ]
+          ],
+          "note": "Two takes the plural naming form kėdės. Ten and kiek take genitive plural kėdžių. Notice the changed stem d → dž. This is a form contrast, not an optional spelling difference.",
+          "targets": [
+            "c4-route:chairs-two-form",
+            "c4-route:chairs-ten-form",
+            "c4-route:chairs-count-question"
+          ],
+          "focus": [
+            "kėdės",
+            "kėdžių",
+            "kėdžių"
+          ],
+          "lesson": "a-c4-route-ten-and-how-many",
+          "position": 27
+        },
+        {
+          "id": "a-c4-route-quantity-model",
+          "kind": "model",
+          "title": "Many and few use the same case",
+          "pairs": [
+            [
+              "Daug kėdžių.",
+              "Many chairs."
+            ],
+            [
+              "Mažai kėdžių.",
+              "Few chairs."
+            ]
+          ],
+          "note": "Daug means many and mažai means few. Both take genitive plural, just like kiek and dešimt.",
+          "targets": [
+            "c4-route:many-chairs",
+            "c4-route:few-chairs"
+          ],
+          "focus": [
+            "Daug",
+            "Mažai"
+          ],
+          "lesson": "a-c4-route-ten-and-how-many",
+          "position": 27
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-route-transfer-2",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:two-chairs",
+          "reviewKey": "c4-route:two-chairs",
+          "source": "Virtuvėje yra ___ kėdės.",
+          "translation": "There are two chairs in the kitchen.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "dvi"
+          ],
+          "words": [
+            "dvi",
+            "du"
+          ],
+          "formAlternatives": [
+            "dvi",
+            "du"
+          ],
+          "wrong": [
+            "du"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Kėdės is feminine: dvi kėdės.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-count-chairs-recall",
+          "lesson": "a-c4-lex-rooms-and-buildings-2",
+          "position": 20
+        },
+        {
+          "id": "a-c4-route-transfer-5",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:room-count-question",
+          "reviewKey": "c4-route:room-count-question",
+          "source": "Kiek ___ yra bute?",
+          "translation": "How many rooms are there in the flat?",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "kambarių"
+          ],
+          "words": [
+            "kambarių",
+            "kambariai"
+          ],
+          "formAlternatives": [
+            "kambarių",
+            "kambariai"
+          ],
+          "wrong": [
+            "kambariai"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "How many rooms: kiek kambarių.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-room-count-recall",
+          "lesson": "a-c4-lex-furnishing-a-home-2",
+          "position": 35
+        },
+        {
+          "id": "a-c4-transfer-2",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:chairs-ten-form",
+          "reviewKey": "c4-route:chairs-ten-form",
+          "source": "Kambaryje yra dešimt ___.",
+          "translation": "There are ten chairs in the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "kėdžių"
+          ],
+          "words": [
+            "kėdžių",
+            "kėdės"
+          ],
+          "formAlternatives": [
+            "kėdžių",
+            "kėdės"
+          ],
+          "wrong": [
+            "kėdės"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "After dešimt: genitive plural kėdžių.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-ten-chairs-recall",
+          "lesson": "a-c4-lex-household-essentials-2",
+          "position": 42
+        },
+        {
+          "id": "a-c4-transfer-3",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:five-tables",
+          "reviewKey": "c4-route:five-tables",
+          "source": "Kambaryje yra ___ stalai.",
+          "translation": "There are five tables in the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "penki"
+          ],
+          "words": [
+            "penki",
+            "penkios"
+          ],
+          "formAlternatives": [
+            "penki",
+            "penkios"
+          ],
+          "wrong": [
+            "penkios"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Masculine plural: penki stalai.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-five-tables-recall",
+          "lesson": "a-c4-lex-household-essentials-3",
+          "position": 43
+        },
+        {
+          "id": "a-c4-mixed-1",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:two-chairs",
+          "reviewKey": "c4-route:two-chairs",
+          "source": "Bute yra ___ kėdės.",
+          "translation": "There are two chairs in the flat.",
+          "answers": [
+            "dvi"
+          ],
+          "words": [
+            "dvi",
+            "du"
+          ],
+          "wrong": [
+            "du"
+          ],
+          "formAlternatives": [
+            "dvi",
+            "du"
+          ],
+          "instruction": "Complete the sentence.",
+          "hint": "Use the meaning and surrounding words to choose the form.",
+          "correction": "Kėdės is feminine, so use dvi.",
+          "changedContext": true,
+          "prerequisiteTopic": "count-gender",
+          "returnOf": "a-c4-route-count-chairs-recall",
+          "lesson": "a-c4-mixed-check",
+          "position": 101
+        }
+      ],
+      "applications": []
+    },
+    {
+      "key": "floor-room-number",
+      "pages": "92–94, 98",
+      "goal": "Ask for a floor location and distinguish it from a room number.",
+      "models": [
+        {
+          "id": "a-c4-route-floor-name-model",
+          "kind": "model",
+          "title": "Naming the floor",
+          "pairs": [
+            [
+              "aukštas",
+              "floor / storey"
+            ],
+            [
+              "pirmas aukštas",
+              "first floor"
+            ],
+            [
+              "pirmame aukšte",
+              "on the first floor"
+            ]
+          ],
+          "note": "Both words change for a location: pirmas aukštas → pirmame aukšte.",
+          "targets": [
+            "c4-route:floor-word",
+            "c4-route:first-floor"
+          ],
+          "focus": [
+            "aukštas",
+            "pirmas aukštas",
+            "pirmame aukšte"
+          ],
+          "lesson": "a-c4-route-floor",
+          "position": 9
+        },
+        {
+          "id": "a-c4-route-floor-question-model",
+          "kind": "model",
+          "title": "Which floor?",
+          "pairs": [
+            [
+              "Kelintame aukšte?",
+              "On which floor?"
+            ],
+            [
+              "Antrame aukšte.",
+              "On the second floor."
+            ]
+          ],
+          "note": "The question and answer both use location forms: kelintame aukšte / antrame aukšte. Antras becomes antrame.",
+          "targets": [
+            "c4-route:floor-question",
+            "c4-route:second-floor"
+          ],
+          "focus": [
+            "Kelintame",
+            "Antrame"
+          ],
+          "lesson": "a-c4-route-floor",
+          "position": 9
+        },
+        {
+          "id": "a-c4-route-room-floor-model",
+          "kind": "model",
+          "title": "Two different questions",
+          "pairs": [
+            [
+              "Kelintas kambarys?",
+              "Which room number?"
+            ],
+            [
+              "Dvyliktas kambarys.",
+              "Room twelve."
+            ],
+            [
+              "Kelintame aukšte?",
+              "On which floor?"
+            ]
+          ],
+          "note": "A room number names the room: dvyliktas kambarys. A floor location uses kelintame aukšte, with both words in the location form. Dvyliktas means twelfth, used here to identify room twelve.",
+          "targets": [
+            "c4-route:room-number-question",
+            "c4-route:room-twelve",
+            "c4-route:floor-question"
+          ],
+          "focus": [
+            "Kelintas",
+            "Dvyliktas",
+            "Kelintame"
+          ],
+          "lesson": "a-c4-route-room-or-floor",
+          "position": 90
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-route-transfer-3",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:second-floor",
+          "reviewKey": "c4-route:second-floor",
+          "source": "Virtuvė yra ___ aukšte.",
+          "translation": "The kitchen is on the second floor.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "antrame"
+          ],
+          "words": [
+            "antrame",
+            "antras"
+          ],
+          "formAlternatives": [
+            "antrame",
+            "antras"
+          ],
+          "wrong": [
+            "antras"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "The floor location uses antrame aukšte.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-floor-second-recall",
+          "lesson": "a-c4-lex-rooms-and-buildings-3",
+          "position": 21
+        }
+      ],
+      "applications": [
+        {
+          "id": "a-c4-route-room-number-recall",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:room-number-question",
+          "reviewKey": "c4-route:room-number-question",
+          "source": "___ kambarys?",
+          "translation": "Which room number?",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Kelintas"
+          ],
+          "words": [
+            "Kelintas",
+            "Kelintame"
+          ],
+          "formAlternatives": [
+            "Kelintas",
+            "Kelintame"
+          ],
+          "wrong": [
+            "Kelintame"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Naming form: kelintas kambarys?",
+          "contentVersion": 2,
+          "lesson": "a-c4-route-room-or-floor",
+          "position": 90
+        },
+        {
+          "id": "a-c4-route-floor-question-recall",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:floor-question",
+          "reviewKey": "c4-route:floor-question",
+          "source": "___ aukšte?",
+          "translation": "On which floor?",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Kelintame"
+          ],
+          "words": [
+            "Kelintame",
+            "Kelintas"
+          ],
+          "formAlternatives": [
+            "Kelintame",
+            "Kelintas"
+          ],
+          "wrong": [
+            "Kelintas"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Location form: kelintame aukšte?",
+          "contentVersion": 2,
+          "lesson": "a-c4-route-room-or-floor",
+          "position": 90
+        },
+        {
+          "id": "a-c4-situation-home-help-q1",
+          "kind": "reading",
+          "ability": "reading",
+          "target": "c4-situation-home-help-q1",
+          "reviewKey": "c4-situation-home-help-q1:reading",
+          "sourceIds": [
+            "c4-situation-home-help-q1"
+          ],
+          "source": "Which room number does she give?",
+          "instruction": "Read the exchange and choose.",
+          "messages": [
+            {
+              "speaker": "Gyventoja",
+              "text": "Gal galite padėti? Vonioje nėra karšto vandens.",
+              "outgoing": false
+            },
+            {
+              "speaker": "Administratorius",
+              "text": "Kelintas kambarys?",
+              "outgoing": true
+            },
+            {
+              "speaker": "Gyventoja",
+              "text": "Dvyliktas.",
+              "outgoing": false
+            },
+            {
+              "speaker": "Administratorius",
+              "text": "Kviečiu santechniką. Jis bus po pietų.",
+              "outgoing": true
+            }
+          ],
+          "options": [
+            "Dvyliktas",
+            "Dvidešimtas",
+            "Antras"
+          ],
+          "answers": [
+            "Dvyliktas"
+          ],
+          "hint": "Find the part of the text that answers the question.",
+          "correction": "Dvyliktas — Twelfth",
+          "answerVisible": true,
+          "lesson": "a-c4-situation-home-help",
+          "position": 95
+        }
+      ],
+      "limit": "Floor location has a new-context check; room-number questions currently have repeated retrieval and supported reading only."
+    },
+    {
+      "key": "descriptions",
+      "pages": "92, 99",
+      "goal": "Agree adjectives and description questions with masculine/feminine nouns.",
+      "models": [
+        {
+          "id": "a-c4-route-big-model",
+          "kind": "model",
+          "title": "The same adjective with two nouns",
+          "pairs": [
+            [
+              "Didelis butas.",
+              "A large flat."
+            ],
+            [
+              "Didelė virtuvė.",
+              "A large kitchen."
+            ]
+          ],
+          "note": "Butas is masculine; virtuvė is feminine. The adjective agrees: didelis / didelė. Both mean large.",
+          "targets": [
+            "c4-route:big-flat",
+            "c4-route:big-kitchen"
+          ],
+          "focus": [
+            "Didelis",
+            "Didelė"
+          ],
+          "lesson": "a-c4-route-describe-gender",
+          "position": 51
+        },
+        {
+          "id": "a-c4-route-small-model",
+          "kind": "model",
+          "title": "A second adjective pattern",
+          "pairs": [
+            [
+              "Mažas butas.",
+              "A small flat."
+            ],
+            [
+              "Maža virtuvė.",
+              "A small kitchen."
+            ]
+          ],
+          "note": "For mažas, the feminine is maža. Learn the paired forms: didelis / didelė, mažas / maža.",
+          "targets": [
+            "c4-route:small-flat",
+            "c4-route:small-kitchen"
+          ],
+          "focus": [
+            "Mažas",
+            "Maža"
+          ],
+          "lesson": "a-c4-route-describe-gender",
+          "position": 51
+        },
+        {
+          "id": "a-c4-route-description-question-model",
+          "kind": "model",
+          "title": "Ask about the flat or kitchen",
+          "pairs": [
+            [
+              "Koks butas?",
+              "What is the flat like?"
+            ],
+            [
+              "Kokia virtuvė?",
+              "What is the kitchen like?"
+            ]
+          ],
+          "note": "Koks asks about masculine butas; kokia asks about feminine virtuvė. These questions ask for a description, not a location.",
+          "targets": [
+            "c4-route:flat-description-question",
+            "c4-route:kitchen-description-question"
+          ],
+          "focus": [
+            "Koks",
+            "Kokia"
+          ],
+          "lesson": "a-c4-route-ask-description",
+          "position": 52
+        },
+        {
+          "id": "a-c4-route-new-adjective-model",
+          "kind": "model",
+          "title": "New: -as and -a",
+          "pairs": [
+            [
+              "Naujas butas.",
+              "A new flat."
+            ],
+            [
+              "Nauja virtuvė.",
+              "A new kitchen."
+            ]
+          ],
+          "note": "Naujas / nauja follows the same pairing as mažas / maža. Keep the meaning new and match the noun’s gender.",
+          "targets": [
+            "c4-route:new-masculine",
+            "c4-route:new-feminine"
+          ],
+          "focus": [
+            "Naujas",
+            "Nauja"
+          ],
+          "lesson": "a-c4-route-more-adjectives",
+          "position": 59
+        },
+        {
+          "id": "a-c4-route-cosy-adjective-model",
+          "kind": "model",
+          "title": "Cosy: -us and -i",
+          "pairs": [
+            [
+              "Jaukus butas.",
+              "A cosy flat."
+            ],
+            [
+              "Jauki virtuvė.",
+              "A cosy kitchen."
+            ]
+          ],
+          "note": "Jaukus has the feminine form jauki. The feminine form does not always end in -a: learn the paired forms, not one universal ending.",
+          "targets": [
+            "c4-route:cosy-masculine",
+            "c4-route:cosy-feminine"
+          ],
+          "focus": [
+            "Jaukus",
+            "Jauki"
+          ],
+          "lesson": "a-c4-route-more-adjectives",
+          "position": 59
+        },
+        {
+          "id": "a-c4-route-bright-adjective-model",
+          "kind": "model",
+          "title": "Bright follows the same pairing",
+          "pairs": [
+            [
+              "Šviesus butas.",
+              "A bright flat."
+            ],
+            [
+              "Šviesi virtuvė.",
+              "A bright kitchen."
+            ]
+          ],
+          "note": "Šviesus / šviesi follows the same -us / -i pairing as jaukus / jauki.",
+          "targets": [
+            "c4-route:bright-masculine",
+            "c4-route:bright-feminine"
+          ],
+          "focus": [
+            "Šviesus",
+            "Šviesi"
+          ],
+          "lesson": "a-c4-route-more-adjectives",
+          "position": 59
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-transfer-6",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:big-kitchen",
+          "reviewKey": "c4-route:big-kitchen",
+          "source": "___ kėdė yra virtuvėje.",
+          "translation": "A large chair is in the kitchen.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Didelė"
+          ],
+          "words": [
+            "Didelė",
+            "Didelis"
+          ],
+          "formAlternatives": [
+            "Didelė",
+            "Didelis"
+          ],
+          "wrong": [
+            "Didelis"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Kėdė, like virtuvė, is feminine: didelė.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-big-kitchen-recall",
+          "lesson": "a-c4-lex-describe-your-flat-4",
+          "position": 56
+        },
+        {
+          "id": "a-c4-transfer-7",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:kitchen-description-question",
+          "reviewKey": "c4-route:kitchen-description-question",
+          "source": "___ kėdė?",
+          "translation": "What is the chair like?",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Kokia"
+          ],
+          "words": [
+            "Kokia",
+            "Koks"
+          ],
+          "formAlternatives": [
+            "Kokia",
+            "Koks"
+          ],
+          "wrong": [
+            "Koks"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Kėdė is feminine: kokia?",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-kitchen-question-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-1",
+          "position": 63
+        },
+        {
+          "id": "a-c4-transfer-8",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:small-flat",
+          "reviewKey": "c4-route:small-flat",
+          "source": "___ stalas yra kambaryje.",
+          "translation": "A small table is in the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Mažas"
+          ],
+          "words": [
+            "Mažas",
+            "Maža"
+          ],
+          "formAlternatives": [
+            "Mažas",
+            "Maža"
+          ],
+          "wrong": [
+            "Maža"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Stalas is masculine, like butas: mažas.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-small-flat-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-2",
+          "position": 64
+        },
+        {
+          "id": "a-c4-function-transfer-0",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:cosy-feminine",
+          "reviewKey": "c4-route:cosy-feminine",
+          "source": "___ svetainė.",
+          "translation": "A cosy living room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Jauki"
+          ],
+          "words": [
+            "Jauki",
+            "Jaukus"
+          ],
+          "formAlternatives": [
+            "Jauki",
+            "Jaukus"
+          ],
+          "wrong": [
+            "Jaukus"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Svetainė is feminine, like virtuvė: jauki.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-cosy-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-5",
+          "position": 67
+        },
+        {
+          "id": "a-c4-function-transfer-1",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:bright-feminine",
+          "reviewKey": "c4-route:bright-feminine",
+          "source": "___ svetainė.",
+          "translation": "A bright living room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Šviesi"
+          ],
+          "words": [
+            "Šviesi",
+            "Šviesus"
+          ],
+          "formAlternatives": [
+            "Šviesi",
+            "Šviesus"
+          ],
+          "wrong": [
+            "Šviesus"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Svetainė is feminine: šviesi.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-bright-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-6",
+          "position": 68
+        }
+      ],
+      "applications": []
+    },
+    {
+      "key": "spatial-relations",
+      "pages": "92, 100",
+      "goal": "Use ant/prie/tarp/vidury with familiar objects and genitive forms.",
+      "models": [
+        {
+          "id": "a-c4-route-table-position-model",
+          "kind": "model",
+          "title": "One table, two positions",
+          "pairs": [
+            [
+              "Ant stalo.",
+              "On the table."
+            ],
+            [
+              "Prie stalo.",
+              "Beside the table."
+            ]
+          ],
+          "note": "Ant means on; prie means beside. Both take stalo, the same genitive form you used after nėra. The preposition changes the position, not the noun form.",
+          "targets": [
+            "c4-route:on-table",
+            "c4-route:beside-table"
+          ],
+          "focus": [
+            "Ant",
+            "Prie"
+          ],
+          "lesson": "a-c4-route-on-or-beside",
+          "position": 14
+        },
+        {
+          "id": "a-c4-route-window-position-model",
+          "kind": "model",
+          "title": "Use a second familiar object",
+          "pairs": [
+            [
+              "Prie lango.",
+              "By the window."
+            ],
+            [
+              "Kėdė yra prie lango.",
+              "The chair is by the window."
+            ]
+          ],
+          "note": "Langas becomes lango after prie, just as stalas becomes stalo.",
+          "targets": [
+            "c4-route:beside-window"
+          ],
+          "focus": [
+            "lango",
+            "lango"
+          ],
+          "lesson": "a-c4-route-on-or-beside",
+          "position": 14
+        },
+        {
+          "id": "a-c4-route-between-model",
+          "kind": "model",
+          "title": "Between two objects",
+          "pairs": [
+            [
+              "Tarp stalo ir lovos.",
+              "Between the table and the bed."
+            ],
+            [
+              "Kėdė yra tarp stalo ir lovos.",
+              "The chair is between the table and the bed."
+            ]
+          ],
+          "note": "Tarp means between. Both objects use genitive: stalas → stalo, lova → lovos. Ir joins them.",
+          "targets": [
+            "c4-route:between-objects"
+          ],
+          "focus": [
+            "stalo ir lovos",
+            "stalo ir lovos"
+          ],
+          "lesson": "a-c4-route-between-and-middle",
+          "position": 58
+        },
+        {
+          "id": "a-c4-route-middle-model",
+          "kind": "model",
+          "title": "Inside or in the middle",
+          "pairs": [
+            [
+              "Stalas yra kambaryje.",
+              "The table is in the room."
+            ],
+            [
+              "Stalas yra vidury kambario.",
+              "The table is in the middle of the room."
+            ]
+          ],
+          "note": "Kambaryje says in the room. Vidury kambario specifies the middle; kambarys takes genitive kambario after vidury.",
+          "targets": [
+            "c4-route:middle-room"
+          ],
+          "focus": [
+            "kambaryje",
+            "vidury kambario"
+          ],
+          "lesson": "a-c4-route-between-and-middle",
+          "position": 58
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-transfer-0",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:on-table",
+          "reviewKey": "c4-route:on-table",
+          "source": "Raktas yra ___ stalo.",
+          "translation": "The key is on the table.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "ant"
+          ],
+          "words": [
+            "ant",
+            "prie"
+          ],
+          "formAlternatives": [
+            "ant",
+            "prie"
+          ],
+          "wrong": [
+            "prie"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Ant means on.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-table-on-recall",
+          "lesson": "a-c4-lex-furnishing-a-home-4",
+          "position": 37
+        },
+        {
+          "id": "a-c4-transfer-1",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:beside-table",
+          "reviewKey": "c4-route:beside-table",
+          "source": "Lova yra ___ stalo.",
+          "translation": "The bed is beside the table.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "prie"
+          ],
+          "words": [
+            "prie",
+            "ant"
+          ],
+          "formAlternatives": [
+            "prie",
+            "ant"
+          ],
+          "wrong": [
+            "ant"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Prie means beside.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-table-beside-recall",
+          "lesson": "a-c4-lex-furnishing-a-home-5",
+          "position": 38
+        },
+        {
+          "id": "a-c4-transfer-9",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:middle-room",
+          "reviewKey": "c4-route:middle-room",
+          "source": "Kėdė yra vidury ___.",
+          "translation": "The chair is in the middle of the room.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "kambario"
+          ],
+          "words": [
+            "kambario",
+            "kambarys",
+            "kambaryje"
+          ],
+          "formAlternatives": [
+            "kambario",
+            "kambarys",
+            "kambaryje"
+          ],
+          "wrong": [
+            "kambarys",
+            "kambaryje"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "After vidury: genitive kambario.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-middle-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-3",
+          "position": 65
+        },
+        {
+          "id": "a-c4-transfer-10",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:between-objects",
+          "reviewKey": "c4-route:between-objects",
+          "source": "Stalas yra tarp kėdės ir ___.",
+          "translation": "The table is between the chair and the bed.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "lovos"
+          ],
+          "words": [
+            "lovos",
+            "lova"
+          ],
+          "formAlternatives": [
+            "lovos",
+            "lova"
+          ],
+          "wrong": [
+            "lova"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Both objects after tarp are genitive.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-between-recall",
+          "lesson": "a-c4-lex-things-to-do-at-home-4",
+          "position": 66
+        },
+        {
+          "id": "a-c4-mixed-2",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-home-locations-core-1mwryj4",
+          "reviewKey": "c4-home-locations-core-1mwryj4:form",
+          "source": "Knyga yra ant ___.",
+          "translation": "The book is on the shelf.",
+          "answers": [
+            "lentynos"
+          ],
+          "words": [
+            "lentynos",
+            "lentyna"
+          ],
+          "wrong": [
+            "lentyna"
+          ],
+          "formAlternatives": [
+            "lentynos",
+            "lentyna"
+          ],
+          "instruction": "Complete the sentence.",
+          "hint": "Use the meaning and surrounding words to choose the form.",
+          "correction": "Ant takes genitive: lentynos.",
+          "changedContext": true,
+          "prerequisiteTopic": "home-locations",
+          "returnOf": "a-c4-home-locations-core-1mwryj4-recall",
+          "lesson": "a-c4-mixed-check",
+          "position": 101
+        }
+      ],
+      "applications": []
+    },
+    {
+      "key": "needs",
+      "pages": "90–91, 94",
+      "goal": "Distinguish a needed object from a needed action, and wanting from having to act.",
+      "models": [
+        {
+          "id": "a-c4-route-computer-need-model",
+          "kind": "model",
+          "title": "The same object, two messages",
+          "pairs": [
+            [
+              "Nėra kompiuterio.",
+              "There is no computer."
+            ],
+            [
+              "Reikia kompiuterio.",
+              "A computer is needed."
+            ],
+            [
+              "Man reikia kompiuterio.",
+              "I need a computer."
+            ]
+          ],
+          "note": "Both nėra and reikia take the genitive kompiuterio. Adding man says who needs it: I do. The noun form stays the same.",
+          "targets": [
+            "c4-route:need-computer",
+            "c4-route:i-need-computer"
+          ],
+          "focus": [
+            "Nėra",
+            "Reikia",
+            "Man"
+          ],
+          "lesson": "a-c4-route-need-an-object",
+          "position": 46
+        },
+        {
+          "id": "a-c4-route-need-towel-model",
+          "kind": "model",
+          "title": "A towel",
+          "pairs": [
+            [
+              "Man reikia rankšluosčio.",
+              "I need a towel."
+            ]
+          ],
+          "note": "Rankšluostis becomes rankšluosčio: t changes to č before -io. Learn this exact form with the noun; do not just remove its ending.",
+          "targets": [
+            "c4-route:need-towel"
+          ],
+          "focus": [
+            "rankšluosčio"
+          ],
+          "lesson": "a-c4-route-need-an-object",
+          "position": 46
+        },
+        {
+          "id": "a-c4-route-need-action-model",
+          "kind": "model",
+          "title": "The need can be an action",
+          "pairs": [
+            [
+              "Reikia kompiuterio.",
+              "A computer is needed."
+            ],
+            [
+              "Reikia uždaryti langą.",
+              "The window needs to be closed."
+            ]
+          ],
+          "note": "A needed object uses genitive: kompiuterio. A needed action uses an infinitive: uždaryti. The action still has its own object, langą.",
+          "targets": [
+            "c4-route:need-computer",
+            "c4-route:need-close"
+          ],
+          "focus": [
+            "kompiuterio",
+            "uždaryti"
+          ],
+          "lesson": "a-c4-route-need-an-action",
+          "position": 72
+        },
+        {
+          "id": "a-c4-route-want-must-model",
+          "kind": "model",
+          "title": "Want to or have to",
+          "pairs": [
+            [
+              "Noriu tvarkyti kambarį.",
+              "I want to tidy the room."
+            ],
+            [
+              "Turiu tvarkyti kambarį.",
+              "I have to tidy the room."
+            ]
+          ],
+          "note": "Tvarkyti means to tidy. Noriu expresses a wish; turiu + infinitive expresses an obligation. Keep tvarkyti kambarį the same and change only the meaning of the first verb.",
+          "targets": [
+            "c4-route:want-tidy",
+            "c4-route:must-tidy"
+          ],
+          "focus": [
+            "Noriu",
+            "Turiu"
+          ],
+          "lesson": "a-c4-route-need-an-action",
+          "position": 72
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-transfer-13",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:must-tidy",
+          "reviewKey": "c4-route:must-tidy",
+          "source": "___ uždaryti langą.",
+          "translation": "I have to close the window.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "Turiu"
+          ],
+          "words": [
+            "Turiu",
+            "Noriu"
+          ],
+          "formAlternatives": [
+            "Turiu",
+            "Noriu"
+          ],
+          "wrong": [
+            "Noriu"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Turiu + infinitive expresses obligation.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-must-recall",
+          "lesson": "a-c4-floors-1",
+          "position": 81
+        },
+        {
+          "id": "a-c4-transfer-15",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:need-computer",
+          "reviewKey": "c4-route:need-computer",
+          "source": "Virtuvėje reikia ___.",
+          "translation": "A computer is needed in the kitchen.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "kompiuterio"
+          ],
+          "words": [
+            "kompiuterio",
+            "kompiuteris"
+          ],
+          "formAlternatives": [
+            "kompiuterio",
+            "kompiuteris"
+          ],
+          "wrong": [
+            "kompiuteris"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Reikia takes the genitive kompiuterio.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-need-computer-recall",
+          "lesson": "a-c4-floors-3",
+          "position": 83
+        }
+      ],
+      "limit": "New-context checks sample obligation and noun need; infinitive need is practised with repeated bounded prompts.",
+      "applications": []
+    },
+    {
+      "key": "permission-request",
+      "pages": "91, 94",
+      "goal": "Ask permission for one's own action versus asking another person politely.",
+      "models": [
+        {
+          "id": "a-c4-route-permission-action-model",
+          "kind": "model",
+          "title": "Open the window",
+          "pairs": [
+            [
+              "atidaryti langą",
+              "to open the window"
+            ],
+            [
+              "uždaryti langą",
+              "to close the window"
+            ]
+          ],
+          "note": "Atidaryti and uždaryti are infinitives: to open and to close. Langas becomes langą as the object of the action.",
+          "targets": [
+            "c4-route:open-window",
+            "c4-route:close-window"
+          ],
+          "focus": [
+            "atidaryti",
+            "uždaryti"
+          ],
+          "lesson": "a-c4-route-permission-or-request",
+          "position": 71
+        },
+        {
+          "id": "a-c4-route-permission-request-model",
+          "kind": "model",
+          "title": "Who will do the action?",
+          "pairs": [
+            [
+              "Ar galiu atidaryti langą?",
+              "May I open the window?"
+            ],
+            [
+              "Ar galite atidaryti langą?",
+              "Can you open the window? (polite)"
+            ],
+            [
+              "Taip, galite.",
+              "Yes, you may."
+            ]
+          ],
+          "note": "Galiu means I can; galite addresses you politely. The action atidaryti stays unchanged. Ar galiu asks permission for your own action; ar galite asks the other person to act.",
+          "targets": [
+            "c4-route:permission-open",
+            "c4-route:request-open",
+            "c4-route:grant-permission"
+          ],
+          "focus": [
+            "galiu",
+            "galite",
+            "galite"
+          ],
+          "lesson": "a-c4-route-permission-or-request",
+          "position": 71
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-transfer-11",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:permission-open",
+          "reviewKey": "c4-route:permission-open",
+          "source": "Ar ___ uždaryti langą?",
+          "translation": "May I close the window?",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "galiu"
+          ],
+          "words": [
+            "galiu",
+            "galite"
+          ],
+          "formAlternatives": [
+            "galiu",
+            "galite"
+          ],
+          "wrong": [
+            "galite"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Ask permission for your own action with galiu.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-permission-recall",
+          "lesson": "a-c4-modal-requests-1",
+          "position": 78
+        },
+        {
+          "id": "a-c4-transfer-12",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:request-open",
+          "reviewKey": "c4-route:request-open",
+          "source": "Ar ___ uždaryti langą?",
+          "translation": "Can you close the window? (polite)",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "galite"
+          ],
+          "words": [
+            "galite",
+            "galiu"
+          ],
+          "formAlternatives": [
+            "galite",
+            "galiu"
+          ],
+          "wrong": [
+            "galiu"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Ask the other person to act with polite galite.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-request-recall",
+          "lesson": "a-c4-modal-requests-2",
+          "position": 79
+        },
+        {
+          "id": "a-c4-mixed-3",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:request-open",
+          "reviewKey": "c4-route:request-open",
+          "source": "Ar ___ padėti?",
+          "translation": "Can you help (formal)?",
+          "answers": [
+            "galite"
+          ],
+          "words": [
+            "galite",
+            "galiu"
+          ],
+          "wrong": [
+            "galiu"
+          ],
+          "formAlternatives": [
+            "galite",
+            "galiu"
+          ],
+          "instruction": "Complete the sentence.",
+          "hint": "Use the meaning and surrounding words to choose the form.",
+          "correction": "Galite addresses someone politely; galiu means I can.",
+          "changedContext": true,
+          "prerequisiteTopic": "modal-requests",
+          "returnOf": "a-c4-route-request-recall",
+          "lesson": "a-c4-mixed-check",
+          "position": 101
+        }
+      ],
+      "applications": [
+        {
+          "id": "a-c4-route-grant-permission-turn",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:of-course",
+          "reviewKey": "c4-route:of-course:reply",
+          "speaker": "Tomas",
+          "source": "Ar galiu atidaryti langą?",
+          "gloss": "May I open the window?",
+          "instruction": "Give your guest permission.",
+          "options": [
+            "Taip, žinoma.",
+            "Ne, atsiprašau."
+          ],
+          "answers": [
+            "Taip, žinoma."
+          ],
+          "next": "Ačiū.",
+          "followGloss": "Thank you.",
+          "wrongNext": "Ačiū.",
+          "wrongFollowGloss": "Thank you.",
+          "hint": "Your reply should mean: Give your guest permission.",
+          "correction": "Taip, žinoma.",
+          "thread": "c4-hosting",
+          "lesson": "a-c4-route-hosting",
+          "position": 91
+        }
+      ]
+    },
+    {
+      "key": "household-help",
+      "pages": "93–94, 101–102",
+      "goal": "Report missing hot water and ask for help with a repair.",
+      "models": [
+        {
+          "id": "a-c4-route-water-problem-model",
+          "kind": "model",
+          "title": "Hot water: present or absent",
+          "pairs": [
+            [
+              "Yra karštas vanduo.",
+              "There is hot water."
+            ],
+            [
+              "Nėra karšto vandens.",
+              "There is no hot water."
+            ]
+          ],
+          "note": "After nėra, both words change: karštas vanduo → karšto vandens. Learn vandens with vanduo; it does not follow the table or chair endings.",
+          "targets": [
+            "c4-route:hot-water-absent"
+          ],
+          "focus": [
+            "karštas vanduo",
+            "karšto vandens"
+          ],
+          "lesson": "a-c4-route-household-problem",
+          "position": 73
+        },
+        {
+          "id": "a-c4-route-help-model",
+          "kind": "model",
+          "title": "Ask for and offer help",
+          "pairs": [
+            [
+              "Reikia pagalbos.",
+              "Help is needed."
+            ],
+            [
+              "Galite padėti?",
+              "Can you help? (polite)"
+            ],
+            [
+              "Galiu padėti.",
+              "I can help."
+            ]
+          ],
+          "note": "Pagalba becomes pagalbos after reikia. Padėti means to help: galite asks the other person; galiu offers your own help.",
+          "targets": [
+            "c4-route:need-help",
+            "c4-route:ask-help",
+            "c4-route:offer-help"
+          ],
+          "focus": [
+            "pagalbos",
+            "Galite",
+            "Galiu"
+          ],
+          "lesson": "a-c4-route-household-problem",
+          "position": 73
+        },
+        {
+          "id": "a-c4-route-call-plumber-model",
+          "kind": "model",
+          "title": "A useful response",
+          "pairs": [
+            [
+              "Reikia kviesti santechniką.",
+              "We need to call a plumber."
+            ]
+          ],
+          "note": "Kviesti can mean to invite or to call someone in. Santechnikas becomes santechniką as the person to call. Reikia is followed by the infinitive kviesti.",
+          "targets": [
+            "c4-route:call-plumber"
+          ],
+          "focus": [
+            "kviesti santechniką"
+          ],
+          "lesson": "a-c4-route-household-problem",
+          "position": 73
+        },
+        {
+          "id": "a-c4-route-repair-reply-model",
+          "kind": "model",
+          "title": "A short repair message",
+          "pairs": [
+            [
+              "Gal galite padėti?",
+              "Could you help?"
+            ],
+            [
+              "Kviečiu santechniką.",
+              "I am calling a plumber."
+            ],
+            [
+              "Jis bus po pietų.",
+              "He will be here in the afternoon."
+            ]
+          ],
+          "note": "Gal softens the request. Kviečiu says I am calling. Learn bus po pietų as a useful future-time message here; the wider future-tense pattern comes later.",
+          "targets": [
+            "c4-route:soft-help",
+            "c4-route:calling-plumber",
+            "c4-route:repair-afternoon"
+          ],
+          "lesson": "a-c4-route-notice-and-help-reading",
+          "position": 94
+        }
+      ],
+      "checks": [
+        {
+          "id": "a-c4-transfer-14",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:hot-water-absent",
+          "reviewKey": "c4-route:hot-water-absent",
+          "source": "Virtuvėje nėra karšto ___.",
+          "translation": "There is no hot water in the kitchen.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "vandens"
+          ],
+          "words": [
+            "vandens",
+            "vanduo"
+          ],
+          "formAlternatives": [
+            "vandens",
+            "vanduo"
+          ],
+          "wrong": [
+            "vanduo"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "After nėra: karšto vandens.",
+          "contentVersion": 2,
+          "changedContext": true,
+          "returnOf": "a-c4-route-water-recall",
+          "lesson": "a-c4-floors-2",
+          "position": 82
+        }
+      ],
+      "applications": [
+        {
+          "id": "a-c4-route-problem-report-turn",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:hot-water-absent",
+          "reviewKey": "c4-route:hot-water-absent:reply",
+          "speaker": "Rasa",
+          "source": "Laba diena.",
+          "gloss": "Good afternoon.",
+          "instruction": "Say there is no hot water.",
+          "options": [
+            "Nėra karšto vandens.",
+            "Yra karštas vanduo."
+          ],
+          "answers": [
+            "Nėra karšto vandens."
+          ],
+          "next": "Reikia kviesti santechniką.",
+          "followGloss": "We need to call a plumber.",
+          "wrongNext": "Reikia kviesti santechniką.",
+          "wrongFollowGloss": "We need to call a plumber.",
+          "hint": "Your reply should mean: Say there is no hot water.",
+          "correction": "Nėra karšto vandens.",
+          "thread": "c4-help",
+          "lesson": "a-c4-route-ask-for-help",
+          "position": 74
+        },
+        {
+          "id": "a-c4-route-problem-help-turn",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:ask-help",
+          "reviewKey": "c4-route:ask-help:reply",
+          "speaker": "Rasa",
+          "source": "Reikia kviesti santechniką.",
+          "gloss": "We need to call a plumber.",
+          "instruction": "Ask the person to help.",
+          "options": [
+            "Galite padėti?",
+            "Galiu padėti."
+          ],
+          "answers": [
+            "Galite padėti?"
+          ],
+          "next": "Galiu padėti.",
+          "followGloss": "I can help.",
+          "wrongNext": "Galiu padėti.",
+          "wrongFollowGloss": "I can help.",
+          "hint": "Your reply should mean: Ask the person to help.",
+          "correction": "Galite padėti?",
+          "thread": "c4-help",
+          "continuation": true,
+          "lesson": "a-c4-route-ask-for-help",
+          "position": 74
+        },
+        {
+          "id": "a-c4-situation-home-help-q3",
+          "kind": "reading",
+          "ability": "reading",
+          "target": "c4-situation-home-help-q3",
+          "reviewKey": "c4-situation-home-help-q3:reading",
+          "sourceIds": [
+            "c4-situation-home-help-q3"
+          ],
+          "source": "Who is the administrator calling? Use the object form.",
+          "instruction": "Read the exchange and choose.",
+          "messages": [
+            {
+              "speaker": "Gyventoja",
+              "text": "Gal galite padėti? Vonioje nėra karšto vandens.",
+              "outgoing": false
+            },
+            {
+              "speaker": "Administratorius",
+              "text": "Kelintas kambarys?",
+              "outgoing": true
+            },
+            {
+              "speaker": "Gyventoja",
+              "text": "Dvyliktas.",
+              "outgoing": false
+            },
+            {
+              "speaker": "Administratorius",
+              "text": "Kviečiu santechniką. Jis bus po pietų.",
+              "outgoing": true
+            }
+          ],
+          "options": [
+            "Santechniką",
+            "Gydytoją",
+            "Padavėją"
+          ],
+          "answers": [
+            "Santechniką"
+          ],
+          "hint": "Find the part of the text that answers the question.",
+          "correction": "Santechniką — A plumber",
+          "answerVisible": true,
+          "lesson": "a-c4-situation-home-help",
+          "position": 95
+        }
+      ],
+      "limit": "Choice-based social replies; future repair timing is introduced as a chunk, not a complete tense lesson."
+    },
+    {
+      "key": "rental",
+      "pages": "93, 106–108",
+      "goal": "Ask about rooms, floor, internet and rent; compare information in adverts.",
+      "models": [
+        {
+          "id": "a-c4-route-room-count-model",
+          "kind": "model",
+          "title": "The question and the answer use different forms",
+          "pairs": [
+            [
+              "Kiek kambarių?",
+              "How many rooms?"
+            ],
+            [
+              "Du kambariai.",
+              "Two rooms."
+            ]
+          ],
+          "note": "When asking how many rooms, use kiek + genitive plural: kambarių. In the answer, du takes the plural naming form kambariai.",
+          "targets": [
+            "c4-route:room-count-question",
+            "c4-route:two-rooms"
+          ],
+          "focus": [
+            "kambarių",
+            "kambariai"
+          ],
+          "lesson": "a-c4-route-room-count",
+          "position": 8
+        },
+        {
+          "id": "a-c4-route-floor-question-model",
+          "kind": "model",
+          "title": "Which floor?",
+          "pairs": [
+            [
+              "Kelintame aukšte?",
+              "On which floor?"
+            ],
+            [
+              "Antrame aukšte.",
+              "On the second floor."
+            ]
+          ],
+          "note": "The question and answer both use location forms: kelintame aukšte / antrame aukšte. Antras becomes antrame.",
+          "targets": [
+            "c4-route:floor-question",
+            "c4-route:second-floor"
+          ],
+          "focus": [
+            "Kelintame",
+            "Antrame"
+          ],
+          "lesson": "a-c4-route-floor",
+          "position": 9
+        },
+        {
+          "id": "a-c4-route-internet-model",
+          "kind": "model",
+          "title": "Ask about a facility",
+          "pairs": [
+            [
+              "Ar yra internetas?",
+              "Is there internet?"
+            ],
+            [
+              "Yra internetas.",
+              "There is internet."
+            ],
+            [
+              "Nėra interneto.",
+              "There is no internet."
+            ]
+          ],
+          "note": "Ar makes a yes/no question. Internetas stays in its naming form after yra. After nėra, use interneto, just as stalas becomes stalo.",
+          "targets": [
+            "c4-route:internet-question",
+            "c4-route:internet-present",
+            "c4-route:internet-absent"
+          ],
+          "focus": [
+            "Ar",
+            "internetas",
+            "interneto"
+          ],
+          "lesson": "a-c4-route-internet",
+          "position": 10
+        },
+        {
+          "id": "a-c4-route-rent-model",
+          "kind": "model",
+          "title": "Ask what the rent costs",
+          "pairs": [
+            [
+              "nuoma",
+              "rent"
+            ],
+            [
+              "Kiek kainuoja nuoma?",
+              "How much is the rent?"
+            ]
+          ],
+          "note": "You used kiek kainuoja to ask prices at a café. Use the same question for rent. Here nuoma is what costs money, so it stays in its naming form.",
+          "targets": [
+            "c4-route:rent-word",
+            "c4-route:rent-question"
+          ],
+          "focus": [
+            "nuoma",
+            "nuoma"
+          ],
+          "lesson": "a-c4-route-rent",
+          "position": 11
+        }
+      ],
+      "applications": [
+        {
+          "id": "a-c4-route-rental-rooms",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:room-count-question",
+          "reviewKey": "c4-route:room-count-question:reply",
+          "speaker": "Rasa",
+          "source": "Laba diena.",
+          "gloss": "Good afternoon.",
+          "instruction": "Ask how many rooms there are.",
+          "options": [
+            "Kiek kambarių?",
+            "Kelintame aukšte?"
+          ],
+          "answers": [
+            "Kiek kambarių?"
+          ],
+          "next": "Du kambariai.",
+          "followGloss": "Two rooms.",
+          "wrongNext": "Du kambariai.",
+          "wrongFollowGloss": "Two rooms.",
+          "hint": "Your reply should mean: Ask how many rooms there are.",
+          "correction": "Kiek kambarių?",
+          "thread": "c4-rental",
+          "lesson": "a-c4-route-rental",
+          "position": 12
+        },
+        {
+          "id": "a-c4-route-rental-floor",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:floor-question",
+          "reviewKey": "c4-route:floor-question:reply",
+          "speaker": "Rasa",
+          "source": "Du kambariai.",
+          "gloss": "Two rooms.",
+          "instruction": "Ask which floor the flat is on.",
+          "options": [
+            "Kelintame aukšte?",
+            "Kiek kambarių?"
+          ],
+          "answers": [
+            "Kelintame aukšte?"
+          ],
+          "next": "Antrame aukšte.",
+          "followGloss": "On the second floor.",
+          "wrongNext": "Antrame aukšte.",
+          "wrongFollowGloss": "On the second floor.",
+          "hint": "Your reply should mean: Ask which floor the flat is on.",
+          "correction": "Kelintame aukšte?",
+          "thread": "c4-rental",
+          "continuation": true,
+          "lesson": "a-c4-route-rental",
+          "position": 12
+        },
+        {
+          "id": "a-c4-route-rental-internet",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:internet-question",
+          "reviewKey": "c4-route:internet-question:reply",
+          "speaker": "Rasa",
+          "source": "Antrame aukšte.",
+          "gloss": "On the second floor.",
+          "instruction": "Ask whether there is internet.",
+          "options": [
+            "Ar yra internetas?",
+            "Kiek kainuoja nuoma?"
+          ],
+          "answers": [
+            "Ar yra internetas?"
+          ],
+          "next": "Taip, yra internetas.",
+          "followGloss": "Yes, there is internet.",
+          "wrongNext": "Taip, yra internetas.",
+          "wrongFollowGloss": "Yes, there is internet.",
+          "hint": "Your reply should mean: Ask whether there is internet.",
+          "correction": "Ar yra internetas?",
+          "thread": "c4-rental",
+          "continuation": true,
+          "lesson": "a-c4-route-rental",
+          "position": 12
+        },
+        {
+          "id": "a-c4-route-rental-price",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:rent-question",
+          "reviewKey": "c4-route:rent-question:reply",
+          "speaker": "Rasa",
+          "source": "Taip, yra internetas.",
+          "gloss": "Yes, there is internet.",
+          "instruction": "Ask how much the rent costs.",
+          "options": [
+            "Kiek kainuoja nuoma?",
+            "Kiek kambarių?"
+          ],
+          "answers": [
+            "Kiek kainuoja nuoma?"
+          ],
+          "next": "450 €.",
+          "followGloss": "€450.",
+          "wrongNext": "450 €.",
+          "wrongFollowGloss": "€450.",
+          "hint": "Your reply should mean: Ask how much the rent costs.",
+          "correction": "Kiek kainuoja nuoma?",
+          "thread": "c4-rental",
+          "continuation": true,
+          "lesson": "a-c4-route-rental",
+          "position": 12
+        },
+        {
+          "id": "a-c4-route-compare-flats-rooms",
+          "kind": "reading",
+          "ability": "reading",
+          "target": "c4-route:rental-reading",
+          "reviewKey": "c4-route:rental-reading:meaning",
+          "source": "You need two rooms and internet. Which flat fits?",
+          "instruction": "Read both adverts and choose.",
+          "options": [
+            "A",
+            "B"
+          ],
+          "answers": [
+            "A"
+          ],
+          "hint": "Look at the part of the sentence that changes the meaning.",
+          "correction": "A has two rooms and internet. B has three rooms and no internet.",
+          "answerVisible": true,
+          "passage": "A\nDu kambariai. Yra internetas. Butas antrame aukšte. Nuoma: 450 €.\n\nB\nTrys kambariai. Nėra interneto. Butas pirmame aukšte. Nuoma: 400 €.",
+          "lesson": "a-c4-route-compare-flats",
+          "position": 92
+        },
+        {
+          "id": "a-c4-route-compare-flats-floor",
+          "kind": "reading",
+          "ability": "reading",
+          "target": "c4-route:rental-reading",
+          "reviewKey": "c4-route:rental-reading:meaning",
+          "source": "You want the first floor. Does that flat have internet?",
+          "instruction": "Read both adverts and choose.",
+          "options": [
+            "Taip",
+            "Ne"
+          ],
+          "answers": [
+            "Ne"
+          ],
+          "hint": "Look at the part of the sentence that changes the meaning.",
+          "correction": "B is on the first floor, and it says nėra interneto: there is no internet.",
+          "answerVisible": true,
+          "passage": "A\nDu kambariai. Yra internetas. Butas antrame aukšte. Nuoma: 450 €.\n\nB\nTrys kambariai. Nėra interneto. Butas pirmame aukšte. Nuoma: 400 €.",
+          "lesson": "a-c4-route-compare-flats",
+          "position": 92
+        }
+      ],
+      "limit": "Prepared reply choices and visible-text comprehension, not spontaneous negotiation or listening to a price.",
+      "checks": []
+    },
+    {
+      "key": "hosting",
+      "pages": "94, 103–104",
+      "goal": "Invite a guest in, offer a seat and respond to a request.",
+      "models": [
+        {
+          "id": "a-c4-route-hosting-model",
+          "kind": "model",
+          "title": "Two invitations",
+          "pairs": [
+            [
+              "Prašom užeiti.",
+              "Please come in."
+            ],
+            [
+              "Prašom sėstis.",
+              "Please sit down."
+            ],
+            [
+              "Taip, žinoma.",
+              "Yes, of course."
+            ]
+          ],
+          "note": "These are useful hosting phrases. Prašom introduces a polite invitation. Taip, žinoma accepts a request.",
+          "targets": [
+            "c4-route:come-in",
+            "c4-route:sit-down",
+            "c4-route:of-course"
+          ],
+          "focus": [
+            "užeiti",
+            "sėstis",
+            "žinoma"
+          ],
+          "lesson": "a-c4-route-hosting",
+          "position": 91
+        },
+        {
+          "id": "a-c4-route-refuse-permission-model",
+          "kind": "model",
+          "title": "A polite refusal",
+          "pairs": [
+            [
+              "Ne, atsiprašau.",
+              "No, sorry."
+            ]
+          ],
+          "note": "You can grant a request with taip, žinoma or decline it with ne, atsiprašau.",
+          "targets": [
+            "c4-route:refuse-permission"
+          ],
+          "lesson": "a-c4-route-hosting",
+          "position": 91
+        }
+      ],
+      "applications": [
+        {
+          "id": "a-c4-route-grant-permission-turn",
+          "kind": "chat-choice",
+          "ability": "social-reply",
+          "target": "c4-route:of-course",
+          "reviewKey": "c4-route:of-course:reply",
+          "speaker": "Tomas",
+          "source": "Ar galiu atidaryti langą?",
+          "gloss": "May I open the window?",
+          "instruction": "Give your guest permission.",
+          "options": [
+            "Taip, žinoma.",
+            "Ne, atsiprašau."
+          ],
+          "answers": [
+            "Taip, žinoma."
+          ],
+          "next": "Ačiū.",
+          "followGloss": "Thank you.",
+          "wrongNext": "Ačiū.",
+          "wrongFollowGloss": "Thank you.",
+          "hint": "Your reply should mean: Give your guest permission.",
+          "correction": "Taip, žinoma.",
+          "thread": "c4-hosting",
+          "lesson": "a-c4-route-hosting",
+          "position": 91
+        },
+        {
+          "id": "a-c4-route-sit-down-recall",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:sit-down",
+          "reviewKey": "c4-route:sit-down",
+          "source": "Prašom ___.",
+          "translation": "Please sit down.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "sėstis"
+          ],
+          "words": [
+            "sėstis",
+            "užeiti"
+          ],
+          "formAlternatives": [
+            "sėstis",
+            "užeiti"
+          ],
+          "wrong": [
+            "užeiti"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Sit down: sėstis.",
+          "contentVersion": 2,
+          "lesson": "a-c4-route-hosting",
+          "position": 91
+        },
+        {
+          "id": "a-c4-route-come-in-recall",
+          "kind": "gap-type",
+          "ability": "form-recall",
+          "target": "c4-route:come-in",
+          "reviewKey": "c4-route:come-in",
+          "source": "Prašom ___.",
+          "translation": "Please come in.",
+          "instruction": "Complete the sentence.",
+          "answers": [
+            "užeiti"
+          ],
+          "words": [
+            "užeiti",
+            "sėstis"
+          ],
+          "formAlternatives": [
+            "užeiti",
+            "sėstis"
+          ],
+          "wrong": [
+            "sėstis"
+          ],
+          "hint": "Check what the sentence needs to say. You can open the example for help.",
+          "correction": "Come in: užeiti.",
+          "contentVersion": 2,
+          "lesson": "a-c4-route-hosting",
+          "position": 91
+        },
+        {
+          "id": "a-c4-situation-guest-q1",
+          "kind": "reading",
+          "ability": "reading",
+          "target": "c4-situation-guest-q1",
+          "reviewKey": "c4-situation-guest-q1:reading",
+          "sourceIds": [
+            "c4-situation-guest-q1"
+          ],
+          "source": "Which phrase asks permission to open the window?",
+          "instruction": "Read the exchange and choose.",
+          "messages": [
+            {
+              "speaker": "Šeimininkas",
+              "text": "Prašom užeiti ir sėstis.",
+              "outgoing": false
+            },
+            {
+              "speaker": "Viešnia",
+              "text": "Ačiū. Koks jaukus butas! Ar galiu atidaryti langą?",
+              "outgoing": true
+            },
+            {
+              "speaker": "Šeimininkas",
+              "text": "Taip, žinoma.",
+              "outgoing": false
+            },
+            {
+              "speaker": "Viešnia",
+              "text": "O kur mano raktas?",
+              "outgoing": true
+            },
+            {
+              "speaker": "Šeimininkas",
+              "text": "Ant lentynos, prie durų.",
+              "outgoing": false
+            }
+          ],
+          "options": [
+            "Ar galiu atidaryti langą?",
+            "Kur mano raktas?",
+            "Prašom sėstis"
+          ],
+          "answers": [
+            "Ar galiu atidaryti langą?"
+          ],
+          "hint": "Find the part of the text that answers the question.",
+          "correction": "Ar galiu atidaryti langą? — May I open the window?",
+          "answerVisible": true,
+          "lesson": "a-c4-situation-guest",
+          "position": 96
+        }
+      ],
+      "limit": "Hosting phrases are bounded chunks. Wider invitations remain in the retained scaffold; independent transfer is not established.",
+      "checks": []
+    },
+    {
+      "key": "writing",
+      "pages": "106–108",
+      "goal": "Write a short rental enquiry using the taught questions.",
+      "models": [],
+      "applications": [
+        {
+          "id": "a-c4-writing-draft",
+          "kind": "writing",
+          "ability": "self-reviewed-writing",
+          "target": "c4-writing-draft",
+          "sourceIds": [
+            "c4-writing-draft"
+          ],
+          "source": "Ask about a rental",
+          "instruction": "Write a short enquiry about a flat you might rent.",
+          "sample": "Laba diena. Noriu išsinuomoti butą. Kiek kambarių yra bute? Kelintame aukšte jis yra? Ar yra internetas? Kiek kainuoja nuoma?",
+          "checklist": [
+            "Say you want to rent a flat.",
+            "Ask about rooms, floor, or price.",
+            "Ask whether a facility you need is present."
+          ],
+          "hint": "Use short sentences and check each point in the list.",
+          "correction": "Compare your message with the example.",
+          "lesson": "a-c4-writing",
+          "position": 102
+        }
+      ],
+      "limit": "Saved and self-reviewed; no automatic grammar or communicative-success score.",
+      "checks": []
+    }
+  ],
+  "remainingRisks": [
+    "Wider vocabulary retains repetitive dictionary scaffolding; revised functional teaching is not a full editorial approval of that scaffold.",
+    "Room-number questions, hosting phrases and infinitive need have narrower new-context evidence than core case, agreement and permission contrasts.",
+    "Social replies use choices. Reading displays the text; writing is self-reviewed. Neither establishes spontaneous spoken interaction.",
+    "Two copied course returns provide opportunities, not proof of retention; mastery still requires unaided evidence across later visits."
+  ]
+}

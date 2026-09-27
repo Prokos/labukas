@@ -1,0 +1,1631 @@
+{
+  "version": 3,
+  "events": [
+    {
+      "id": "ef46de7c-06e1-4f05-9ea8-cee72285d51a",
+      "type": "run",
+      "version": 3,
+      "at": 1790332250385,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "variant": 1,
+      "replay": false
+    },
+    {
+      "id": "e1d7be3b-1587-4f3b-b717-48692970b266",
+      "type": "exposure",
+      "version": 3,
+      "at": 1790332250482,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "hello-model",
+      "targets": [
+        "greeting",
+        "thanks"
+      ]
+    },
+    {
+      "id": "24d7184c-0d3e-4eee-88f4-7f7906b893eb",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332250568,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "hello-choice",
+      "target": "greeting",
+      "reviewKey": "greeting",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "Labas!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Labas!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "34abe8c2-91b0-431b-8c45-77f8031f70c1",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332250635,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "thanks-meaning",
+      "target": "thanks",
+      "reviewKey": "thanks",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "Thank you!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Thank you!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "8a66c2db-9ad7-43f8-801d-1b5933695f97",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332250717,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "hello-meaning",
+      "target": "greeting",
+      "reviewKey": "greeting",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "Hello!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Hello!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "ac347eb3-f7b8-4546-8185-f51f20766df1",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332250784,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "thanks-choice",
+      "target": "thanks",
+      "reviewKey": "thanks",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "Ačiū!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Ačiū!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "3f393623-fef6-4b46-9536-316c19815adf",
+      "type": "exposure",
+      "version": 3,
+      "at": 1790332250798,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "reply-model",
+      "targets": [
+        "thanks-reply"
+      ]
+    },
+    {
+      "id": "47117ab8-9f03-4df6-8ca6-61882f01921a",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332250867,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "reply-meaning",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "You’re welcome!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "You’re welcome!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "594339d4-04da-4a68-a65a-ddbb97bfaf30",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332250934,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "thanks-reply",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Prašom!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Prašom!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "4daf902b-5048-4d96-ab22-c8794752aa54",
+      "type": "pair-answer",
+      "version": 3,
+      "at": 1790332251017,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "first-match",
+      "target": "Labas!",
+      "answer": "Hello!",
+      "correctness": true,
+      "requestedHelp": []
+    },
+    {
+      "id": "1a04f4d9-203d-475c-91bf-b497da73feab",
+      "type": "pair-answer",
+      "version": 3,
+      "at": 1790332251085,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "first-match",
+      "target": "Ačiū!",
+      "answer": "Thank you!",
+      "correctness": true,
+      "requestedHelp": []
+    },
+    {
+      "id": "bc9bf36b-e5f4-42ea-a3f9-513cf500e9a5",
+      "type": "pair-answer",
+      "version": 3,
+      "at": 1790332251151,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "first-match",
+      "target": "Prašom!",
+      "answer": "You’re welcome!",
+      "correctness": true,
+      "requestedHelp": []
+    },
+    {
+      "id": "ef72da50-e587-491a-bce2-694cce0c80b3",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251184,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "first-match",
+      "target": "first-words",
+      "reviewKey": "first-words",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "",
+      "correctness": true,
+      "outcome": "correct",
+      "spellingCorrect": null,
+      "responseMode": "match",
+      "suppliedSupport": [
+        "matching"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "6a9d071e-061d-4fc1-a12a-38034b9563eb",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251251,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "first-reading",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "reading",
+      "answer": "Acknowledge thanks.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Acknowledge thanks.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "reading",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "3abecc8f-c1a0-49a7-874d-2aed2651d788",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251335,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "greeting-return",
+      "target": "greeting",
+      "reviewKey": "greeting",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Labas!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Labas!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "10b0af0e-8570-40c1-b93f-c447767f521d",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251401,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c",
+      "step": "thanks-return",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "Prašom!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Prašom!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "519b5ec4-e6ca-477c-a636-b91049e89b16",
+      "type": "complete",
+      "version": 3,
+      "at": 1790332251406,
+      "lesson": "first-words",
+      "run": "89c476bc-6f10-460e-9f1a-cdc638983c7c"
+    },
+    {
+      "id": "d06aeac3-3249-4472-a1ae-c71253382e16",
+      "type": "run",
+      "version": 3,
+      "at": 1790332251467,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "variant": 0,
+      "replay": false
+    },
+    {
+      "id": "1e6ae012-04bc-408e-be80-30f86905206f",
+      "type": "exposure",
+      "version": 3,
+      "at": 1790332251527,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "name-model",
+      "targets": [
+        "name-frame"
+      ]
+    },
+    {
+      "id": "93fb7f78-d77a-461c-99d9-562e3d6b0bd3",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251601,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "name-meaning",
+      "target": "name-frame",
+      "reviewKey": "name-frame",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "My name is Rasa.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "My name is Rasa.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "36325be6-c75b-4357-82a6-b978ee72fb02",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251750,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "name-bank",
+      "target": "name-frame",
+      "reviewKey": "name-frame",
+      "contentVersion": 3,
+      "ability": "construction",
+      "answer": "Mano vardas Tomas",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Mano vardas Tomas.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "bank",
+      "suppliedSupport": [
+        "word-bank"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "834c51d0-b6aa-42f6-9a6e-dd4f859fc6bf",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251817,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "name-gap",
+      "target": "name-frame",
+      "reviewKey": "name-frame",
+      "contentVersion": 3,
+      "ability": "form-choice",
+      "targetForm": "vardas",
+      "answer": "vardas",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "vardas",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "gap",
+      "suppliedSupport": [
+        "choices",
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "b86c377a-519e-477d-8aa6-3ebe7e75d26f",
+      "type": "help",
+      "version": 3,
+      "at": 1790332251851,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "thanks-recall",
+      "kind": "hint"
+    },
+    {
+      "id": "5def04d4-f4e3-4c29-8d02-fc3a3a9eea31",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332251952,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "thanks-recall",
+      "target": "thanks",
+      "reviewKey": "thanks",
+      "contentVersion": 3,
+      "ability": "word-recall",
+      "answer": "Dėkui!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Dėkui!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [
+        "hint"
+      ],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "fdb4b54f-4210-42f6-9dea-7921aba0b44d",
+      "type": "exposure",
+      "version": 3,
+      "at": 1790332251982,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "name-question-model",
+      "targets": [
+        "name-question"
+      ]
+    },
+    {
+      "id": "11aeb3bc-8248-420f-b5f6-613d6b54fbf5",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252051,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "question-meaning",
+      "target": "name-question",
+      "reviewKey": "name-question",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "What is your name?",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "What is your name?",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "98ccab2a-35e9-4d18-aa34-18ca3b5e2559",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252134,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "meet-greeting",
+      "target": "greeting",
+      "reviewKey": "greeting",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Labas!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Labas!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "chat",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "6456cc52-c152-4316-8575-161bc15a221c",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252268,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "meet-name",
+      "target": "name-frame",
+      "reviewKey": "name-frame",
+      "contentVersion": 3,
+      "ability": "construction",
+      "answer": "Mano vardas Tomas",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Mano vardas Tomas.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "chat-bank",
+      "suppliedSupport": [
+        "word-bank",
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "d33aae7e-796d-4ee2-b222-6f63cd826319",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252434,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "name-reading",
+      "target": "name-question",
+      "reviewKey": "name-question",
+      "contentVersion": 3,
+      "ability": "reading",
+      "answer": "Your name.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Your name.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "reading",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "5b078688-14c1-495e-8685-4195f9a28c69",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252517,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96",
+      "step": "reply-return",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Prašom!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Prašom!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "a7b0345f-3efb-4d0a-b92d-9fe7980ffc6e",
+      "type": "complete",
+      "version": 3,
+      "at": 1790332252523,
+      "lesson": "your-name",
+      "run": "a45664f9-c2e2-43d5-b652-4b6fb022fd96"
+    },
+    {
+      "id": "a03a5dea-5572-453f-af82-563a52a018c8",
+      "type": "run",
+      "version": 3,
+      "at": 1790332252601,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "variant": 0,
+      "replay": false
+    },
+    {
+      "id": "e3c334de-8a8b-42bb-b40f-d05f2dc9ed2a",
+      "type": "exposure",
+      "version": 3,
+      "at": 1790332252684,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "person-model",
+      "targets": [
+        "esu",
+        "esi"
+      ]
+    },
+    {
+      "id": "6678c55a-e290-4dfa-9cd0-b2435c594550",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252750,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "i-form",
+      "target": "esu",
+      "reviewKey": "esu",
+      "contentVersion": 3,
+      "ability": "form-choice",
+      "targetForm": "esu",
+      "answer": "esu",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "esu",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "gap",
+      "suppliedSupport": [
+        "choices",
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "676b5ef1-5d75-4127-b851-ea2b315b031e",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252817,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "you-meaning",
+      "target": "esi",
+      "reviewKey": "esi",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "You are Rasa.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "You are Rasa.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "8028244a-59ae-4387-8329-621c9179aae8",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332252917,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "you-form",
+      "target": "esi",
+      "reviewKey": "esi",
+      "contentVersion": 3,
+      "ability": "form-choice",
+      "targetForm": "esi",
+      "answer": "esi",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "esi",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "gap",
+      "suppliedSupport": [
+        "choices",
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "228126ee-9e99-421d-b3f4-80a1cb2224e1",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253068,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "i-bank",
+      "target": "esu",
+      "reviewKey": "esu",
+      "contentVersion": 3,
+      "ability": "construction",
+      "answer": "Aš esu Tomas",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Aš esu Tomas.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "bank",
+      "suppliedSupport": [
+        "word-bank"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "d7f68ba5-2fd9-4f93-918d-d346849b7822",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253151,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "thanks-spaced",
+      "target": "thanks",
+      "reviewKey": "thanks",
+      "contentVersion": 3,
+      "ability": "meaning",
+      "answer": "Ačiū!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Ačiū!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "5e83a135-0f37-4299-be96-0985de1ffe53",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253284,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "fix-person",
+      "target": "esu",
+      "reviewKey": "esu",
+      "contentVersion": 3,
+      "ability": "error-repair",
+      "answer": "esu",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "esu",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "edit",
+      "suppliedSupport": [
+        "replacement-options"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "4bc74e75-b106-43fa-969c-bd3daf0464a1",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253335,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "i-form-recall",
+      "target": "esu",
+      "reviewKey": "esu",
+      "contentVersion": 3,
+      "ability": "form-recall",
+      "targetForm": "esu",
+      "answer": "esu",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "esu",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": true,
+      "responseMode": "gap-type",
+      "suppliedSupport": [
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": true,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "4f010737-ecd6-4f46-8a28-c0fa377b5c47",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253435,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "person-contrast",
+      "target": "esu",
+      "reviewKey": "esu",
+      "contentVersion": 3,
+      "ability": "person-meaning",
+      "answer": "Aš esu Rasa.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Aš esu Rasa.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "757883cf-b23b-44bb-a0e8-0661017ef965",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253484,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "you-form-recall",
+      "target": "esi",
+      "reviewKey": "esi",
+      "contentVersion": 3,
+      "ability": "form-recall",
+      "targetForm": "esi",
+      "answer": "esi",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "esi",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": true,
+      "responseMode": "gap-type",
+      "suppliedSupport": [
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": true,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "9336813d-d224-4017-ac65-f7120fc632a5",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253534,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0",
+      "step": "reply-recall",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "reply-recall",
+      "answer": "Prašom!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Prašom!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [],
+      "independentRecall": true,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "09297abb-64d3-4406-8adb-536ad7b9c114",
+      "type": "complete",
+      "version": 3,
+      "at": 1790332253539,
+      "lesson": "i-and-you",
+      "run": "92dcab39-f08f-4e04-9eed-79ff24e0c5e0"
+    },
+    {
+      "id": "45e15482-a588-49b8-b61b-09928f47757f",
+      "type": "run",
+      "version": 3,
+      "at": 1790332253600,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "variant": 0,
+      "replay": false
+    },
+    {
+      "id": "c543da7d-9034-4279-9281-139f7cf19fe3",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253718,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-greeting",
+      "target": "greeting",
+      "reviewKey": "greeting",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Labas!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Labas!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "chat",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "8c485e6b-c16f-4477-b0b7-5a023d8e3e85",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332253818,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-name",
+      "target": "esu",
+      "reviewKey": "esu",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Aš esu Tomas.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Aš esu Tomas.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "chat",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "1a4bbe01-6fe1-4cee-a4fa-0f68ec76ec5e",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332254017,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-reading",
+      "target": "name-frame",
+      "reviewKey": "name-frame",
+      "contentVersion": 3,
+      "ability": "reading",
+      "answer": "Lina gives her name; Tomas gives his.",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Lina gives her name; Tomas gives his.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "reading",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "aad63dbd-a000-45f6-9686-83b764e0bf87",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332254068,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-form",
+      "target": "esi",
+      "reviewKey": "esi",
+      "contentVersion": 3,
+      "ability": "form-recall",
+      "targetForm": "esi",
+      "answer": "esi",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "esi",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": true,
+      "responseMode": "gap-type",
+      "suppliedSupport": [
+        "translation"
+      ],
+      "requestedHelp": [],
+      "independentRecall": true,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "8db2c009-e35c-4d8c-8cbc-f82d16f2b63d",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332254118,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-thanks",
+      "target": "thanks",
+      "reviewKey": "thanks",
+      "contentVersion": 3,
+      "ability": "word-recall",
+      "answer": "Ačiū!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Ačiū!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": true,
+      "responseMode": "type",
+      "suppliedSupport": [],
+      "requestedHelp": [],
+      "independentRecall": true,
+      "independentWordRecall": true,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "1b568bf0-b40b-499f-9a93-f0fb5f8947ca",
+      "type": "help",
+      "version": 3,
+      "at": 1790332254201,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-name-bank",
+      "kind": "hint"
+    },
+    {
+      "id": "f9a3e6c1-5846-4030-84f6-ea0164578322",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332254334,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-name-bank",
+      "target": "name-frame",
+      "reviewKey": "name-frame",
+      "contentVersion": 3,
+      "ability": "construction",
+      "answer": "Mano vardas Mantas",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Mano vardas Mantas.",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "bank",
+      "suppliedSupport": [
+        "word-bank"
+      ],
+      "requestedHelp": [
+        "hint"
+      ],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "2e88fe81-b0fe-447c-942d-ff92620c64a8",
+      "type": "answer",
+      "version": 3,
+      "at": 1790332254417,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+      "step": "final-reply",
+      "target": "thanks-reply",
+      "reviewKey": "thanks-reply",
+      "contentVersion": 3,
+      "ability": "reply-selection",
+      "answer": "Prašom!",
+      "correctness": true,
+      "outcome": "correct",
+      "assessment": {
+        "version": 1,
+        "outcome": "correct",
+        "reason": "exact",
+        "matchedAnswer": "Prašom!",
+        "wordingCorrect": true,
+        "spellingCorrect": true
+      },
+      "spellingCorrect": null,
+      "responseMode": "choice",
+      "suppliedSupport": [
+        "choices"
+      ],
+      "requestedHelp": [],
+      "independentRecall": false,
+      "independentWordRecall": false,
+      "repair": false,
+      "answerVisible": false
+    },
+    {
+      "id": "1348fec6-87e3-4b32-a568-c46835f049ba",
+      "type": "complete",
+      "version": 3,
+      "at": 1790332254423,
+      "lesson": "meet-someone",
+      "run": "ce20a992-1288-4597-9788-5d44c7cc8aed"
+    }
+  ],
+  "completed": [
+    "first-words",
+    "your-name",
+    "i-and-you",
+    "meet-someone"
+  ],
+  "run": {
+    "id": "ce20a992-1288-4597-9788-5d44c7cc8aed",
+    "lessonId": "meet-someone",
+    "variant": 0,
+    "index": 6,
+    "queue": [
+      {
+        "id": "final-greeting",
+        "kind": "chat",
+        "target": "greeting",
+        "ability": "reply-selection",
+        "source": "Labas!",
+        "instruction": "Reply to Lina.",
+        "options": [
+          "Labas!",
+          "Ačiū!"
+        ],
+        "answers": [
+          "Labas!"
+        ],
+        "hint": "Look for the greeting you learned.",
+        "correction": "Use Labas to return a greeting.",
+        "speaker": "Lina",
+        "thread": "final",
+        "next": "Koks tavo vardas?",
+        "wrongNext": "Koks tavo vardas?"
+      },
+      {
+        "id": "final-name",
+        "kind": "chat",
+        "target": "esu",
+        "ability": "reply-selection",
+        "source": "Koks tavo vardas?",
+        "instruction": "Introduce yourself as Tomas.",
+        "options": [
+          "Aš esu Tomas.",
+          "Tu esi Tomas."
+        ],
+        "answers": [
+          "Aš esu Tomas."
+        ],
+        "hint": "Your reply needs to be about yourself.",
+        "correction": "Aš esu introduces yourself. Tu esi talks about the other person.",
+        "speaker": "Lina",
+        "thread": "final",
+        "continuation": true,
+        "next": "Mano vardas Lina.",
+        "wrongNext": "Koks tavo vardas?"
+      },
+      {
+        "id": "final-reading",
+        "kind": "reading",
+        "target": "name-frame",
+        "ability": "reading",
+        "source": "Which description matches these messages?",
+        "instruction": "Read the exchange and choose.",
+        "options": [
+          "Lina asks a name; Tomas gives his.",
+          "Lina gives her name; Tomas gives his."
+        ],
+        "answers": [
+          "Lina gives her name; Tomas gives his."
+        ],
+        "hint": "Mano refers to the speaker. Whose name is given?",
+        "correction": "Both use Mano vardas — “My name”. Neither asks Koks tavo vardas?",
+        "messages": [
+          {
+            "speaker": "Lina",
+            "text": "Mano vardas Lina."
+          },
+          {
+            "speaker": "Tomas",
+            "text": "Mano vardas Tomas.",
+            "outgoing": true
+          }
+        ]
+      },
+      {
+        "id": "final-form",
+        "kind": "gap-type",
+        "target": "esi",
+        "ability": "form-recall",
+        "source": "Tu ___ Rasa.",
+        "translation": "You are Rasa.",
+        "instruction": "Complete the sentence.",
+        "words": [
+          "esu",
+          "esi"
+        ],
+        "answers": [
+          "esi"
+        ],
+        "hint": "Tu means “you”. Which form goes with you?",
+        "correction": "Tu goes with esi: Tu esi Rasa."
+      },
+      {
+        "id": "final-thanks",
+        "kind": "type",
+        "target": "thanks",
+        "ability": "word-recall",
+        "source": "Thank you!",
+        "instruction": "Write in Lithuanian.",
+        "answers": [
+          "Ačiū!",
+          "Dėkui!"
+        ],
+        "words": [
+          "Ačiū!",
+          "Prašom!",
+          "Labas!"
+        ],
+        "hint": "Think of the word beginning with A.",
+        "correction": "Ačiū! — Thank you.",
+        "assessmentPolicy": {
+          "spelling": "diacritics"
+        },
+        "wrong": [
+          "labas",
+          "prašom",
+          "prasom"
+        ]
+      },
+      {
+        "id": "final-name-bank",
+        "kind": "bank",
+        "target": "name-frame",
+        "ability": "construction",
+        "source": "My name is Mantas.",
+        "instruction": "Build the Lithuanian.",
+        "words": [
+          "Mantas",
+          "vardas",
+          "tavo",
+          "Mano"
+        ],
+        "answers": [
+          "Mano vardas Mantas.",
+          "Mantas mano vardas."
+        ],
+        "hint": "Mano means “my”; tavo means “your”. Whose name are you giving?",
+        "correction": "Mano means “my”. Use Mano vardas Mantas."
+      },
+      {
+        "id": "final-reply",
+        "kind": "choice",
+        "target": "thanks-reply",
+        "ability": "reply-selection",
+        "source": "Ačiū!",
+        "instruction": "Choose a reply.",
+        "options": [
+          "Labas!",
+          "Prašom!"
+        ],
+        "answers": [
+          "Prašom!"
+        ],
+        "hint": "This is a response to someone’s thanks.",
+        "correction": "Prašom replies to thanks. Labas says hello."
+      }
+    ],
+    "intro": false,
+    "done": true,
+    "answer": "",
+    "selected": [],
+    "help": [],
+    "feedback": null,
+    "matched": [],
+    "pending": null,
+    "pendingRight": null,
+    "pairError": "",
+    "editIndex": null,
+    "repairTargets": [],
+    "threads": {
+      "final": [
+        {
+          "speaker": "Lina",
+          "text": "Labas!"
+        },
+        {
+          "speaker": "You",
+          "text": "Labas!",
+          "outgoing": true
+        },
+        {
+          "speaker": "Lina",
+          "text": "Koks tavo vardas?"
+        },
+        {
+          "speaker": "You",
+          "text": "Aš esu Tomas.",
+          "outgoing": true
+        },
+        {
+          "speaker": "Lina",
+          "text": "Mano vardas Lina."
+        }
+      ]
+    },
+    "paused": false,
+    "reviewing": false,
+    "checked": []
+  },
+  "suspended": {}
+}

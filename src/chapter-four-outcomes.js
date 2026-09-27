@@ -1,0 +1,201 @@
+// Evidence for the housing chapter's source functions, not a proficiency score.
+export const chapterFourOutcomes = [
+  {
+    key: "home-location",
+    pages: "88–90, 93",
+    goal: "Name core home spaces and locate a person or object inside one.",
+    models: ["home-words-model", "home-location-model"],
+    checks: ["a-c4-route-transfer-0"],
+  },
+  {
+    key: "presence-absence",
+    pages: "90, 93",
+    goal: "Distinguish presence from absence and change the noun after nėra.",
+    models: [
+      "table-presence-model",
+      "chair-presence-model",
+      "internet-model",
+      "bath-genitive-model",
+      "television-genitive-model",
+    ],
+    checks: [
+      "a-c4-route-transfer-1",
+      "a-c4-route-transfer-4",
+      "a-c4-function-transfer-2",
+      "a-c4-function-transfer-3",
+      "a-c4-mixed-0",
+    ],
+  },
+  {
+    key: "plural-stems",
+    pages: "90–91",
+    goal: "Use plural naming forms and selected d→dž / t→č stem changes.",
+    models: [
+      "plural-nouns-model",
+      "tree-stems-model",
+      "dormitory-model",
+      "mirror-genitive-model",
+    ],
+    checks: ["a-c4-transfer-4", "a-c4-transfer-5", "a-c4-function-transfer-4"],
+    limit:
+      "Samples selected noun classes; this does not establish every Lithuanian plural or stem alternation.",
+  },
+  {
+    key: "counting",
+    pages: "91, 96–97",
+    goal: "Match number gender and contrast naming plurals after two with genitive plurals after ten/kiek.",
+    models: [
+      "count-gender-model",
+      "room-count-model",
+      "one-model",
+      "three-model",
+      "five-model",
+      "ten-chairs-model",
+      "quantity-model",
+    ],
+    checks: [
+      "a-c4-route-transfer-2",
+      "a-c4-route-transfer-5",
+      "a-c4-transfer-2",
+      "a-c4-transfer-3",
+      "a-c4-mixed-1",
+    ],
+  },
+  {
+    key: "floor-room-number",
+    pages: "92–94, 98",
+    goal: "Ask for a floor location and distinguish it from a room number.",
+    models: ["floor-name-model", "floor-question-model", "room-floor-model"],
+    checks: ["a-c4-route-transfer-3"],
+    applications: [
+      "a-c4-route-room-number-recall",
+      "a-c4-route-floor-question-recall",
+      "a-c4-situation-home-help-q1",
+    ],
+    limit:
+      "Floor location has a new-context check; room-number questions currently have repeated retrieval and supported reading only.",
+  },
+  {
+    key: "descriptions",
+    pages: "92, 99",
+    goal: "Agree adjectives and description questions with masculine/feminine nouns.",
+    models: [
+      "big-model",
+      "small-model",
+      "description-question-model",
+      "new-adjective-model",
+      "cosy-adjective-model",
+      "bright-adjective-model",
+    ],
+    checks: [
+      "a-c4-transfer-6",
+      "a-c4-transfer-7",
+      "a-c4-transfer-8",
+      "a-c4-function-transfer-0",
+      "a-c4-function-transfer-1",
+    ],
+  },
+  {
+    key: "spatial-relations",
+    pages: "92, 100",
+    goal: "Use ant/prie/tarp/vidury with familiar objects and genitive forms.",
+    models: [
+      "table-position-model",
+      "window-position-model",
+      "between-model",
+      "middle-model",
+    ],
+    checks: [
+      "a-c4-transfer-0",
+      "a-c4-transfer-1",
+      "a-c4-transfer-9",
+      "a-c4-transfer-10",
+      "a-c4-mixed-2",
+    ],
+  },
+  {
+    key: "needs",
+    pages: "90–91, 94",
+    goal: "Distinguish a needed object from a needed action, and wanting from having to act.",
+    models: [
+      "computer-need-model",
+      "need-towel-model",
+      "need-action-model",
+      "want-must-model",
+    ],
+    checks: ["a-c4-transfer-13", "a-c4-transfer-15"],
+    limit:
+      "New-context checks sample obligation and noun need; infinitive need is practised with repeated bounded prompts.",
+  },
+  {
+    key: "permission-request",
+    pages: "91, 94",
+    goal: "Ask permission for one's own action versus asking another person politely.",
+    models: ["permission-action-model", "permission-request-model"],
+    checks: ["a-c4-transfer-11", "a-c4-transfer-12", "a-c4-mixed-3"],
+    applications: ["a-c4-route-grant-permission-turn"],
+  },
+  {
+    key: "household-help",
+    pages: "93–94, 101–102",
+    goal: "Report missing hot water and ask for help with a repair.",
+    models: [
+      "water-problem-model",
+      "help-model",
+      "call-plumber-model",
+      "repair-reply-model",
+    ],
+    checks: ["a-c4-transfer-14"],
+    applications: [
+      "a-c4-route-problem-report-turn",
+      "a-c4-route-problem-help-turn",
+      "a-c4-situation-home-help-q3",
+    ],
+    limit:
+      "Choice-based social replies; future repair timing is introduced as a chunk, not a complete tense lesson.",
+  },
+  {
+    key: "rental",
+    pages: "93, 106–108",
+    goal: "Ask about rooms, floor, internet and rent; compare information in adverts.",
+    models: [
+      "room-count-model",
+      "floor-question-model",
+      "internet-model",
+      "rent-model",
+    ],
+    applications: [
+      "a-c4-route-rental-rooms",
+      "a-c4-route-rental-floor",
+      "a-c4-route-rental-internet",
+      "a-c4-route-rental-price",
+      "a-c4-route-compare-flats-rooms",
+      "a-c4-route-compare-flats-floor",
+    ],
+    limit:
+      "Prepared reply choices and visible-text comprehension, not spontaneous negotiation or listening to a price.",
+  },
+  {
+    key: "hosting",
+    pages: "94, 103–104",
+    goal: "Invite a guest in, offer a seat and respond to a request.",
+    models: ["hosting-model", "refuse-permission-model"],
+    applications: [
+      "a-c4-route-grant-permission-turn",
+      "a-c4-route-sit-down-recall",
+      "a-c4-route-come-in-recall",
+      "a-c4-situation-guest-q1",
+    ],
+    limit:
+      "Hosting phrases are bounded chunks. Wider invitations remain in the retained scaffold; independent transfer is not established.",
+  },
+  {
+    key: "writing",
+    pages: "106–108",
+    goal: "Write a short rental enquiry using the taught questions.",
+    models: [],
+    applications: ["a-c4-writing-draft"],
+    limit:
+      "Saved and self-reviewed; no automatic grammar or communicative-success score.",
+  },
+];

@@ -1,3 +1,4 @@
+import { teachingPilotFor } from "./content/teaching-pilots.js";
 import { targetTransfers, lessonOverrides } from "./content/course-layout.js";
 import { discoveryPlan, applyTeachingOrder } from "./lesson-plan.js";
 import { expandCurriculum } from "./content/assemble.js";
@@ -666,6 +667,9 @@ export const lessons = chapters.flatMap((chapter, ci) =>
       ...x,
       id: x.key,
       teachingKind: l.kind,
+      ...(teachingPilotFor(l.key, x)
+        ? { teaching: teachingPilotFor(l.key, x) }
+        : {}),
       chapter: ci,
       lesson: l.key,
     })),

@@ -1,3 +1,4 @@
+import { collectAuthored, prepareAuthoredImport } from "./authored-storage.js";
 import { installAppUpdates, setUpdateBusy } from "./app-updates.js";
 import {
   alphabet,
@@ -154,6 +155,10 @@ import {
 import * as cloud from "./cloud";
 import { SakykMark, Wordmark, BrandArt } from "./Art";
 import "./styles.css";
+import OpeningPreview from "./OpeningPreview";
+import { authoredChapters, authoredChapter } from "./remaining-curriculum";
+import LessonShell from "./LessonShell";
+
 const Icon = ({ name, size = 20, ...props }) => {
   const C = I[name] || I.BookOpen;
   return <C size={size} strokeWidth={1.8} {...props} />;
@@ -168,8 +173,9 @@ const Button = ({ children, onClick, secondary = false, ...rest }) => (
   </button>
 );
 function App() {
+  const [openingActive, setOpeningActive] = useState(false);
   const [progress, setProgress] = useState(readProgress),
-    [page, setPage] = useState("today"),
+    [page, setPage] = useState(openingPreview ? "course" : "today"),
     [session, setSession] = useState(null),
     [settings, setSettings] = useState(false),
     [syncStatus, setSyncStatus] = useState("Saved on this device"),
@@ -177,8 +183,8 @@ function App() {
     [toast, setToast] = useState(""),
     [user, setUser] = useState(null);
   useEffect(
-    () => setUpdateBusy(Boolean(session || settings)),
-    [session, settings],
+    () => setUpdateBusy(Boolean(session || settings || openingActive)),
+    [session, settings, openingActive],
   );
   const progressRef = useRef(progress),
     syncRef = useRef(false),
@@ -275,6 +281,7 @@ function App() {
     }
   }
   useEffect(() => {
+    if (openingPreview) return;
     const onStorage = (e) => {
       if (e.key === STORAGE_KEY) persist(readProgress());
     };
@@ -291,7 +298,7 @@ function App() {
     };
   }, []);
   useEffect(() => {
-    if (!cloud.isConfigured()) return;
+    if (openingPreview || !cloud.isConfigured()) return;
     let unsubscribe;
     cloud
       .initialize((nextUser) => {
@@ -361,7 +368,10 @@ function App() {
   ];
   return (
     <>
-      <aside className="sidebar" inert={Boolean(session || settings)}>
+      <aside
+        className="sidebar"
+        inert={Boolean(session || settings || openingActive)}
+      >
         <a
           className="brand"
           aria-label="Sakyk home"
@@ -408,7 +418,10 @@ function App() {
           </div>
         </div>
       </aside>
-      <div className="app-shell" inert={Boolean(session || settings)}>
+      <div
+        className="app-shell"
+        inert={Boolean(session || settings || openingActive)}
+      >
         <header className="topbar">
           <span className="breadcrumb">
             Your Lithuanian journey <span>/</span>{" "}
@@ -439,7 +452,54 @@ function App() {
           </div>
         </header>
         <main>
-          {page === "today" && (
+          {!openingPreview && ["today", "course"].includes(page) && (
+            <a className="opening-entry" href="?preview=chapter2">
+              <span>
+                <strong>Continue the revised course</strong>
+                <small>Chapters 1–10 · Choose your chapter</small>
+              </span>
+              <Icon name="ArrowRight" size={20} />
+            </a>
+          )}
+          {!openingPreview && ["today", "course"].includes(page) && (
+            <a className="opening-entry" href="?preview=opening">
+              <span>
+                <strong>First conversations</strong>
+                <small>Try the connected opening lessons</small>
+              </span>
+              <Icon name="ArrowRight" size={20} />
+            </a>
+          )}
+          {openingPreview && ["today", "course", "practice"].includes(page) && (
+            <div>
+              {previewName !== "opening" && (
+                <div className="authored-chapter-navigation">
+                  <label htmlFor="authored-chapter">Chapter</label>
+                  <select
+                    id="authored-chapter"
+                    value={previewChapter.number}
+                    onChange={(e) => {
+                      location.search = `?preview=chapter${e.target.value}`;
+                    }}
+                  >
+                    {authoredChapters.map((c) => (
+                      <option key={c.number} value={c.number}>
+                        {c.number}. {chapters[c.number - 1].title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              <OpeningPreview
+                key={previewChapter?.key || "opening"}
+                course={previewChapter}
+                onActiveChange={setOpeningActive}
+                view={page === "practice" ? "practice" : "course"}
+                onCourse={() => setPage("course")}
+              />
+            </div>
+          )}
+          {!openingPreview && page === "today" && (
             <>
               <div className="page-heading">
                 <span className="eyebrow">SMALL WORDS. A BRIGHTER YOU.</span>
@@ -559,7 +619,7 @@ function App() {
               </div>
             </>
           )}
-          {page === "course" && (
+          {!openingPreview && page === "course" && (
             <>
               <PageHeading
                 eyebrow="YOUR ROADMAP"
@@ -597,7 +657,7 @@ function App() {
               </div>
             </>
           )}
-          {page === "practice" && (
+          {!openingPreview && page === "practice" && (
             <PracticeBrowser
               s={s}
               onStart={startPractice}
@@ -607,7 +667,10 @@ function App() {
           {page === "reference" && <StudyReference />}
         </main>
       </div>
-      <nav className="mobile-nav" inert={Boolean(session || settings)}>
+      <nav
+        className="mobile-nav"
+        inert={Boolean(session || settings || openingActive)}
+      >
         {nav.map(([id, icon, label]) => (
           <button
             key={id}
@@ -674,7 +737,16 @@ function App() {
           onGoal={(value) => addEvent("goal", { value })}
           onExport={() => {
             const blob = new Blob(
-                [JSON.stringify(progressRef.current, null, 2)],
+                [
+                  JSON.stringify(
+                    {
+                      ...progressRef.current,
+                      authored: collectAuthored(localStorage),
+                    },
+                    null,
+                    2,
+                  ),
+                ],
                 { type: "application/json" },
               ),
               url = URL.createObjectURL(blob),
@@ -686,7 +758,15 @@ function App() {
           }}
           onImport={async (file) => {
             try {
-              persist(validateProgress(JSON.parse(await file.text())));
+              const incoming = validateProgress(JSON.parse(await file.text()));
+              const authored = prepareAuthoredImport(
+                incoming.authored,
+                localStorage,
+              );
+              persist(incoming);
+              for (const [key, state] of Object.entries(authored))
+                localStorage.setItem(key, JSON.stringify(state));
+              window.dispatchEvent(new Event("sakyk:authored-import"));
               notify("Backup imported. Your progress has been combined.");
               if (cloud.isConnected()) sync();
             } catch (e) {
@@ -1276,48 +1356,6 @@ function Session({
     [item, index],
   );
   useEffect(() => {
-    const prev = document.activeElement;
-    const scrollY = window.scrollY;
-    const savedStyle = document.body.getAttribute("style");
-    Object.assign(document.body.style, {
-      overflow: "hidden",
-      position: "fixed",
-      top: `-${scrollY}px`,
-      width: "100%",
-    });
-    (inputRef.current || sessionRef.current?.querySelector("button"))?.focus({
-      preventScroll: true,
-    });
-    function trap(e) {
-      if (e.key !== "Tab") return;
-      const root =
-        sessionRef.current?.querySelector("[role=alertdialog]") ||
-        sessionRef.current;
-      const els = [
-        ...root.querySelectorAll(
-          "button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), summary",
-        ),
-      ];
-      const first = els[0],
-        last = els.at(-1);
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last?.focus({ preventScroll: true });
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first?.focus({ preventScroll: true });
-      }
-    }
-    document.addEventListener("keydown", trap);
-    return () => {
-      if (savedStyle === null) document.body.removeAttribute("style");
-      else document.body.setAttribute("style", savedStyle);
-      window.scrollTo(0, scrollY);
-      document.removeEventListener("keydown", trap);
-      prev?.focus({ preventScroll: true });
-    };
-  }, []);
-  useEffect(() => {
     sessionRef.current?.scrollTo(0, 0);
   }, [index, intro, done]);
   useLayoutEffect(() => {
@@ -1329,50 +1367,6 @@ function Session({
     )
       inputRef.current?.focus({ preventScroll: true });
   }, [index, intro, introduced, done, exit, ex?.type]);
-  useLayoutEffect(() => {
-    const viewport = window.visualViewport;
-    const keyboard = navigator.virtualKeyboard;
-    const root = sessionRef.current;
-    let frame;
-    let fullHeight = window.innerHeight;
-    function resize() {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const top = viewport?.offsetTop || 0;
-        // Respect both browser layout resizing and visual-viewport resizing.
-        // Do not opt into keyboard overlays: let the browser resize normally.
-        let bottom = Math.min(
-          window.innerHeight,
-          top + (viewport?.height || window.innerHeight),
-        );
-        if (keyboard?.boundingRect.height > 0)
-          bottom = Math.min(bottom, keyboard.boundingRect.top);
-        const height = Math.max(0, bottom - top);
-        fullHeight = Math.max(fullHeight, window.innerHeight);
-        root.style.setProperty("--session-height", `${height}px`);
-        root.style.setProperty("--session-top", `${top}px`);
-        if (fullHeight - height > 150 || keyboard?.boundingRect.height > 0) {
-          // Move the WHOLE lesson up to reveal the in-flow action. The header
-          // scrolls away with the question; nothing is pinned over the content.
-          root.scrollTop = root.scrollHeight;
-        }
-      });
-    }
-    resize();
-    viewport?.addEventListener("resize", resize);
-    viewport?.addEventListener("scroll", resize);
-    keyboard?.addEventListener("geometrychange", resize);
-    window.addEventListener("resize", resize);
-    root.addEventListener("focusin", resize);
-    return () => {
-      cancelAnimationFrame(frame);
-      viewport?.removeEventListener("resize", resize);
-      viewport?.removeEventListener("scroll", resize);
-      keyboard?.removeEventListener("geometrychange", resize);
-      window.removeEventListener("resize", resize);
-      root.removeEventListener("focusin", resize);
-    };
-  }, []);
   function reset() {
     setAnswer("");
     setSelfChecked(false);
@@ -1631,45 +1625,35 @@ function Session({
     return () => document.removeEventListener("keydown", advance);
   });
   return (
-    <div
-      className="session"
-      ref={sessionRef}
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
+    <LessonShell
+      sessionRef={sessionRef}
+      inputRef={inputRef}
+      title={title}
+      headerLabel={headerLabel}
+      onClose={() => (results.length && !done ? setExit(true) : onClose())}
+      percent={
+        done
+          ? 100
+          : intro
+            ? 0
+            : practiceReport
+              ? (practiceReport.recalled.length / config.targets) * 100
+              : (index / queue.length) * 100
+      }
+      count={
+        intro
+          ? `${config.queue.length} exercises`
+          : done
+            ? paused
+              ? "Saved"
+              : "Complete"
+            : practiceReport
+              ? `${practiceReport.recalled.length} / ${config.targets} recalled`
+              : `${index + 1} / ${queue.length}`
+      }
       data-session-mode={config.mode}
       data-course-step={config.step?.id}
     >
-      <div className="session-top">
-        <button
-          className="icon-button"
-          aria-label="Close lesson"
-          onClick={() => (results.length && !done ? setExit(true) : onClose())}
-        >
-          <Icon name="X" size={25} />
-        </button>
-        <div className="session-top-middle">
-          <span>{headerLabel}</span>
-          <div className="progress-track">
-            <div
-              style={{
-                width: `${done ? 100 : intro ? 0 : practiceReport ? (practiceReport.recalled.length / config.targets) * 100 : (index / queue.length) * 100}%`,
-              }}
-            />
-          </div>
-        </div>
-        <span className="session-count">
-          {intro
-            ? `${config.queue.length} exercises`
-            : done
-              ? paused
-                ? "Saved"
-                : "Complete"
-              : practiceReport
-                ? `${practiceReport.recalled.length} / ${config.targets} recalled`
-                : `${index + 1} / ${queue.length}`}
-        </span>
-      </div>
       {done ? (
         <div className="session-content summary">
           <span className="celebration">
@@ -2236,7 +2220,7 @@ function Session({
                             ][index % 3]
                           : feedback.correct
                             ? "You’ve got it — let’s try without help later."
-                            : "A small mistake. A useful lesson."}
+                            : "A small mistake..."}
                     </strong>
                     {!feedback.mastered && !feedback.writing && (
                       <>
@@ -2246,11 +2230,12 @@ function Session({
                             ? " · We’ll revisit these pairs."
                             : ""}
                         </p>
-                        {(item.explanation ||
+                        {(ex.explanation ||
+                          item.explanation ||
                           (item.practiceKind &&
                             source?.kind === "pattern")) && (
                           <p className="feedback-explanation">
-                            {item.explanation || source.rule}
+                            {ex.explanation || item.explanation || source.rule}
                           </p>
                         )}
                       </>
@@ -2285,17 +2270,17 @@ function Session({
           >
             <h2>Pause for now?</h2>
             <p>
-              Your answers are saved. This lesson will start from the beginning
+              This lesson will start from the beginning
               when you return.
             </p>
             <Button onClick={() => setExit(false)}>Keep learning</Button>
             <Button secondary onClick={onClose}>
-              Save & leave
+              Leave
             </Button>
           </div>
         </div>
       )}
-    </div>
+    </LessonShell>
   );
 }
 function Settings({
@@ -2372,7 +2357,7 @@ function Settings({
             <Icon name="Sprout" size={20} />
             Your daily goal
           </h3>
-          <p>A gentle nudge to show up, with no lost hearts or limits.</p>
+          <p>A gentle nudge to show up.</p>
           <div className="goal-options">
             {[5, 10, 15, 20].map((v) => (
               <button
@@ -2507,5 +2492,10 @@ function Settings({
   );
 }
 
+const previewName = new URLSearchParams(location.search).get("preview");
+const previewChapter = authoredChapter(
+  previewName?.match(/^chapter(10|[1-9])$/)?.[1],
+);
+const openingPreview = previewName === "opening" || Boolean(previewChapter);
 createRoot(document.getElementById("root")).render(<App />);
 if (import.meta.env.PROD) installAppUpdates();

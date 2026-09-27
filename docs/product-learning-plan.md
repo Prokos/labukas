@@ -1,157 +1,138 @@
-# Product plan: rebuild the main learning journey around usable Lithuanian
+# Curriculum and teaching plan
 
-23 September 2026 · Revised after the complete course-structure comparison and the decision to ship text first. Proposal, not implemented behavior.
+Authoritative scope and delivery order. Build a coherent Lithuanian course for English-speaking beginners, with Practice supporting the main path.
 
-**Recommendation:** reorganize the main course into short communicative units that revisit situations with increasing demands. Give each unit a deliberate mix of instruction, comprehension, production, conversation and review. Build the content and assessment model needed to support those units. Practice should reuse that system.
+**Current deliverable (26 September 2026):** the user explicitly authorized work on the remaining curriculum after chapter 2. Build the remaining chapters in the shared playable experience, retain source coverage, and audit teaching and recall. The [remaining curriculum review](remaining-curriculum.md) records the current result and production limits. The chapter structure is retained for this requested replacement; the 36-unit outline below remains a future pacing outline, not an additional parallel course.
 
-The first version of this plan put too much weight on Practice and error feedback. The [full curriculum comparison](duolingo-curriculum-comparison.md) now grounds the proposal in all 286 reference units, all linked guidebooks, section grammar, documented question families, and our executable main path. Its exports make both complete course sequences inspectable.
+**Execution correction after rejected previews:** Stage A must demonstrate connected teaching across lessons, not compress an interaction checklist into one lesson or replace recall with copying. The current [question-by-question contract](stage-a-experience.md) covers greetings/naming and one small person-form contrast so vocabulary progression, grammar teaching, later use and course continuation can be reviewed together. No standalone typing sample, unsupported duration estimate or learner-facing test controls. Verify these requirements in the playable sequence before presenting it; do not weaken them to match an implementation.
 
-## 1. Product outcome and scope
+The [Duolingo comparison](duolingo-curriculum-comparison.md) supplies design evidence. [Speech and proficiency boundaries](speech-and-proficiency-plan.md) define the text-only release. [Practice design](practice-design.md) covers review behavior. Concrete [exercise review cases](exercise-review-cases.md) accompany the requirements below.
 
-An English-speaking beginner should start using Lithuanian in everyday situations early, then become able to understand unfamiliar examples and express their own meaning. Finishing sentence repetitions is an intermediate activity, not the outcome.
+The [shared assessment and support contract](answer-assessment.md) defines spelling versus meaning/form errors, evidence, vocabulary-help placement, and the required Course/Practice migration. Apply feedback as reusable rules with negative cases, not individual answer exceptions.
 
-**Eventual curriculum target: CEFR A2, with an A1 milestone. First release: text only; listening and speaking are deferred.** Author the language progression toward that target, while reporting only the abilities actually taught and assessed. Text-course completion cannot establish all-skills A2. B1 is a subsequent course expansion requiring more sustained, spontaneous communication. The first six units are a pilot, not an A1 qualification. The 36-unit outline and visit budget must expand wherever necessary to cover the target abilities; they cannot establish a level by themselves.
+## Scope
 
-Prioritize everyday introductions, café exchanges, finding places, arranging time, home, study/work, shopping, relationships and obtaining help. Assess short routine exchanges, comprehension of clear everyday messages, and simple descriptions and writing. These intended outcomes follow the [CEFR self-assessment descriptors](https://europass.europa.eu/en/common-european-framework-reference-language-skills); completion alone must not be presented as certified proficiency. Maintain a descriptor-to-teaching-to-assessment matrix and report evidence separately by skill.
+- Teach meaning and use before testing. Introduce small sets, normally two or three targets, then reduce support and return after intervening work and on later days.
+- Preserve the brand, navigation, useful controls, mobile/keyboard access, progress, writing, backup/sync and offline text. Improve the lesson interior wherever hierarchy or interaction requires it.
+- Extend the existing app and content model only as authored exercises require. No separate Practice product, unrelated app redesign, live AI tutor or general AI grader.
+- Text first. Listening and speaking are deferred; planned variants remain invisible, optional and uncredited. Every unit works without audio.
+- Work toward A2 with an A1 milestone. Unit count and text completion do not establish proficiency; assess each claimed ability separately.
 
-See [proficiency and future speech delivery](speech-and-proficiency-plan.md) for the eventual skill criteria and retained provider/cost research. Speech evaluation, generation, recording and scoring are not prerequisites for this release. Google Chirp is the intended starting point when listening is added.
+## Course progression
 
-Preserve original Lithuanian material, small initial sets, staged support, later retrieval, readable situations, self-reviewed writing, offline use and saved progress. Change what is compulsory, when material appears, what an exercise tests, and how evidence affects the next lesson.
+Use these **36 initial unit slots** as an authoring outline. Expand or split where the language requires it; neither 36 units nor a fixed visit count guarantees coverage. The original ten chapters remain source collections and optional topic access. Keep wider vocabulary, full paradigms and cultural extensions available without making them prerequisites for simple exchanges.
 
-## 2. Decisions supported by the comparison
+| Section | Units in order |
+| --- | --- |
+| First useful exchanges | **1** Greet and give your name; **2** Introduce yourself and another person; **3** Order a drink; **4** Say where you are from and live; **5** Ask where a place is; **6** Introduce someone in your family. |
+| Everyday life | **7** Say what you like; **8** Ask a price and pay; **9** Arrange a simple time; **10** Talk about work/study; **11** Describe your home; **12** Ask for clothes/colours. |
+| Getting things done | **13** Order a meal and discuss ingredients; **14** Follow directions and use transport; **15** Arrange or decline a meeting; **16** Ask about size, fit and availability; **17** Ask permission or explain a household problem; **18** Ask for help and arrange an appointment. |
+| Time and experiences | **19** Describe yesterday; **20** Talk about a trip; **21** Make future plans; **22** Read a date and timetable; **23** Change an arrangement; **24** Write a short account or postcard. |
+| People and problems | **25** Describe and compare people; **26** Give or choose a gift; **27** Invite and reply; **28** Discuss a celebration; **29** Explain illness or absence; **30** Explain a purchase problem and request an exchange. |
+| Connected everyday communication | **31** Give detailed place/route information; **32** Write a study/work message; **33** Explain reasons and contrast alternatives; **34** Suggest an alternative and clarify; **35** Understand notices and instructions; **36** Complete mixed everyday tasks. |
 
-| Finding                                                                                                                                                                                               | Product decision                                                                                                                                                             |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Our café chapter begins at session 194, but “I would like…” begins at 326 and its café exchange at 400. The reference teaches a simple order in unit 4, then returns to restaurants with new demands. | Teach a small useful exchange early. Spread vocabulary, forms and more difficult situations across later returns.                                                            |
-| Our first dedicated reading is at session 175; situations sit near chapter ends.                                                                                                                      | Every opening unit gets a short comprehensible scene. Later units increase length, reduce support and add inference.                                                         |
-| Our conversation classes chiefly translate, order and type phrases.                                                                                                                                   | Author conversational decisions: understand a question, choose a suitable reply, provide a missing turn, clarify a misunderstanding.                                         |
-| Our course is text-only; all reference guidebooks have audio references, and its path includes listening modes.                                                                                       | Reserve optional listening/speaking variants in the content. Ship the text route first; add reviewed Google Chirp audio later with a non-listening route through every unit. |
-| Our class templates generate long vocabulary blocks and repeat target strings through different controls.                                                                                             | Author units around goals and examples, with explicit activity purposes, prerequisites and controlled vocabulary.                                                            |
-| We already have course recall and review, but goal mappings do not drive selection or assessment.                                                                                                     | Make objectives executable. Separate lesson completion from demonstrated ability; schedule cumulative returns in the main route.                                             |
-| A pronoun mistake receives a location-rule paragraph.                                                                                                                                                 | Grading, hints, corrections and progression must share a supported assessment. Fix the fallback, then enable specific teaching across the product.                           |
+The comparison motivates useful language early and later returns with new demands. For example, unit 3 enables a small drink order; unit 13 adds understanding and changing an order. Lithuanian determines the form progression. A usable fixed phrase can precede generalizing its case pattern; record those achievements separately. Duolingo’s Spanish content is not Lithuanian source material, and its archive does not expose its full grading or exercise bank.
 
-## 3. Proposed whole-course syllabus
+Opening-unit outcomes:
 
-Use **36 initial unit slots in six sections** as an authoring blueprint, not 36 identical workloads. Split or combine a unit if prerequisite and learner review show it is too dense. A starting budget is roughly 6–10 short visits per unit, including a situation and goal check. Validate that budget rather than mechanically expanding every content row into six stages.
+| Unit | New focus | End check |
+| --- | --- | --- |
+| 1 | Greeting, thanks/reply, naming frame; spelling within these words | Follow a brief meeting and supply an appropriate bounded response. |
+| 2 | Selected person/“be” forms, familiar roles, `ji/jis` referents | Describe the intended person in a new example. |
+| 3 | A few drinks, polite request frame, yes/no/thanks | Understand an offer and request the intended drink. |
+| 4 | From versus in, a few place names, selected living forms | Separate origin from current home in a new profile. |
+| 5 | Essential destinations, location question, one direction at a time | Identify the requested place and follow a short direction. |
+| 6 | A few relationships, names, introductions and possession | Understand a small family description and introduce a relative. |
 
-The ten existing chapters become source collections and optional topic access. The primary path interleaves their material:
+## Exercise design
 
-| Section                                 | Proposed units, in order                                                                                                                                                                                                                                | Source material and redistribution                                                                                                                       |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. First useful exchanges**           | 1 Greet and give your name; 2 Introduce yourself and another person; 3 Order a drink; 4 Say where you are from and live; 5 Ask where a place is; 6 Introduce someone in your family                                                                     | Small selections from chapters 1, 2, 3 and 7. Defer country lists, complete person tables, broad food lists and extended family.                         |
-| **2. Everyday life**                    | 7 Say what you like; 8 Ask a price and pay; 9 Arrange a simple time; 10 Talk about work/study; 11 Describe your home; 12 Ask for clothes/colours                                                                                                        | Chapters 2–4, 6–8. Reuse people, requests and locations; introduce only the numbers/forms needed for the task.                                           |
-| **3. Getting things done**              | 13 Order a meal and discuss ingredients; 14 Follow directions and use transport; 15 Arrange or decline a meeting; 16 Ask about size, fit and availability; 17 Ask permission or explain a household problem; 18 Ask for help and arrange an appointment | Return to earlier situations with richer exchanges, drawing from chapters 2–4, 8 and 9.                                                                  |
-| **4. Time and experiences**             | 19 Describe yesterday; 20 Talk about a trip; 21 Make future plans; 22 Read a date and timetable; 23 Change an arrangement; 24 Write a short account or postcard                                                                                         | Chapters 3, 5 and 6. Teach past/future contrasts through meaning; avoid full date inventories before a usable date task.                                 |
-| **5. People and problems**              | 25 Describe and compare people; 26 Give or choose a gift; 27 Invite and reply; 28 Discuss a celebration; 29 Explain illness or absence; 30 Explain a purchase problem and request an exchange                                                           | Chapters 7–10. Return to family, plans, requests and purchases, combining description, time and reasons.                                                 |
-| **6. Connected everyday communication** | 31 Give detailed place/route information; 32 Write a study/work message; 33 Explain reasons and contrast alternatives; 34 Suggest an alternative and clarify; 35 Understand notices and instructions; 36 Complete mixed everyday tasks                  | Integrate existing directions, messages, conjunctions, instructions, invitations and writing. Finish with unfamiliar situations using familiar language. |
+Choose the task for the language being learned. Direct translation is appropriate for meaning and recall. Show “Hello!” rather than “A friend arrives” followed by “Greet your friend.” Avoid broad typing prompts such as “greetings” with one secret accepted answer.
 
-Preserve specialist vocabulary, larger country/language inventories, full profession lists, extensive paradigms and cultural expansions as optional topic study or reference until a core goal requires them. Keep natural Lithuanian cultural content while reducing blocking prerequisites.
+Context earns space only when it changes what the learner must understand or choose. If removing the English setup leaves the same learning demand, remove it. Required vocabulary and distractors must have been taught or have a supplied gloss.
 
-### First twelve units: teaching and assessment
+| Activity | Learner action | Presentation |
+| --- | --- | --- |
+| Meaning / translation | Recognize or retrieve a word or bounded phrase. | Prominent source, brief instruction, choices or input. |
+| Supported construction / focused form | Build a phrase or select/retrieve its changing form. | Word bank or inline gap with relevant contrasts; make the changing part visible. |
+| Conversation reply | Interpret an utterance and take the next turn. | Messenger-style exchange with clear speakers. The submitted reply becomes the learner’s message and receives a relevant authored next turn. |
+| Reading for meaning | Extract a fact or connect information across a short text. | Text is primary; the question tests Lithuanian comprehension, not speaker-label trivia or an English logic puzzle. |
+| Later recall / application | Retrieve earlier language or use it with a new demand. | Reuse the appropriate interaction. A new English wrapper does not establish transfer. |
 
-| Unit               | New focus                                                                  | Evidence at the end                                                          |
-| ------------------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| 1. Greetings/name  | Appropriate greeting/thanks/reply; a naming frame; spelling in these words | Follow a brief meeting and provide the appropriate next turn.                |
-| 2. Introductions   | Selected person and “be” forms with familiar roles; `ji/jis` referents     | Describe the intended person in a new example.                               |
-| 3. A drink         | A few drinks and a polite request as a usable phrase; yes/no/thanks        | Understand an offer and request the intended drink.                          |
-| 4. Origin/location | From versus in with a few place names; selected living forms               | Distinguish someone's origin from their current location in a new profile.   |
-| 5. A place         | Essential destinations and a location question; one direction at a time    | Identify the requested place and follow a short direction.                   |
-| 6. Family          | A few relationships; reuse names, introductions and possession             | Understand a small family description and introduce a relative.              |
-| 7. Preferences     | Likes/dislikes and their person structure, using familiar language         | Select and produce the preference intended.                                  |
-| 8. Paying          | A small price range, number recognition and a payment exchange             | Extract a price from a menu and reply appropriately; audio can follow later. |
-| 9. A time          | Selected days and simple hours                                             | Understand an arrangement and supply its day/time.                           |
-| 10. Work/study     | A few activities and locations; reuse person/question forms                | Ask and answer a short personal-information exchange.                        |
-| 11. Home           | Essential rooms/objects, existence and location frames                     | Find information in a description and describe a room.                       |
-| 12. Clothes        | A few items/colours and a request; agreement as needed                     | Understand a shop exchange and request the intended item.                    |
+Choices, banks, gaps, typing and reading already exist. Identify which interactions are reused, improved or added. A new family requires a different learner action; a label, scene or chat bubble alone is insufficient. A flat dialogue followed by a comprehension question remains reading, rather than a turn-taking interaction.
 
-Lithuanian needs its own form progression. A usable fixed phrase can appear before the learner generalizes its case pattern; record these as different achievements. Link dictionary forms with the forms in use. Teach case contrasts in contexts that distinguish their meanings, and expand person/gender/number paradigms over several units. A dictionary word's introduction does not establish knowledge of every inflection.
+Let content determine lesson length and grouping. Unit 1 teaches greeting, thanks/reply and naming through models, meaning, supported use, retrieval and a short interaction check. Do not impose a fixed visit count or apply one stage template to every target.
 
-## 4. The main-lesson experience
+### Screen requirements
 
-A unit needs a model, supported interpretation, selective form work, unaided production, a communicative situation, cumulative review and a goal check. These are teaching functions, not mandatory separate screens or a rigid order for every visit.
+- Make the language prominent: the source phrase must outweigh “What does this mean?”; a conversation must visually read as an exchange.
+- Use one coherent task area and a short, consistently placed secondary instruction. Avoid separate framed scene, command and mode-label panels for one simple task.
+- Reserve reading panels for reading content. Use icons for clear functions; do not put the brand mark beside every instruction as an unexplained avatar.
+- Keep Check/Continue predictable, choices readable and focus/Enter behavior reliable. Inputs, Lithuanian letters and actions must remain accessible with the phone keyboard open.
+- Inspect long phrases, errors and multi-turn exchanges on desktop and phone. Lack of overflow alone does not establish a usable hierarchy.
 
-For **unit 1**, author the first six visits as follows:
+### Content contract
 
-1. **Meet the language.** Read a short greeting exchange with visible meaning. Recognize the greeting and choose a reply. Mark the exchange as suitable for future audio.
-2. **Choose what to say.** Distinguish greeting, thanks and response in small contexts. Distractors are plausible utterances with the wrong conversational purpose.
-3. **Give and ask a name.** Introduce the naming exchange as a frame. Build then supply a missing turn; keep other language familiar.
-4. **Understand someone new.** Read a different exchange and name, then answer about its meaning. A future listening variant can reuse the exchange while recording distinct evidence.
-5. **Retrieve and combine.** Independently provide a greeting/name response among other material. Give supported conceptual help and return after intervening questions.
-6. **Complete the interaction.** Check the goal with a new reviewed exchange. Report demonstrated abilities and support needs. Schedule a later return; this same-day result does not establish retention.
+Before implementing each integrated batch, write a concise question-by-question sequence with:
 
-Later units add longer input, new speakers, reduced translation support, extra turns, changed intentions and short personal writing. Unit 3 should feel like ordering a drink; unit 13 should add understanding and modifying an order.
+1. **Teaching:** target, prerequisites, earlier model/support and purpose of this task.
+2. **Learner view:** exact content and instruction, activity, response control and available help.
+3. **Assessment:** accepted variants, plausible wrong answers, cue/correction and the specific ability demonstrated. Independently check a reasonable alternative and a meaningful error.
+4. **Return:** intervening work, later retrieval and the new demand in reserved checks.
 
-**First course release capabilities:** meaning choice, reviewed form contrast, supported sentence building, independent short production, reply selection, short reading comprehension, reserved assessment examples, targeted repair and cumulative review.
+Use plausible contrasts, without unfamiliar distractors or layout/length clues. Two meaningful choices can suffice. Rewrite unfair prompts instead of accumulating guessed answer strings. Keep open writing explicitly self-reviewed.
 
-**Next within the text course:** staged multi-turn scenes and smaller personal messages before the existing writing workshops. Simple reply selection and missing-turn tasks already belong in the opening units.
+Reserved checks use taught language with new information or combinations. Persist the selected variant across interruption; re-exposed examples count as practice. These assessment rules stay internal.
 
-**Deferred:** reviewed Google Chirp audio and listening exercises; speaking rehearsal and any speech assessment. Automatic pronunciation assessment, unconstrained conversation grading and automated open-writing assessment remain separate future decisions. None blocks the text course.
+## Feedback and repair
 
-## 5. Content and engineering model
+**Correctness drives primary feedback.** A correct answer receives positive confirmation after a model, with a bank or after a hint. Never derive the error state from mastery or independence.
 
-The course plan must be explicit data rather than the incidental order produced by inserting vocabulary classes before anchors. Keep this as plain content data and small extensions to the existing app. Introduce metadata only when a real exercise or teaching decision needs it; no generic curriculum platform, live AI tutor or speech backend is required.
+| Response | Visible feedback | Internal distinction |
+| --- | --- | --- |
+| Correct without requested help | Normal success. | Record response mode and supplied scaffolding separately. Ordinary instruction is neither hint use nor difficulty. |
+| Correct after a requested hint | Positive confirmation; optional brief amber/neutral support note. | Schedule later retrieval without the hint. |
+| Correct after reveal/reference | Confirm the successful response without blame. | Record reveal/reference separately from a small hint; do not claim independent recall. |
+| Right wording with an assessed spelling slip | Brief spelling correction, visually distinct from a wrong-word/form error. | Preserve demonstrated word recall; leave spelling unresolved. Never infer whole-answer mastery or reteach meaning from this alone. |
+| Known wrong answer | Error styling and one relevant correction. | Diagnose only what the answer supports and select appropriate repair. |
+| Wording that cannot be assessed fairly | Neutral comparison with a model. | No mistake penalty; flag the content gap for author review. |
 
-| Layer                     | Minimum contract                                                                                                                                 |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Course / unit plan**    | Goal, prerequisites, required/optional language, ordered visits with purpose, planned returns and assessment criteria.                           |
-| **Language content**      | Stable lexeme/sense and form IDs, grammatical features, utterance meaning, speakers/referents, annotated spans, reviewed alternatives and media. |
-| **Activity**              | Purpose, targeted/contextual features, stimulus, response mode, support, answer contract, distractor rationale and supported diagnostics.        |
-| **Assessment / evidence** | Response validity, help used, supported differences, concept evidence, modality, familiar/transfer context and timing.                           |
-| **Teaching decision**     | Continue, cue, explain/repair, select another example, revisit a prerequisite, or schedule later review.                                         |
+Red denotes an actual error. Feedback must also be understandable without color and have sufficient contrast. Scope help to the current attempt; it must not leak into the next question. Verify the [model, hint, reference, error and resume cases](exercise-review-cases.md).
 
-Keep bounded deterministic grading for constrained tasks. Distinguish grammatical validity from matching the prompt's meaning. For unsupported differences, show the model/difference without claiming a cause. A correct answer after a hint is correct and assisted, not simply a mistake.
+Hints guide attention before answering; corrections explain after it. Preserve what was right: for an explicitly female referent, `jis gyvena Kaune` needs a `jis`/`ji` correction, not a location-case lecture. Recurring difficulty should trigger a relevant cue, different example or prerequisite reteaching, with bounded retries.
 
-For `jis gyvena kaune`, referent metadata supports a pronoun correction; the matching location is not a locative failure. The same contract must handle verb and place-form differences and unknown cases. It must also drive introductions and next tasks, making this more than a feedback patch.
+Use short, natural copy. “Lesson complete” and a useful next action usually suffice. Keep participation accounting, evidence categories and proficiency caveats out of routine exercise/completion feedback.
 
-Hints should offer relevant meaning/form guidance before revealing the answer. Separate lesson reference, pre-answer hint, post-answer explanation and repair. Introductions show the current focus; reference tables can stay comprehensive.
+## Integration and learner history
 
-A validator should catch missing prerequisites/assets for enabled activities, invalid spans, unchecked alternatives, ambiguous distractors and assessment examples reused in teaching. Planned audio need not exist until its variant is enabled. Lithuanian review is still necessary for naturalness, grammar and variation; review audio when it is introduced.
+Course and Practice share teaching, activity presentation, grading, hints, feedback and evidence. Implement later returns in actual course continuation and Practice, rather than only recording future unit numbers. Practice-specific selection and stopping rules are in [Practice design](practice-design.md).
 
-### Deferred modalities and non-listening alternatives
+Before replacing the production course, complete the [assessment consumer migration](answer-assessment.md#implementation-and-remaining-integration): feedback, attempts, progress, review selection and backup/sync must agree on the same dimensions. A preview-only grading improvement is not completion of this requirement.
 
-Keep the shared goal and utterance IDs stable. An optional variant needs only its modality, availability (`planned` or `enabled`) and a text fallback activity ID where applicable. The fallback is a real exercise with its own answer contract, not a second copy of all the teaching material. Mark suitable exchanges for future listening and spoken replies as part of authoring, so they can be added to existing visits.
+Keep the model small: units/lessons, stable language/sense/form references, authored response contracts, supported diagnostics and additive evidence. Add metadata only when an exercise or teaching decision uses it.
 
-- Planned variants are inert: never queue them, show empty screens, block unit completion or award completion/mastery for them. The active text path determines current course progress.
-- Every unit remains completable without listening or speaking. When listening ships, provide “Can't listen now” and a persistent preference; unavailable audio follows the same route.
-- For comprehension, the alternative can present the exchange as text and ask about meaning. For dictation or sound discrimination, displaying the answer would defeat the task: select a different authored text exercise for the taught language, or omit an optional sound-only activity.
-- Record the activity actually attempted. Reading an exchange earns reading evidence; it does not satisfy a listening assessment. Adding voice later must neither reset prior text progress nor pretend the learner already completed voice work.
+Record correctness, teaching exposure, built-in support, requested help/reveal, response mode, target, context and timing separately. Distinguish encountered, introduced, attempted, completed and demonstrated. Ordinary instruction must not create remedial loops. Recognition cannot establish independent use of every word; an alternative construction cannot award the unused model forms; a fixed phrase cannot establish a paradigm. Separate immediate success from recall across days, with explicit scheduling heuristics.
 
-This follows Duolingo's documented support for [turning off listening and skipping audio-only lessons](https://blog.duolingo.com/learning-with-hearing-aids/). A non-listening route need not be an identical text conversion of every audio question.
+Preserve immutable events, original content IDs, writing drafts and historical completion. Version changed lesson contracts. Carry credit forward only where supported without erasing earlier work. Keep unknown preview records available for backup/merge without awarding unsupported credit. Validation must neither regrade old answers against new answer banks nor silently reset progress.
 
-## 6. Assessment, review and Practice
+## Delivery order
 
-Each unit ends in an ability check using **new examples of taught language**. Comprehension checks should establish understanding without demanding incidental exact wording. Retakes need alternative reviewed examples. Speaking rehearsal cannot establish writing or independent-speaking mastery. Open writing remains transparently self-reviewed until a better assessment is validated.
+| Stage | Deliverable |
+| --- | --- |
+| **A — playable exercise experience** | Build a small sequence with real greeting/naming content and the exact proposed opening lesson order. Include translation, supported construction, a meaningful messenger-style reply, short comprehension, bounded typing and the feedback review cases. Demonstrate desktop/phone, keyboard use and a natural completion screen. Use the smallest local implementation needed; defer course-wide infrastructure and six-unit authoring. |
+| **Product review** | The user tries and accepts the playable experience before expansion. Present actual interactions, not another abstract plan. Revise it if needed; tests or silence do not substitute for acceptance. |
+| **B — integrated first unit** | Complete unit 1 with preparation, support, repair, a reserved interaction check, real later return and persistence. Inspect every question and compare the integrated UI with the accepted experience. Material departures need review; routine implementation proceeds. |
+| **C — opening six** | Specify and implement units 2–6 in batches, including person/pronoun/origin/location contrasts and cumulative returns. Keep a reuse/split/move/optional/rewrite ledger against the original content. |
+| **D — units 7–18** | Add longer exchanges and short self-reviewed messages. Return to earlier abilities with new demands. |
+| **E — units 19–36** | Deliver time, connected messages and social/problem-solving progression. Complete the content ledger and course-wide prerequisite/history checks; expand the outline where coverage requires it. |
 
-Plan returns in later main-course units, both direct recall and reuse in new situations. Keep elapsed time and modality in the evidence: separation by another lesson is not necessarily spacing across days. Course continuation should choose a useful next action and allow supported progress without claiming unproved mastery.
+### Checks for each integrated batch
 
-Practice becomes another entry into the same system: encountered words/forms and a suggested round. Recent unresolved difficulties deserve attention, but lifetime mistake counts must not dominate indefinitely. Introduce unfamiliar material properly and test recovered material later. Include a done-for-now state. Practice must not compensate for a main course that omits teaching or review.
+| Area | Required evidence |
+| --- | --- |
+| Teaching | Walk through every question knowing only preceding content. Check preparation for first typing, meaningful choices, task variety and actual later use. Remove context that adds no learning demand. |
+| Grading and repair | Independent fixtures for legitimate alternatives, allowed subject/copula omission, word order, spelling/punctuation and wrong meanings. Inspect visible correct, helped, incorrect and uncertain responses, including resume, in Course and Practice. |
+| Design | Compare baseline, accepted experience and integrated desktop/phone screens. Check hierarchy, reading load, turn behavior, purposeful icons, feedback, focus, Enter and keyboard visibility. |
+| Compatibility | Run appropriate unit/build/browser checks for prerequisites, content, partial work, old passes, writing, history, backup/sync, resume and offline text. Planned speech stays inert. Resolve the existing pilot annotation failure. |
+| Language and learning | Record qualified Lithuanian review separately from draft/source checking. Without it, label the work an internal preview. Observe comprehension, false rejections, hint dependence, delayed recall and unfamiliar-example performance; tests alone establish neither efficacy nor CEFR proficiency. |
 
-## 7. Delivery order and gates
-
-| Stage                                               | Concrete delivery                                                                                                                                                                                                                 | Completion gate                                                                                                                                                                  |
-| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **A. Finalize the opening curriculum**              | Review this whole-course blueprint; fully specify units 1–6 with language, prerequisites, visit purposes, scenes, checks and later returns. Classify existing classes as reuse/split/move/optional/rewrite.                       | Six coherent main-course units on paper. No broad vocabulary inventory blocks a basic interaction. Every goal and introduced form has teaching and assessment opportunities.     |
-| **B. Build one main-course unit end to end**        | Minimal unit/activity model, richer evidence, conceptual hints, text reply selection and goal check. Author unit 1 with reviewed content. Remove unrelated feedback and reconcile the unconnected teaching-pilot code/docs/tests. | A new learner completes the unit through Course: reads, interprets, responds and uses a new example. Alternatives and assisted success behave correctly; feedback is supported.  |
-| **C. Release the opening six units**                | Units 1–6, cumulative returns, short text scenes and alternate assessments. Include pronoun, verb/person and origin/location contrasts in their proper units.                                                                     | Learners can attempt these useful exchanges without completing the old inventories. Observe comprehension, delayed recall and transfer as well as usability.                     |
-| **D. Migrate everyday units 7–18**                  | Extend dialogues, short writing and course adaptation. Connect Practice to the shared evidence model.                                                                                                                             | Earlier abilities recur; reading comprehension and meaningful responses are present throughout; supported difficulties lead to useful next tasks. Saved progress remains intact. |
-| **E. Migrate units 19–36 and optional collections** | Deliver the tense, connected-message and social/problem-solving progression. Review source content and retire redundant required repetitions.                                                                                     | Every unit meets the contract. A migration ledger explains retained, optional and replaced material. Course-wide prerequisites and history checks pass.                          |
-
-**The first releasable result is a redesigned main-course experience**, not a Practice redesign or isolated grammar demo. Stage A is content design work; writing a scheduler cannot replace it. Stages B/C validate the architecture across different goals before broad migration.
-
-The archive cannot determine optimal Lithuanian lesson length or learning thresholds. Observe beginners and compare matched old/new tasks, including next-day/later recall, unfamiliar-example comprehension, successful responses, false rejection and misleading feedback. Specify evaluation criteria beforehand. A small pilot finds problems; it does not establish statistical efficacy.
-
-## 8. Migration and definition of done
-
-Keep immutable historical events, original content IDs, saved writing and offline behavior. Version new units/visits instead of silently changing completed sessions. Transfer historical credit only where evidence supports the new requirement; never reset completed work or fabricate listening/concept evidence from old booleans. New fields are additive and preserve legacy semantics.
-
-Verify old passes, partial progress, backup merge, sync, offline text and disabled future activity variants. When audio is enabled, also verify cached playback, unavailable audio and non-listening alternatives. Include keyboard/mobile checks and pronoun/verb/case, alternative-answer, assisted-answer and unknown-difference cases. The existing teaching-pilot test currently fails because its expected annotations are not integrated; reconcile it openly.
-
-A unit is done when its goal is clear, prerequisites are available, language/variants are reviewed, activities test distinct abilities, corrections are supported, assessment uses reserved examples, a later return is scheduled, and progress survives migration. More sentences, source-book coverage or a changed layout alone do not meet that definition.
-
-## 9. Plan readiness and the Duolingo benchmark
-
-The product direction is complete enough to implement the opening course. The full 36-unit curriculum is not yet authored or validated. Before implementing each batch, specify its actual language/forms, prerequisites, model exchanges, questions, accepted variants, meaningful distractors, supported corrections, later returns and reserved checks. This is concrete content production within the agreed plan, not a reason to keep widening the product scope.
-
-The [reference comparison](duolingo-curriculum-comparison.md) shows staged everyday goals, recurring grammar, stories and later returns. Duolingo's [published course-design process](https://blog.duolingo.com/how-duolingo-experts-work-with-ai/) additionally describes controlled language introduction, reviewed alternatives, targeted exercise types, comprehension questions, personalization and spaced practice. These functions belong across curriculum, content and app behavior. The supplied archive does not expose complete grading, error diagnosis or learner outcomes, and cannot prove that every gap is solved in every Duolingo course.
-
-For this release, the essential quality bar is: useful language early; a manageable amount of new material; questions that test meaning as well as form; natural reviewed Lithuanian and legitimate answers; relevant help and repair; new examples and later retrieval; and clear next steps with preserved progress. The main course and Practice share this teaching behavior. Advanced placement, automatic production scoring and voice features can follow. Phonology and speech remain explicit future work, not silently satisfied text-course requirements.
+A failed teaching, feedback, design or compatibility check blocks presenting the affected work as ready. The latest user authorization permits the remaining chapter drafts; it does not waive production integration or language-quality requirements.

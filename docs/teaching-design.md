@@ -1,6 +1,8 @@
 # Teaching design
 
-A chapter contains focused classes; a lesson is a short visit to one class. Keep the exercise header to one line: Chapter N - Lesson X of Y. Class titles and phases belong to the start and completion screens. The [coverage ledger](coverage.md) inventories the authored material and the [curriculum audit](curriculum-audit.md) records the latest structural review.
+Reference for the existing chapter/class system. The [product plan](product-learning-plan.md) defines the redesign.
+
+A chapter contains focused classes; a lesson is a short visit to one class. The exercise header shows Chapter N - Lesson X of Y; class titles and phases appear on the start and completion screens. The [coverage ledger](coverage.md) inventories the authored material and the [curriculum audit](curriculum-audit.md) records the latest structural review.
 
 ## Course teaching
 
@@ -12,7 +14,7 @@ General notes appear at the first class introduction and remain available throug
 
 ## Practice and returns
 
-Personal review chooses up to eight earlier targets. Named practice sets reuse the course's small introduction groups; selecting an individual word anchors the set rather than selecting an entire skill category. New targets receive supported rounds. The set is fixed at launch and finishes after its tasks and bounded retries. Repeating practice is an explicit action and does not award a course pass.
+The [Practice design](practice-design.md) describes the unified Practice page and its selection, spacing and retry rules.
 
 Recovered mistakes lose their lifetime error-rate advantage after two successful answers. Recent successful items receive a ten-minute cooldown for incidental course inserts. Due and unresolved items remain priorities. Guided rounds avoid adjacent duplicates when another target at the same stage is available. A one-target correction may still need a repetition.
 
