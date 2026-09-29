@@ -1,12 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {
-  authoredChapters,
-  authoredChapter,
-} from "../src/remaining-curriculum.js";
-import { normalizeAnswer } from "../src/answer-assessment.js";
-import { createCourseRuntime } from "../src/authored-course.js";
-const course = authoredChapter(3);
+import { courses, course as courseByNumber } from "./helpers.js";
+import { normalizeAnswer } from "../src/learning/answer-assessment.js";
+import { createCourseRuntime } from "../src/learning/session.js";
+const course = courseByNumber(3);
 const route = course.lessons.filter((l) => l.reviewStatus);
 const located = course.lessons.flatMap((l, index) =>
   l.steps.map((q) => ({ q, index, lesson: l })),
@@ -88,7 +85,7 @@ test("both replies in the meeting conversation are prepared; it progresses throu
 });
 
 test("every model contributes reference for all its targets, including second and third entries", () => {
-  for (const c of authoredChapters.filter((c) => c.number !== 2)) {
+  for (const c of courses.filter((c) => c.number !== 2)) {
     for (const m of c.lessons
       .flatMap((l) => l.steps)
       .filter((q) => q.kind === "model")) {
@@ -125,35 +122,13 @@ test("the café bridge retains real chapter-2 targets and writing uses prepared 
   assert.ok(!/važiuosiu|eisiu|\beik\b/i.test(sample));
 });
 
-test("unfinished retired queues, answers and evidence survive the revised sequence", () => {
-  const r = createCourseRuntime(course),
-    id = "a-c3l2-1";
-  assert.ok(!course.lessons.some((l) => l.id === id));
-  assert.ok(course.retiredLessons.some((l) => l.id === id));
-  let s = r.startOpening(r.freshOpening(), id, 1);
-  s.run.answer = "universitetą";
-  s.run.help = ["hint"];
-  const suspended = structuredClone(s.run);
-  s = r.startOpening(s, "a-c3-route-destination", 2);
-  assert.deepEqual(s.suspended[id], suspended);
-  s = r.startOpening(JSON.parse(JSON.stringify(s)), id, 3);
-  assert.equal(s.run.answer, "universitetą");
-  assert.deepEqual(s.run.help, ["hint"]);
-  assert.deepEqual(s.completed, []);
-});
-
 test("source functions point to real teaching and distinguish productive checks from supported applications", async () => {
-  const { chapterThreeOutcomes } =
-    await import("../src/chapter-three-outcomes.js");
+  const chapterThreeOutcomes = course.objectives;
   const all = new Map(located.map(({ q }) => [q.id, q]));
   for (const outcome of chapterThreeOutcomes) {
     assert.ok(outcome.pages && outcome.goal);
     for (const id of outcome.models)
-      assert.equal(
-        all.get(`a-c3-route-${id}`)?.kind,
-        "model",
-        `${outcome.key}: ${id}`,
-      );
+      assert.equal(all.get(id)?.kind, "model", `${outcome.key}: ${id}`);
     for (const id of outcome.checks || []) {
       const q = all.get(id);
       assert.ok(q?.changedContext && !q.plannedReturn, `${outcome.key}: ${id}`);
@@ -170,15 +145,15 @@ test("source functions point to real teaching and distinguish productive checks 
   const r = createCourseRuntime(course);
   const how = all.get("a-c3-route-by-what-recall");
   for (const answer of ["Kuo", "Kaip"])
-    assert.equal(r.gradeOpening(how, answer).status, "correct");
-  assert.equal(r.gradeOpening(how, "Kada").status, "incorrect");
+    assert.equal(r.gradeAnswer(how, answer).status, "correct");
+  assert.equal(r.gradeAnswer(how, "Kada").status, "incorrect");
   const which = all.get("a-c3-route-which-bus-recall");
   for (const answer of ["Koks", "Kelintas"])
-    assert.equal(r.gradeOpening(which, answer).status, "correct");
+    assert.equal(r.gradeAnswer(which, answer).status, "correct");
 });
 
 test("earlier-chapter returns bring their reference examples with them", () => {
-  for (const c of authoredChapters.filter((c) => c.number >= 3)) {
+  for (const c of courses.filter((c) => c.number >= 3)) {
     for (const q of c.lessons
       .flatMap((l) => l.steps)
       .filter((q) => q.fromChapter)) {

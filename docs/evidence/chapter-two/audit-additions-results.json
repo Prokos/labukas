@@ -1,9 +1,0 @@
-{
-  "checks": [
-    "1440px: all 11 added plural-request and singular-ingredient screens, including later returns",
-    "1440px: mastery labels and explanatory text stay readable without horizontal clipping",
-    "390px: all 11 added plural-request and singular-ingredient screens, including later returns",
-    "390px: mastery labels and explanatory text stay readable without horizontal clipping"
-  ],
-  "errors": []
-}

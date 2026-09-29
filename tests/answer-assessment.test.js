@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { assessAnswer } from "../src/answer-assessment.js";
+import { assessAnswer } from "../src/learning/answer-assessment.js";
 
 test("shared assessment distinguishes typography, spelling, wrong forms and unknown wording", () => {
   const thanks = {
@@ -12,7 +12,7 @@ test("shared assessment distinguishes typography, spelling, wrong forms and unkn
     assert.equal(assessAnswer(a, thanks).outcome, "correct", a);
   for (const a of ["Aciu", "Ačiu", "Aciū", "ačiu!"])
     assert.deepEqual(assessAnswer(a, thanks), {
-      version: 2,
+      version: 3,
       outcome: "spelling",
       reason: "diacritics",
       matchedAnswer: "Ačiū!",
@@ -89,7 +89,7 @@ test("a full diacritic-only mismatch is never diagnosed as an incomplete answer"
   assert.equal(assessAnswer("juodos kavos pras", policy).reason, "incomplete");
 });
 
-test("spelling tolerance is opt-in, respects authored wrong forms and never guesses from edit distance", () => {
+test("diacritic-only tolerance is opt-in and does not infer arbitrary typos", () => {
   assert.equal(
     assessAnswer("Aciu", { answers: ["Ačiū!"], unknown: "incorrect" }).outcome,
     "incorrect",
@@ -156,5 +156,57 @@ test("canonical form collisions stay errors inside phrases", () => {
       knownForms,
     }).outcome,
     "correct",
+  );
+});
+
+test("vocabulary typos protect real words, endings, short words and distant guesses", () => {
+  const grade = (answer, expected, known = []) =>
+    assessAnswer(answer, {
+      answers: [expected],
+      spelling: "diacritics",
+      vocabularyTypos: true,
+      knownForms: new Set(known),
+      unknown: "incorrect",
+    });
+  for (const [answer, expected] of [
+    ["salatos", "salotos"],
+    ["autobuas", "autobusas"],
+    ["banndelė", "bandelė"],
+    ["autobusas", "autobusas"],
+    ["vynouge", "vynuogė"],
+    ["ryzai", "ryžiai"],
+  ]) {
+    assert.equal(
+      grade(answer, expected).outcome,
+      answer === expected ? "correct" : "spelling",
+      answer,
+    );
+  }
+  for (const [answer, expected] of [
+    ["salata", "salotos"],
+    ["salotų", "salotos"],
+    ["sltos", "salotos"],
+    ["bananai", "vynuogė"],
+    ["kasa", "kava"],
+    ["pinigus", "pinigai"],
+    ["slyvos", "slyva"],
+  ])
+    assert.equal(grade(answer, expected).outcome, "incorrect", answer);
+  assert.equal(grade("darbas", "daržas", ["darbas"]).outcome, "incorrect");
+  assert.equal(grade("darzas", "darbas", ["daržas"]).outcome, "incorrect");
+  assert.equal(
+    assessAnswer("salatos", {
+      answers: ["salotos"],
+      spelling: "diacritics",
+      vocabularyTypos: true,
+      incorrectAnswers: ["salatos"],
+    }).reason,
+    "known-wrong",
+  );
+  assert.equal(
+    assessAnswer("salatos", { answers: ["salotos"], spelling: "diacritics" })
+      .outcome,
+    "unassessed",
+    "open phrases/form tasks do not opt in",
   );
 });

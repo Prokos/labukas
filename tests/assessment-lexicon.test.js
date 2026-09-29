@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAssessmentLexicon } from "../src/assessment-lexicon.js";
-import { createCourseRuntime } from "../src/authored-course.js";
-import { lithuanianAssessmentPolicy } from "../src/lithuanian-assessment-policy.js";
+import { buildAssessmentLexicon } from "../src/learning/lexicon.js";
+import { createCourseRuntime } from "../src/learning/session.js";
+import { lithuanianAssessmentPolicy } from "../src/learning/lithuanian-policy.js";
 
 test("canonical index excludes English and invented wrong spellings", () => {
   const forms = buildAssessmentLexicon(
@@ -35,14 +35,14 @@ test("new authored lessons get phrase spelling, form protection and strict overr
     lessons: [{ id: "lesson", steps: [step] }],
     assessmentPolicy: lithuanianAssessmentPolicy,
   });
-  assert.equal(runtime.gradeOpening(step, "Siandien salta").status, "spelling");
+  assert.equal(runtime.gradeAnswer(step, "Siandien salta").status, "spelling");
   assert.equal(
-    runtime.gradeOpening({ ...step, answers: ["Kviečiu jus."] }, "kviečiu jūs")
+    runtime.gradeAnswer({ ...step, answers: ["Kviečiu jus."] }, "kviečiu jūs")
       .status,
     "incorrect",
   );
   assert.equal(
-    runtime.gradeOpening(
+    runtime.gradeAnswer(
       { ...step, assessmentPolicy: { spelling: "strict" } },
       "Siandien salta",
     ).status,

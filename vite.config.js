@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 function offline() {
   const version = Date.now().toString(36);
   return {
-    name: "labukas-offline",
+    name: "sakyk-offline",
     apply: "build",
     transformIndexHtml() {
       return [

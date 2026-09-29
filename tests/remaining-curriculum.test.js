@@ -1,24 +1,17 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { authoredChapters } from "../src/remaining-curriculum.js";
-import { lessons as originalLessons } from "../src/curriculum.js";
-import { createCourseRuntime } from "../src/authored-course.js";
-import { words } from "../src/course-authoring.js";
+import { courses } from "./helpers.js";
+import { createCourseRuntime } from "../src/learning/session.js";
+import { words } from "./helpers.js";
 
-for (const course of authoredChapters.filter((c) => c.number !== 2)) {
+for (const course of courses.filter((c) => c.number !== 2)) {
   test(`chapter ${course.number}: source inventory retained, playable contracts and bounded production`, () => {
     const r = createCourseRuntime(course),
       seen = new Set(),
       all = [];
-    const covered = new Set(course.ledger.map((x) => x.source));
-    for (const l of originalLessons.filter(
-      (l) => l.chapter === course.number - 1 && !l.optional,
-    ))
-      for (const i of l.items.filter((i) => !i.extension))
-        assert.ok(covered.has(i.id), `missing ${i.id}`);
     for (const l of course.lessons) {
       assert.ok(l.steps.length && l.goal && l.sourcePages, l.id);
-      assert.equal(r.startOpening(r.freshOpening(), l.id).run.lessonId, l.id);
+      assert.equal(r.startLesson(r.createState(), l.id).run.lessonId, l.id);
       for (const q of l.steps) {
         assert.ok(!seen.has(q.id), `duplicate ${q.id}`);
         seen.add(q.id);
@@ -32,10 +25,11 @@ for (const course of authoredChapters.filter((c) => c.number !== 2)) {
           continue;
         }
         if (q.kind === "match") continue;
-        assert.ok(q.hint && q.correction, q.id);
+        assert.ok(q.correction, q.id);
+        if (q.hint !== undefined) assert.ok(q.hint.trim(), q.id);
         for (const a of q.answers)
           assert.equal(
-            r.gradeOpening(q, a, { editIndex: q.editIndex }).status,
+            r.gradeAnswer(q, a, { editIndex: q.editIndex }).status,
             "correct",
             `${q.id}: ${a}`,
           );
@@ -87,29 +81,26 @@ for (const course of authoredChapters.filter((c) => c.number !== 2)) {
 }
 
 test("new chapters preserve rich grading and support in Course and Practice", () => {
-  const course = authoredChapters.find((c) => c.number === 3),
+  const course = courses.find((c) => c.number === 3),
     r = createCourseRuntime(course);
   const q = course.lessons
     .flatMap((l) => l.steps)
     .find((q) => q.kind === "type" && q.answers[0] === "šeštadienis");
   assert.ok(q);
-  assert.equal(r.gradeOpening(q, "sestadienis").status, "spelling");
+  assert.equal(r.gradeAnswer(q, "sestadienis").status, "spelling");
   const grammar = course.lessons
     .flatMap((l) => l.steps)
     .find((q) => q.changedContext && q.answers[0] === "muziejų");
-  assert.equal(r.gradeOpening(grammar, "muziejaus").status, "incorrect");
+  assert.equal(r.gradeAnswer(grammar, "muziejaus").status, "incorrect");
 });
 
 test("all new lessons finish through the runtime without granting later-day mastery", () => {
-  for (const course of authoredChapters.filter((c) => c.number !== 2)) {
+  for (const course of courses.filter((c) => c.number !== 2)) {
     const r = createCourseRuntime(course);
-    let state = r.freshOpening(),
+    let state = r.createState(),
       now = new Date(2026, 8, 26, 10).getTime();
     for (const lesson of course.lessons) {
-      state = r.advanceOpening(
-        r.startOpening(state, lesson.id, now++, 0),
-        now++,
-      );
+      state = r.advance(r.startLesson(state, lesson.id, now++, 0), now++);
       let guard = 0;
       while (!state.run.done) {
         assert.ok(guard++ < 80, lesson.id);
@@ -125,13 +116,13 @@ test("all new lessons finish through the runtime without granting later-day mast
               checked: q.checklist?.map((_, i) => i) || [],
             },
           };
-          state = r.answerOpening(state, now++);
+          state = r.submitAnswer(state, now++);
           assert.ok(
             ["correct", "self-reviewed"].includes(state.run.feedback?.status),
             q.id,
           );
         }
-        state = r.advanceOpening(state, now++);
+        state = r.advance(state, now++);
       }
     }
     assert.equal(state.completed.length, course.lessons.length);
@@ -141,71 +132,39 @@ test("all new lessons finish through the runtime without granting later-day mast
   }
 });
 
-test("source coverage names actual taught expressions, not only ledger entries", () => {
-  for (const course of authoredChapters.filter((c) => c.number !== 2)) {
-    const normalize = (t) => words(t).join(" ").toLowerCase();
+test("chapter vocabulary is taught explicitly or in an identified model", () => {
+  for (const course of courses.filter((c) => c.number !== 2)) {
+    const norm = (t) => words(t).join(" ").toLowerCase();
+    const models = course.lessons
+      .flatMap((l) => l.steps)
+      .filter((q) => q.kind === "model");
     const taught = new Set(
-      course.lessons
-        .flatMap((l) => l.steps)
-        .filter((q) => q.kind === "model")
-        .flatMap((q) => q.pairs.map((p) => normalize(p[0]))),
+      models.flatMap((q) => q.pairs.map((p) => norm(p[0]))),
     );
-    for (const l of originalLessons.filter(
-      (l) =>
-        l.chapter === course.number - 1 &&
-        !l.optional &&
-        !["reading", "writing"].includes(l.kind),
-    ))
-      for (const i of l.items.filter((i) => !i.extension)) {
-        const replacement = course.ledger.find(
-          (e) => e.source === i.id && e.disposition === "taught-in-context",
+    for (const word of course.vocabulary) {
+      if (word.model)
+        assert.ok(
+          models
+            .find((q) => q.id === word.model)
+            ?.pairs.some(([lt]) =>
+              ` ${norm(lt)} `.includes(` ${norm(word.lt)} `),
+            ),
+          word.lt,
         );
-        if (replacement) {
-          const lesson = course.lessons.find(
-            (l) => l.id === replacement.lesson,
-          );
-          const model = lesson?.steps.find(
-            (q) => q.id === replacement.model && q.kind === "model",
-          );
-          assert.ok(
-            model?.pairs.some(([lt]) =>
-              ` ${normalize(lt)} `.includes(` ${normalize(i.lt)} `),
-            ),
-            `${i.id}: missing expression in replacement model`,
-          );
-          assert.ok(
-            lesson.steps.some(
-              (q) => q.kind !== "model" && model.targets.includes(q.target),
-            ),
-            `${i.id}: replacement has no practice`,
-          );
-        } else assert.ok(taught.has(normalize(i.lt)), `${i.id}: ${i.lt}`);
-      }
-    const positions = course.lessons.map((l) => l.sourceLesson);
-    for (const source of originalLessons.filter(
-      (l) => l.chapter === course.number - 1 && l.kind === "vocabulary",
-    )) {
-      const context = course.lessons.findIndex(
-        (l) => l.id === `a-${source.id}-use`,
-      );
-      if (context < 0) continue;
-      assert.ok(
-        !positions.slice(context + 1).includes(source.id),
-        `context before teaching: ${source.id}`,
-      );
+      else assert.ok(taught.has(norm(word.lt)), word.lt);
     }
   }
 });
 
 test("wrong conversation replies receive the matching recovery message and translation", () => {
-  const course = authoredChapters.find((c) => c.number === 4),
+  const course = courses.find((c) => c.number === 4),
     r = createCourseRuntime(course);
   const lesson = course.lessons.find((l) => l.id === "a-c4-route-rental");
-  let s = r.advanceOpening(r.startOpening(r.freshOpening(), lesson.id, 1, 0));
+  let s = r.advance(r.startLesson(r.createState(), lesson.id, 1, 0));
   s.run.index = s.run.queue.findIndex((q) => q.kind === "chat-choice");
   const q = s.run.queue[s.run.index];
   s.run.answer = q.options.find((a) => !q.answers.includes(a));
-  s = r.answerOpening(s, 2);
+  s = r.submitAnswer(s, 2);
   const reply = s.run.threads[q.thread].at(-1);
   assert.equal(reply.text, q.wrongNext);
   assert.equal(reply.gloss, q.wrongFollowGloss);

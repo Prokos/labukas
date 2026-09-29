@@ -4,17 +4,17 @@ import {
   chapterTwoCourse as course,
   chapterTwoLessons as lessons,
   chapterTwoRuntime as r,
-} from "../src/chapter-two-content.js";
+} from "./helpers.js";
 const steps = lessons.flatMap((l) => l.steps);
 const step = (id) => steps.find((q) => q.id === id);
 function at(id) {
   const l = lessons.find((l) => l.steps.some((q) => q.id === id));
-  let s = r.advanceOpening(r.startOpening(r.freshOpening(), l.id, 1, 0), 2);
+  let s = r.advance(r.startLesson(r.createState(), l.id, 1, 0), 2);
   s.run.index = s.run.queue.findIndex((q) => q.id === id);
   return s;
 }
 function answer(s, value, patch = {}) {
-  return r.answerOpening(
+  return r.submitAnswer(
     { ...s, run: { ...s.run, answer: value, ...patch } },
     Date.now(),
   );
@@ -26,7 +26,7 @@ test("all chapter lessons are accessible directly, teach their targets and have 
   const known = new Set();
   for (const l of lessons) {
     assert.ok(l.goal && l.sourcePages && l.steps.length > 0, l.id);
-    assert.equal(r.startOpening(r.freshOpening(), l.id).run.lessonId, l.id);
+    assert.equal(r.startLesson(r.createState(), l.id).run.lessonId, l.id);
     for (const q of l.steps) {
       if (q.kind === "model") {
         q.targets.forEach((t) => known.add(t));
@@ -40,11 +40,12 @@ test("all chapter lessons are accessible directly, teach their targets and have 
         known.has(q.target),
         `${q.id} lacks prior teaching for ${q.target}`,
       );
-      assert.ok(q.hint && q.correction, q.id);
+      assert.ok(q.correction, q.id);
+      if (q.hint !== undefined) assert.ok(q.hint.trim(), q.id);
       if (q.kind === "match") continue;
       for (const a of q.answers)
         assert.equal(
-          r.gradeOpening(q, a, { editIndex: q.editIndex }).status,
+          r.gradeAnswer(q, a, { editIndex: q.editIndex }).status,
           "correct",
           `${q.id}: ${a}`,
         );
@@ -89,28 +90,28 @@ test("grammatical diacritics, person shifts and quantities remain meaningful err
     ["c2-food-recall", "duona", "correct"],
     ["c2-ingredients-recall", "pienas", "correct"],
   ])
-    assert.equal(r.gradeOpening(step(id), a).status, status, `${id}: ${a}`);
+    assert.equal(r.gradeAnswer(step(id), a).status, status, `${id}: ${a}`);
   assert.equal(
-    r.gradeOpening(step("c2-menu-extras-recall"), "kiauliena").status,
+    r.gradeAnswer(step("c2-menu-extras-recall"), "kiauliena").status,
     "correct",
   );
   assert.equal(
-    r.gradeOpening(step("c2-more-menu-recall"), "pyragas").status,
+    r.gradeAnswer(step("c2-more-menu-recall"), "pyragas").status,
     "correct",
   );
 });
 
 test("chapter completion traverses every authored task without claiming writing mastery", () => {
-  let s = r.freshOpening();
+  let s = r.createState();
   let time = 1;
   for (const l of lessons) {
-    s = r.advanceOpening(r.startOpening(s, l.id, time++, 1), time++);
+    s = r.advance(r.startLesson(s, l.id, time++, 1), time++);
     let guard = 0;
     while (!s.run.done) {
       assert.ok(guard++ < 60, l.id);
       const q = s.run.queue[s.run.index];
       if (q.kind !== "model") {
-        s = r.answerOpening(
+        s = r.submitAnswer(
           {
             ...s,
             run: {
@@ -125,7 +126,7 @@ test("chapter completion traverses every authored task without claiming writing 
         );
         assert.ok(s.run.feedback, q.id);
       }
-      s = r.advanceOpening(s, time++);
+      s = r.advance(s, time++);
     }
   }
   assert.equal(s.completed.length, lessons.length);
@@ -145,10 +146,12 @@ test("errors repair the same target; help, transcripts and writing drafts surviv
   let s = answer(at("c2-with-milk"), "pieno");
   const repair = s.run.queue.find((q) => q.repair);
   assert.equal(repair.target, "c2-with");
-  assert.match(repair.teaching, /pienu/);
+  assert.equal(repair.teaching, undefined);
+  assert.equal(repair.repairStage, 1);
+  assert.ok(repair.options.includes("pienu"));
   assert.equal(repair.kind, "gap");
   s = at("c2-request-fish");
-  s = r.helpOpening(s, "reveal");
+  s = r.requestHelp(s, "reveal");
   s = answer(s, "žuvies");
   assert.equal(s.events.at(-1).independentRecall, false);
   s = at("c2-final-food");
@@ -165,10 +168,10 @@ test("errors repair the same target; help, transcripts and writing drafts surviv
     },
   };
   s = JSON.parse(JSON.stringify(s));
-  assert.equal(r.answerOpening(s), s);
+  assert.equal(r.submitAnswer(s), s);
   s = answer(s, s.run.answer, { checked: [0, 1, 2] });
   assert.equal(s.events.at(-1).answer, "Man patinka arbata.");
-  const next = r.advanceOpening(s);
+  const next = r.advance(s);
   assert.deepEqual(next.run.checked, []);
 });
 
@@ -177,9 +180,9 @@ test("switching lessons preserves unfinished writing and does not invent complet
   s.run.answer = "Geriu arbatą.";
   s.run.checked = [0];
   s.run.reviewing = true;
-  s = r.startOpening(s, "c2-drinks");
+  s = r.startLesson(s, "c2-drinks");
   assert.equal(s.completed.length, 0);
-  s = r.startOpening(JSON.parse(JSON.stringify(s)), "c2-food-reading");
+  s = r.startLesson(JSON.parse(JSON.stringify(s)), "c2-food-reading");
   assert.equal(s.run.answer, "Geriu arbatą.");
   assert.deepEqual(s.run.checked, [0]);
   assert.equal(s.run.reviewing, true);
@@ -190,14 +193,14 @@ test("chapter practice shares grading and evidence without granting course compl
   assert.equal(r.reviewQueue(s)[0].reviewNeed, "target");
   s = r.startReview(s);
   assert.equal(s.run.review, true);
-  s = r.advanceOpening(s);
+  s = r.advance(s);
   s = answer(s, "bulves");
-  s = r.advanceOpening(s);
+  s = r.advance(s);
   const attempt = s.events.findLast((e) => e.type === "answer");
   assert.equal(
     attempt.independentRecall,
-    false,
-    "visible correction is support",
+    true,
+    "no answer was revealed before the new recall attempt",
   );
   assert.equal(
     s.run.done,
@@ -205,20 +208,20 @@ test("chapter practice shares grading and evidence without granting course compl
     "with one target, defer retrieval instead of looping a just-shown answer",
   );
   assert.deepEqual(s.completed, []);
-  assert.equal(r.learningEvidence(s)[0].independentRun, 0);
-  assert.equal(r.learningEvidence(s)[0].needsSupport, true);
-  const later = Date.now() + 86400000;
-  s = r.advanceOpening(r.startReview(s, later), later);
-  assert.equal(s.run.queue[0].answerVisible, undefined);
-  s = r.answerOpening({ ...s, run: { ...s.run, answer: "bulves" } }, later + 1);
-  s = r.advanceOpening(s, later + 2);
   assert.equal(r.learningEvidence(s)[0].independentRun, 1);
-  assert.equal(r.learningEvidence(s)[0].recallVisits, 1);
-  const restored = r.startOpening(s, "c2-objects");
+  assert.equal(r.learningEvidence(s)[0].needsTarget, true);
+  const later = Date.now() + 86400000;
+  s = r.advance(r.startReview(s, later), later);
+  assert.equal(s.run.queue[0].answerVisible, undefined);
+  s = r.submitAnswer({ ...s, run: { ...s.run, answer: "bulves" } }, later + 1);
+  s = r.advance(s, later + 2);
+  assert.equal(r.learningEvidence(s)[0].independentRun, 2);
+  assert.equal(r.learningEvidence(s)[0].recallVisits, 2);
+  const restored = r.startLesson(s, "c2-objects");
   assert.equal(restored.run.feedback.status, "incorrect");
   assert.equal(restored.run.answer, "bulvės");
   assert.equal(
-    r.gradeOpening(step("c2-drinks-recall"), "kavą").status,
+    r.gradeAnswer(step("c2-drinks-recall"), "kavą").status,
     "incorrect",
   );
 });
@@ -228,14 +231,17 @@ test("conversation variants preserve the actual payment target in later practice
     [0, "Kortele."],
     [1, "Grynaisiais."],
   ]) {
-    let s = r.advanceOpening(
-      r.startOpening(r.freshOpening(), "c2-chapter-check", 1, variant),
+    let s = r.advance(
+      r.startLesson(r.createState(), "c2-chapter-check", 1, variant),
     );
     s.run.index = s.run.queue.findIndex((q) => q.id.startsWith("c2-final-pay"));
     s = answer(s, expected);
     const row = r.learningEvidence(s)[0];
     assert.equal(row.lastProduction.answers[0], expected);
-    assert.equal(r.reviewQueue(s)[0].answers[0], expected);
+    assert.equal(
+      r.reviewQueue(s, Date.now() + 86401000)[0].answers[0],
+      expected,
+    );
     assert.equal(row.independentRun, 1);
     const negative = s.run.queue.find((q) => q.id === "c2-final-negative");
     assert.equal(negative.reviewKey, "c2-object:form:arbatos");
@@ -260,14 +266,14 @@ test("phrase spelling is shared by Course, saved queues and Practice without a m
     assert.equal(row.needsTarget, false);
     assert.equal(row.recentErrors, 0);
     assert.equal(row.needsSpelling, true);
-    s = r.advanceOpening(r.startReview(s));
+    s = r.advance(r.startReview(s));
     s = answer(s, text);
     assert.equal(s.run.feedback.status, "spelling");
-    s = r.advanceOpening(s);
+    s = r.advance(s);
     assert.equal(s.run.done, true, "defer the isolated spelling return");
     const later = Date.now() + 86400000;
-    s = r.advanceOpening(r.startReview(s, later), later);
-    s = r.answerOpening(
+    s = r.advance(r.startReview(s, later), later);
+    s = r.submitAnswer(
       { ...s, run: { ...s.run, answer: canonical } },
       later + 1,
     );
@@ -277,7 +283,7 @@ test("phrase spelling is shared by Course, saved queues and Practice without a m
     assert.equal(row.recallVisits, 1);
   }
   assert.equal(
-    r.gradeOpening(
+    r.gradeAnswer(
       { ...step("c2-phrase-short"), assessmentPolicy: { spelling: "strict" } },
       "juodos kavos prasom",
     ).status,

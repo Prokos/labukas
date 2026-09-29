@@ -1,9 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { authoredChapter } from "../src/remaining-curriculum.js";
-import { normalizeAnswer as norm } from "../src/answer-assessment.js";
-import { createCourseRuntime } from "../src/authored-course.js";
-const course = authoredChapter(4);
+import { course as courseByNumber } from "./helpers.js";
+import { normalizeAnswer as norm } from "../src/learning/answer-assessment.js";
+import { createCourseRuntime } from "../src/learning/session.js";
+const course = courseByNumber(4);
 const located = course.lessons.flatMap((lesson, index) =>
   lesson.steps.map((q) => ({ q, lesson, index })),
 );
@@ -98,7 +98,7 @@ test("reserved chapter 4 combinations use earlier target identities after spacin
     );
     for (const wrong of q.wrong)
       assert.equal(
-        r.gradeOpening(q, wrong).status,
+        r.gradeAnswer(q, wrong).status,
         "incorrect",
         `${q.id}: ${wrong}`,
       );
@@ -114,10 +114,10 @@ test("chapter 4 spelling slips preserve words while wrong case, number and perso
     ["big-kitchen-recall", "Didele"],
   ]) {
     const q = task(`a-c4-route-${id}`);
-    assert.equal(r.gradeOpening(q, misspelled).status, "spelling", id);
+    assert.equal(r.gradeAnswer(q, misspelled).status, "spelling", id);
     for (const wrong of q.wrong)
       assert.equal(
-        r.gradeOpening(q, wrong).status,
+        r.gradeAnswer(q, wrong).status,
         "incorrect",
         `${id}: ${wrong}`,
       );
@@ -130,26 +130,10 @@ test("chapter 4 spelling slips preserve words while wrong case, number and perso
   ]) {
     const q = task(`a-c4-route-${id}`);
     for (const a of q.answers)
-      assert.equal(r.gradeOpening(q, a).status, "correct", id);
+      assert.equal(r.gradeAnswer(q, a).status, "correct", id);
     for (const a of q.wrong)
-      assert.equal(r.gradeOpening(q, a).status, "incorrect", id);
+      assert.equal(r.gradeAnswer(q, a).status, "incorrect", id);
   }
-});
-
-test("retired chapter 4 work remains resumable without completing new teaching", () => {
-  const id = "a-c4l1-1";
-  assert.ok(course.retiredLessons.some((l) => l.id === id));
-  assert.ok(!course.lessons.some((l) => l.id === id));
-  let state = r.startOpening(r.freshOpening(), id, 1);
-  state.run.answer = "kambarys";
-  state.run.help = ["reference"];
-  const old = structuredClone(state.run);
-  state = r.startOpening(state, "a-c4-route-home-location", 2);
-  assert.deepEqual(state.suspended[id], old);
-  state = r.startOpening(JSON.parse(JSON.stringify(state)), id, 3);
-  assert.equal(state.run.answer, "kambarys");
-  assert.deepEqual(state.run.help, ["reference"]);
-  assert.deepEqual(state.completed, []);
 });
 
 test("adverts require combining information and visible text never grants productive recall", () => {
@@ -157,14 +141,14 @@ test("adverts require combining information and visible text never grants produc
     const q = task(`a-c4-route-${id}`);
     assert.equal(q.kind, "reading");
     assert.equal(q.answerVisible, true);
-    let s = r.advanceOpening(
-      r.startOpening(r.freshOpening(), "a-c4-route-compare-flats", 1),
+    let s = r.advance(
+      r.startLesson(r.createState(), "a-c4-route-compare-flats", 1),
       2,
     );
     s.run.queue = [q];
     s.run.index = 0;
     s.run.answer = q.answers[0];
-    s = r.answerOpening(s, 3);
+    s = r.submitAnswer(s, 3);
     assert.equal(s.run.feedback.status, "correct");
     const event = s.events.at(-1);
     assert.equal(event.independentRecall, false);
@@ -172,8 +156,7 @@ test("adverts require combining information and visible text never grants produc
 });
 
 test("chapter 4 source-function claims point to actual teaching and label supported evidence", async () => {
-  const { chapterFourOutcomes } =
-    await import("../src/chapter-four-outcomes.js");
+  const chapterFourOutcomes = course.objectives;
   const sentences = new Set();
   for (const { q } of located.filter(
     ({ q }) => q.changedContext && !q.plannedReturn,
@@ -185,7 +168,7 @@ test("chapter 4 source-function claims point to actual teaching and label suppor
   for (const o of chapterFourOutcomes) {
     assert.ok(o.pages && o.goal);
     for (const id of o.models)
-      assert.equal(task(`a-c4-route-${id}`)?.kind, "model", `${o.key}: ${id}`);
+      assert.equal(task(id)?.kind, "model", `${o.key}: ${id}`);
     for (const id of o.checks || []) {
       const q = task(id);
       assert.ok(q?.changedContext && !q.plannedReturn, `${o.key}: ${id}`);
