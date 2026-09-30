@@ -200,7 +200,7 @@ export default function App() {
                 >
                   {chapters.map((c) => (
                     <option key={c.number} value={c.number}>
-                      {c.number}. {c.title}
+                      Chapter {c.number}
                     </option>
                   ))}
                 </select>

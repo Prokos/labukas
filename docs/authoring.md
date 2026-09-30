@@ -2,7 +2,7 @@
 
 Edit `src/curriculum/chapters/NN.json`. This is the content source of truth. Do not introduce per-chapter builders, lesson generators or a second exercise runtime.
 
-A chapter declares `schemaVersion`, `number`, `version`, title, description, lessons, vocabulary and optional objectives, reference rows and dependencies. `src/curriculum/index.json` contains navigation metadata; keep it aligned with the chapter. `version` describes the progress state schema, not the editorial revision date.
+A chapter declares `schemaVersion`, `number`, `version`, title, description, lessons, vocabulary and optional objectives and dependencies. The chapter files define the catalog; the app discovers them directly, and lesson totals come from each chapter's lesson list. `version` describes the progress state schema, not the editorial revision date. Help references are compiled from model examples in the chapter and its dependencies, so author each example once in its teaching step.
 
 A lesson declares a stable `id`, title, goal and ordered `steps`. It may declare `requires` and `provides` concept identities. Introduce each required concept before using it. Optional `variants` contain explicit alternative sequences; every variant needs equivalent preparation and evidence expectations.
 

@@ -138,7 +138,7 @@ export function compileCourses(definitions) {
         chapterNumbers.has(dependency),
         `Missing chapter dependency ${dependency}`,
       );
-  return definitions.map((definition) => {
+  const compiled = definitions.map((definition) => {
     const { schemaVersion, dependencies, ...course } =
       structuredClone(definition);
     const compileLesson = (lesson) => ({
@@ -161,4 +161,29 @@ export function compileCourses(definitions) {
     );
     return course;
   });
+  const definitionByNumber = new Map(
+    definitions.map((definition) => [definition.number, definition]),
+  );
+  for (const course of compiled) {
+    const relevant = new Set();
+    const visit = (number) => {
+      if (relevant.has(number)) return;
+      relevant.add(number);
+      const definition = definitionByNumber.get(number);
+      for (const dependency of definition?.dependencies || []) visit(dependency);
+    };
+    visit(course.number);
+    course.reference = compiled
+      .filter((item) => relevant.has(item.number))
+      .flatMap((item) =>
+        item.lessons.flatMap((lesson) =>
+          lesson.steps
+            .filter((q) => q.kind === "model")
+            .flatMap((q) =>
+              q.pairs.map(([lt, en]) => ({ target: q.id, lt, en })),
+            ),
+        ),
+      );
+  }
+  return compiled;
 }

@@ -1,29 +1,23 @@
-import index from "./index.json" with { type: "json" };
 import { compileCourses } from "./compiler.js";
 import { lithuanianAssessmentPolicy } from "../learning/lithuanian-policy.js";
-const sources = [
-  () => import("./chapters/01.json"),
-  () => import("./chapters/02.json"),
-  () => import("./chapters/03.json"),
-  () => import("./chapters/04.json"),
-  () => import("./chapters/05.json"),
-  () => import("./chapters/06.json"),
-  () => import("./chapters/07.json"),
-  () => import("./chapters/08.json"),
-  () => import("./chapters/09.json"),
-  () => import("./chapters/10.json"),
-];
+const sources = import.meta.glob("./chapters/*.json");
+const sourceByNumber = new Map(
+  Object.entries(sources).map(([path, load]) => [
+    Number(path.match(/(\d+)\.json$/)[1]),
+    load,
+  ]),
+);
+export const chapters = [...sourceByNumber.keys()]
+  .sort((a, b) => a - b)
+  .map((number) => ({ number }));
 const pending = new Map();
 async function definition(number) {
-  if (!sources[number - 1]) throw new Error(`Unknown chapter ${number}`);
+  const load = sourceByNumber.get(Number(number));
+  if (!load) throw new Error(`Unknown chapter ${number}`);
   if (!pending.has(number))
-    pending.set(
-      number,
-      sources[number - 1]().then((m) => m.default),
-    );
+    pending.set(number, load().then((m) => m.default));
   return pending.get(number);
 }
-export const chapters = index;
 export async function loadCourse(number) {
   const definitions = new Map();
   async function visit(n) {

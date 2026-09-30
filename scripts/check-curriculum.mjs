@@ -1,32 +1,15 @@
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { compileCourses } from "../src/curriculum/compiler.js";
-const index = JSON.parse(
-  await readFile(
-    new URL("../src/curriculum/index.json", import.meta.url),
-    "utf8",
-  ),
-);
+const chapterDirectory = new URL("../src/curriculum/chapters/", import.meta.url);
+const files = (await readdir(chapterDirectory))
+  .filter((file) => /^\d+\.json$/.test(file))
+  .sort();
 const definitions = await Promise.all(
-  index.map((c) =>
-    readFile(
-      new URL(
-        `../src/curriculum/chapters/${String(c.number).padStart(2, "0")}.json`,
-        import.meta.url,
-      ),
-      "utf8",
-    ).then(JSON.parse),
-  ),
+  files.map((file) => readFile(new URL(file, chapterDirectory), "utf8").then(JSON.parse)),
 );
 const courses = compileCourses(definitions);
 for (const c of courses) {
-  const entry = index.find((i) => i.number === c.number);
-  assert.equal(
-    entry.lessons,
-    c.lessons.length,
-    `Chapter ${c.number}: index count`,
-  );
-  assert.equal(entry.title, c.title, `Chapter ${c.number}: index title`);
   const known = new Set(),
     tasks = new Map(c.lessons.flatMap((l) => l.steps).map((q) => [q.id, q]));
   for (const lesson of c.lessons) {
